@@ -12,17 +12,17 @@
 #define B_READONLY "rb"
 
 /*consts for mouse move events*/
-#define MOVE_EVENT 1;
+#define MOVE_EVENT 1
 #define UP 'U'
 #define DOWN 'D'
 #define LEFT 'L'
 #define RIGHT 'R'
 
 /*consts for mouse keys*/
-#define CLICK_EVENT 2;
-#define LEFT_CLICK 'l';
-#define RIGHT_CLICK 'r';
-#define MIDDLE_CLICK 'm';
+#define CLICK_EVENT 2
+#define LEFT_CLICK 'l'
+#define RIGHT_CLICK 'r'
+#define MIDDLE_CLICK 'm'
 
 /*data format in array*/
 #define TYPE 0
