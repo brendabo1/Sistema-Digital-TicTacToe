@@ -1,11 +1,11 @@
-#ifndef MOUSE_DRIVER
-#define MOUSE_DRIVER
+#ifndef MOUSE_HANDLER
+#define MOUSE_HANDLER
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-#define MOUSE   "/dev/input/event12"
+#define MOUSE   "/dev/input/event17"
 
 #define EVENT_SIZE sizeof(struct input_event)
 
