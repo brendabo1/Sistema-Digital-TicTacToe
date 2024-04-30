@@ -1,6 +1,7 @@
 #ifndef POSITION_TRANSLATE
 #define POSITION_TRANSLATE
 
+#include <stdbool.h>
 /*consts for find value in vector*/
 #define CORD_X 1
 #define CORD_Y 0

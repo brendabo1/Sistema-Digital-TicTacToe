@@ -8,6 +8,10 @@
 #define CORD_Y 0
 #define INVALID_CORD -1
 
+
+/**
+ * @param
+*/
 int readEvent(int currentPos[], int * newPos);
 
 #endif

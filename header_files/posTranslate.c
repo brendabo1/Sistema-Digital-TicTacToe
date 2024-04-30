@@ -63,8 +63,11 @@ int getnewpos(int currentpos[], char move, int* newPos) {
             newPos[CORD_X] = currentpos[CORD_X];
             newPos[CORD_Y] = currentpos[CORD_Y] - 1;
             return 1;
-        } else
-            return 0;
+        } else{
+            newPos[CORD_X] = currentpos[CORD_X];
+            newPos[CORD_Y] = currentpos[CORD_Y];
+            return 1;
+        }
         break;
     case DOWN:
         if(movetodown(currentpos)) {
@@ -72,7 +75,9 @@ int getnewpos(int currentpos[], char move, int* newPos) {
             newPos[CORD_Y] = currentpos[CORD_Y] + 1;
             return 1;
         } else {
-            return 0;
+            newPos[CORD_X] = currentpos[CORD_X];
+            newPos[CORD_Y] = currentpos[CORD_Y];
+            return 1;
         }
     break;
     case LEFT:
@@ -81,7 +86,9 @@ int getnewpos(int currentpos[], char move, int* newPos) {
             newPos[CORD_Y] = currentpos[CORD_Y];
             return 1;
         } else {
-            return 0;
+            newPos[CORD_X] = currentpos[CORD_X];
+            newPos[CORD_Y] = currentpos[CORD_Y];
+            return 1;
         }
     break;
     case RIGHT:
@@ -91,7 +98,9 @@ int getnewpos(int currentpos[], char move, int* newPos) {
             newPos[CORD_Y] = currentpos[CORD_Y];
             return 1;
         } else{
-            return 0;
+            newPos[CORD_X] = currentpos[CORD_X];
+            newPos[CORD_Y] = currentpos[CORD_Y];
+            return 1;
         }
     break;
     }
