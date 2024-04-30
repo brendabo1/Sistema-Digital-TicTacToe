@@ -3,6 +3,13 @@
 
 <h2>Sobre</h2>
 <p>introdução</p>
+<h3>Requisitos</h3>
+<p>
+  <ul>
+    <li>O código deve ser escrito em linguagem C;</li>
+    <li>O sistema só poderá utilizar os componentes disponíveis na placa.</li>
+  </ul>
+</p>
 <h2>Equipe</h2>
 <ul>
   <li>Brenda</li>
@@ -11,8 +18,11 @@
 </ul>
 
 
-<h2>Introdução</h2>
+<h2>Softwares Utilizados</h2>
 
-<h2>Seção 2</h2>
-<h2>Seção 3</h2>
+<h2>Arquitetura do Computador utilizado nos testes</h2>
+  <h3>Arquitetura da DE1-SoC 2</h3>
+  <h3>Linux</h3>
+  <h3>Testes</h3>
+<h2>Configuação do Ambeinte e Execução 3</h2>
 
