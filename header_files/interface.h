@@ -1,6 +1,6 @@
 #ifndef INTERFACE_MOUSE_JOGO
 #define INTERFACE_MOUSE_JOGO
-#include "mouseDriver.h"
+#include "mouseHandler.h"
 #include "posTranslate.h"
 
 #define CLICK 2

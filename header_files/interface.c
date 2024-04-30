@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "interface.h"
-#include "mouseDriver.h"
+#include "mouseHandler.h"
 #include "posTranslate.h"
 
 int readEvent(int currentPos[], int * newPos){
