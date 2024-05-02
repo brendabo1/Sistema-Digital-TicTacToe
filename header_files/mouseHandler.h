@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#define MOUSE   "/dev/input/event17"
+#define MOUSE   "/dev/input/event0"
 
 #define EVENT_SIZE sizeof(struct input_event)
 
