@@ -1,11 +1,21 @@
+/*
+Este arquivo implementa a logica do arquivo posTranslate.h e tem como objetivo prover uma tradução de eventos para entradas do mouse
+
+Universidade Estadual de Feira de Santana - TEC499 MI Sistemas Digitais
+Autores: Brenda Barbosa, Camila Queiroz e Maike de Oliveira
+Data da última modificação: 07/05/2024
+*/
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include "posTranslate.h"
 
 /**
- * @param currentpos a array with 2 values, when 0 is y cordinate and 1 is x cordinate
- * @return true if the position is valid, false otherwise
+ * função que confere se mover pra direita é um movimento valido ou não
+ * currenpos: é um vetor com 2 valores onde 0 é o eixo Y e 1 é o eixo X
+ * Return: verdadeiro se é um movimento valido
+ *      false se é um movimento invalido
 */
 bool movetoright(int currentpos[]) {
     if(currentpos[CORD_X] != 2)
@@ -15,8 +25,10 @@ bool movetoright(int currentpos[]) {
 }
 
 /**
- * @param currentpos a array when 0 is y cordinate and 1 is x cordinate
- * @return true if the position is valid, false otherwise
+ * função que confere se mover pra esquerda é um movimento valido ou não
+ * currenpos: é um vetor com 2 valores onde 0 é o eixo Y e 1 é o eixo X
+ * Return: verdadeiro se é um movimento valido
+ *      false se é um movimento invalido
 */
 bool movetoleft(int currentpos[]) {
     if(currentpos[CORD_X] != 0){
@@ -27,8 +39,10 @@ bool movetoleft(int currentpos[]) {
 }
 
 /**
- * @param currentpos a array with 2 values, when 0 is y cordinate and 1 is x cordinate
- * @return true if the position is valid, false otherwise
+ * função que confere se mover pra cima é um movimento valido ou não
+ * currenpos: é um vetor com 2 valores onde 0 é o eixo Y e 1 é o eixo X
+ * Return: verdadeiro se é um movimento valido
+ *      false se é um movimento invalido
 */
 bool movetoup(int currentpos[]) {
     if(currentpos[CORD_Y] != 0) {
@@ -39,8 +53,10 @@ bool movetoup(int currentpos[]) {
 }
 
 /**
- * @param currentpos a array with 2 values, when 0 is y cordinate and 1 is x cordinate
- * @return true if the position is valid, false otherwise
+ * função que confere se mover pra baixo é um movimento valido ou não
+ * currenpos: é um vetor com 2 valores onde 0 é o eixo Y e 1 é o eixo X
+ * Return: verdadeiro se é um movimento valido
+ *      false se é um movimento invalido
 */
 bool movetodown(int currentpos[]) {
     if(currentpos[CORD_Y] != 2)
@@ -50,29 +66,34 @@ bool movetodown(int currentpos[]) {
 }
 
 /**
- * @param currentposa array with 2 values, when 0 is y cordinate and 1 is x cordinate
- * @param move the move to be made, is a char
- * @param newPos pointer to array with 2 values for new cordinates, when 0 is cordinate y and 1 is cordinate x
- * @return 0 is have a error, 1 if the move is valid
+ * função responsavel por agrupar as funções de validação de movimentos de acordo com as posições atuais 
+ * e impedir a ocorrencia de movimentações invalidas
+ * currentpos: vetor com 2 posições onde 0 é o eixo Y e 1 é o eixo X
+ * move: o proximo movimento a ser realizado
+ * newPos: um vetor com 2 posições para as novas cordenadas onde 0 é o eixo Y e 1 é o eixo X
+ * Return: 1 se ocorreu movimentação
+ *      0 se não foi possivel realizar movimentação
 */
 int getnewpos(int currentpos[], char move, int* newPos) {
     switch (move)
     {
     case UP:
+        /*caso seja um movimento valido*/
         if (movetoup(currentpos)) {
             newPos[CORD_X] = currentpos[CORD_X];
-            newPos[CORD_Y] = currentpos[CORD_Y] - 1;
+            newPos[CORD_Y] = currentpos[CORD_Y] - 1; /*decrementa 1 no eixo Y*/
             return 1;
-        } else{
+        } else{ /*caso não, mantem as mesmas cordenadas*/
             newPos[CORD_X] = currentpos[CORD_X];
             newPos[CORD_Y] = currentpos[CORD_Y];
             return 1;
         }
         break;
     case DOWN:
+    /*caso seja um movimento valido*/
         if(movetodown(currentpos)) {
             newPos[CORD_X] = currentpos[CORD_X];
-            newPos[CORD_Y] = currentpos[CORD_Y] + 1;
+            newPos[CORD_Y] = currentpos[CORD_Y] + 1; /*incrementa um no eixo Y*/
             return 1;
         } else {
             newPos[CORD_X] = currentpos[CORD_X];
@@ -81,8 +102,9 @@ int getnewpos(int currentpos[], char move, int* newPos) {
         }
     break;
     case LEFT:
+    /*caso seja um movimento valido*/
         if(movetoleft(currentpos)) {
-            newPos[CORD_X] = currentpos[CORD_X] - 1;
+            newPos[CORD_X] = currentpos[CORD_X] - 1; /*decrementa um no eixo X*/
             newPos[CORD_Y] = currentpos[CORD_Y];
             return 1;
         } else {
@@ -92,9 +114,10 @@ int getnewpos(int currentpos[], char move, int* newPos) {
         }
     break;
     case RIGHT:
+    /*caso seja um movimento valido*/
         if (movetoright(currentpos))
         {
-            newPos[CORD_X] = currentpos[CORD_X] + 1;
+            newPos[CORD_X] = currentpos[CORD_X] + 1; /*incrementa um no eixo X*/
             newPos[CORD_Y] = currentpos[CORD_Y];
             return 1;
         } else{
