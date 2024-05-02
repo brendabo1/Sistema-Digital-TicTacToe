@@ -1,105 +1,186 @@
+/*
+Este arquivo implementa a lógica do jogo da velha. A implementação
+apresenta três modos de jogo:  i) dual player; ii) single player (easy):
+jogadas do computador são geradas aleatoriamente; iii) single player (hard): 
+jogadas do computador são geradas com o algoritmo 'minimax'.
+
+Universidade Estadual de Feira de Santana - TEC499 MI Sistemas Digitais
+Autores: Brenda Barbosa, Camila Queiroz e Maike de Oliveira
+Data da última modificação: 07/05/2024
+*/
+
 #include <stdio.h>
-#include<stdlib.h>
-#include<unistd.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <time.h>
 
-#define PLAYER1  0
-#define PLAYER2  1
 
-#define WIDTH 3
+#define COMPUTER 0 //identificacao do computador
+#define PLAYER1 1 //identificacao do jogador 1
+#define PLAYER2 2 //identificacao do jogador 2
 
-//Function prototypes
+#define WIDTH 3 // tamanho do tabuleiro
+
+/* Function prototypes */
 int tic_tac_toe_dual_player();
+int tic_tac_toe_computer_player();
+int tic_tac_toe_single_player_hard();
 void print_title();
+void print_menu();
 void print_checkboard();
 void reset_board();
-int check_empty_space(int []);
+int check_empty_space(int[]);
 int empty_spaces();
-void register_move(int, int []);
+void computer_move(int *);
+void register_move(int, int[]);
 int check_winner();
 
+/* **************************************************************************** */
 
-// ##########################################################
+/*  VARIAVEIS GLOBAIS  */
 
-// Global variables
-char *x[5] = {
-    "       \0",
-    " ** ** \0",
-    "  ***  \0",
-    "  ***  \0",
-    " ** ** \0"};
+/*
+* Armazena as jogadas. Cada um dos 9 quadrantes são
+* identificados por meio da linha e coluna (xy)
+* 00  01  02
+* 10  11  12
+* 20  21  22
 
-char *o[5] = {
-    "       \0",
-    "  ***  \0",
-    " ** ** \0",
-    " ** ** \0",
-    "  ***  \0"};
+*/
+int checkboard[WIDTH][WIDTH] = {{-1, -1, -1}, 
+                                {-1, -1, -1}, 
+                                {-1, -1, -1}};
 
-char *empty[5] = {
-    "       \0",
-    "       \0",
-    "       \0",
-    "       \0",
-    "       \0"};
 
-const char horizontal_line[26] = {220, 220, 220, 220, 220, 220, 220, 220, 220, 220,
-                                  220, 220, 220, 220, 220, 220, 220, 220, 220, 220, 220, 220, 220, '\0'};
-const char vertical_bar[2] = {219, '\0'};
-
-int checkboard[WIDTH][WIDTH] = {{-1,-1,-1},
-                                {-1,-1,-1},
-                                {-1,-1,-1}};
-
-//Functions
-int tic_tac_toe_dual_player(){
-  int move[2];
-  int plays = 0, playingNow = PLAYER1, winner = -1;
+/*******************************************************************
+*  Função: tic_tac_toe_dual_player
+*
+* Implemeta a lógica do jogo no modo dual player.
+* Return: a identificação do jogador que ganhou a partida.
+*         retorna -1 caso tenha sido um empate
+*         retorna -2 caso um player solicite o encerramento
+*         da partida
+*******************************************************************/
+int tic_tac_toe_dual_player()
+{
   
+  int move[3] = {0};        //quadrante e confirmação de jogada
+  int playingNow = PLAYER1, //de quem é a vez de jogar
+      winner = -1,          //armazena a identificação do vencedor
+      finish = 0;           // partida finalizada externamente
+  
+  //Loop do jogo
+  while (!finish && empty_spaces() && winner == -1)
+  {
 
-  while(plays<9 && winner == -1){
+    system("clear");
+    print_title();
+    print_checkboard();
 
-    //display title and board
-      system("clear");
-      print_title();
-      
-      print_checkboard();
-      
-      scanf("%d",&move[0]);
-      scanf("%d",&move[1]);
+   // Jogada do player da vez
+   // TODO
 
-      //Game control
-      if(move[0] == -1){
-        break;		
-      }else if(move[0] == 40){
-        reset_board();
-        continue;
-      }
 
-      //Register move
-      if(check_empty_space(move)){
-        register_move(playingNow, move);
+    // Registrar jogada
+    if (check_empty_space(move))
+    {
+      register_move(playingNow, move);
 
-        playingNow = (playingNow == PLAYER1) ? PLAYER2 : PLAYER1;
+      playingNow = (playingNow == PLAYER1) ? PLAYER2 : PLAYER1; //alterna entre players
+    }
+    else
+    {
+      continue; //quadrante ocupado
+    }
 
-      }else{
-        continue;
-      }
-
-      //Checking winner
-      winner = check_winner();
-
-      //Updating play count
-      plays++;
-
+    
+    winner = check_winner(); // Verificar vencedor
+    // Verificar finalização externa
+    //TODO
   }
+
   system("clear");
   print_checkboard();
+  
+  if (finish) //solicitacao realizada
+    return -2;
+
   return winner;
-
-
-
 };
-void print_title(){
+
+/*******************************************************************
+*  Função: tic_tac_toe_single_player_easy
+*
+* Implemeta a lógica do jogo no modo single player (easy).
+* Return: a identificação do jogador que ganhou a partida.
+*         retorna -1 caso tenha sido um empate
+*         retorna -2 caso o player solicite o encerramento
+*         da partida
+*******************************************************************/
+int tic_tac_toe_single_player_easy()
+{
+
+  int move[3] = {0};        //quadrante e confirmação de jogada
+  int playingNow = COMPUTER,//de quem é a vez de jogar
+      winner = -1,          //armazena a identificação do vencedor
+      finish = 0;
+
+  //Loop do jogo
+  while (!finish && empty_spaces() && winner == -1)
+  {
+    system("clear");
+    print_title();
+    print_checkboard();
+
+    if (playingNow == COMPUTER) // jogada do computador
+    {
+      computer_move(move);
+      sleep(1);
+    }
+    else //jogada do player
+    { 
+      
+      //TODO
+    }
+
+    //Registrar jogada
+    register_move(playingNow, move);
+    playingNow = (playingNow == PLAYER2) ? COMPUTER : PLAYER2;
+
+    winner = check_winner(); //verificar vencedor
+
+    //Verificar solicitação de encerramento
+    //TODO
+  }
+
+  system("clear");
+  print_checkboard();
+
+  if (finish) //solicitacao realizada
+    return -2;
+
+  return winner;
+}
+
+/*******************************************************************
+*  Função: tic_tac_toe_single_player_hard
+*
+* Implemeta a lógica do jogo no modo single player (hard).
+* Return: a identificação do jogador que ganhou a partida.
+*         retorna -1 caso tenha sido um empate
+*         retorna -2 caso o player solicite o encerramento
+*         da partida
+*******************************************************************/
+int tic_tac_toe_single_player_hard() {
+  //TODO
+}
+
+/*******************************************************************
+*  Função: print_title
+* Imprime o título do jogo (TIC TAC TOE)
+*******************************************************************/
+void print_title()
+{
   printf("\t\t\t\t########   ########   ########        ########   ########   ########      ########   ########   ########\n");
   printf("\t\t\t\t   ##         ##      ##                 ##      ##    ##   ##               ##      ##    ##   ##\n");
   printf("\t\t\t\t   ##         ##      ##                 ##      ########   ##               ##      ##    ##   ########\n");
@@ -107,20 +188,66 @@ void print_title(){
   printf("\t\t\t\t   ##      ########   ########           ##      ##    ##   ########         ##      ########   ########\n\n\n\n");
 }
 
+/*******************************************************************
+*  Função: print_menu
+* Imprime o menu do jogo com os modos de jogo.
+*******************************************************************/
 
-void print_checkboard(){
-  char** spaces[9];
+void print_menu()
+{
+  printf("1. DUAL PLAYER\n2. SINGLE PLAYER (easy)\n3. SINGLE PLAYER (hard)");
+  printf("\nMode: ");
+}
+
+/*******************************************************************
+*  Função: print_checkboard
+* Imprime o tabuleiro do jogo no estado atual.
+*******************************************************************/
+
+void print_checkboard()
+{
+  /* Elementos gráficos */
+  char *x[5] = {
+      "       \0",
+      " ** ** \0",
+      "  ***  \0",
+      "  ***  \0",
+      " ** ** \0"};
+
+  char *o[5] = {
+      "       \0",
+      "  ***  \0",
+      " ** ** \0",
+      " ** ** \0",
+      "  ***  \0"};
+
+  char *empty[5] = {
+      "       \0",
+      "       \0",
+      "       \0",
+      "       \0",
+      "       \0"};
+
+  const char horizontal_line[26] = {124, 124, 124, 124, 124,
+                                    124, 124, 124, 124, 124,
+                                    124, 124, 124, 124, 124,
+                                    124, 124, 124, 124, 124,
+                                    124, 124, 124, 124, 124, '\0'};
+
+  const char vertical_bar[2] = {'|', '\0'};
+
+
+  char **spaces[9]; //relacao jogador x elemento grafico
   int index = 0;
 
-  for (int i = 0; i < WIDTH; i++)
-  {
-    for (int j = 0; j < WIDTH; j++)
-    {
-      if (checkboard[i][j] == PLAYER1)
-      {
+  /*Relaciona cada jogada do tabuleiro ao respectivo
+  elemento gráfico */
+  for (int i = 0; i < WIDTH; i++){
+    for (int j = 0; j < WIDTH; j++){
+      if (checkboard[i][j] == PLAYER1 || checkboard[i][j] == COMPUTER){
         spaces[index] = x;
-      }else if (checkboard[i][j] == PLAYER2)
-      {
+      }
+      else if (checkboard[i][j] == PLAYER2){
         spaces[index] = o;
       }else{
         spaces[index] = empty;
@@ -128,131 +255,164 @@ void print_checkboard(){
 
       index++;
     }
-     
   }
-  
-  
-  int l = 0;
 
-  for (l = 0; l < 5; l++)
+  //Imprime o tabuleiro
+  for (int l = 0; l < 5; l++)
   {
-    printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n",spaces[0][l],vertical_bar,spaces[1][l],vertical_bar,spaces[2][l]);
+    printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[0][l], vertical_bar, spaces[1][l], vertical_bar, spaces[2][l]);
   }
-  printf("\t\t\t\t\t\t\t\t\t%s\n",horizontal_line);
+  printf("\t\t\t\t\t\t\t\t\t%s\n", horizontal_line);
 
-  l = 0;
-  for (l = 0; l < 5; l++)
+  for (int l = 0; l < 5; l++)
   {
-    printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n",spaces[3][l],vertical_bar,spaces[4][l],vertical_bar,spaces[5][l]);
+    printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[3][l], vertical_bar, spaces[4][l], vertical_bar, spaces[5][l]);
   }
 
-  printf("\t\t\t\t\t\t\t\t\t%s\n",horizontal_line);
+  printf("\t\t\t\t\t\t\t\t\t%s\n", horizontal_line);
 
-  l = 0;
-  for (l = 0; l < 5; l++)
+  for (int l = 0; l < 5; l++)
   {
-    printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n",spaces[6][l],vertical_bar,spaces[7][l],vertical_bar,spaces[8][l]);
+    printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[6][l], vertical_bar, spaces[7][l], vertical_bar, spaces[8][l]);
   }
-  
-  
-
-
-
 };
-void reset_board(){
 
-  for (int i = 0; i < WIDTH; i++)
-  {
-    for (int j = 0; j < WIDTH; j++)
-    {
+
+/*******************************************************************
+*  Função: reset_board
+* Reinicializa o tabuleiro. Seta todos os quadrantes com o valor -1
+*******************************************************************/
+void reset_board()
+{
+  for (int i = 0; i < WIDTH; i++){
+    for (int j = 0; j < WIDTH; j++){
       checkboard[i][j] = -1;
     }
-    
   }
 }
 
-
-int check_empty_space(int position[]){
+/*******************************************************************
+*  Função: check_empty_space
+* Verifica se o quadrante passado está vazio
+* position: vetor de inteiros com o quadrante escolhido (linha, coluna)
+* Return: 1 se o quadrante estiver vazio ou 
+*         0 se estiver ocupado
+*******************************************************************/
+int check_empty_space(int position[])
+{
   return (checkboard[position[0]][position[1]] == -1) ? 1 : 0;
-
 }
 
-int empty_spaces(){
+/*******************************************************************
+*  Função: empty_spaces
+* Verifica se existe algum quadrante vazio no tabuleiro
+* Return: 1 se o existe algum quadrante vazio ou 
+*         0 se todos estiverem ocupados
+*******************************************************************/
+int empty_spaces()
+{
 
   for (int i = 0; i < WIDTH; i++)
   {
     for (int j = 0; j < WIDTH; j++)
     {
-       if(checkboard[i][j]==-1){return 1;}
+      if (checkboard[i][j] == -1)
+      {
+        return 1;
+      }
     }
   }
-  
+
   return 0;
-
-
 }
 
+/*******************************************************************
+*  Função: computer_move
+* Seleciona de forma aleatória um quadrante vazio do tabuleiro
+* p: ponteiro inteiro que será utilizado para salvar o quadrante
+* (linha, coluna) selecionado
+*******************************************************************/
+void computer_move(int *p){
+  srand(time(0)); //defincao da seed do rand
+  do
+  {
+    p[0] = rand() % WIDTH;
+    p[1] = rand() % WIDTH;
 
+  } while (!check_empty_space(p));
+}
+
+/*******************************************************************
+*  Função: register_move
+* Registra a jogada passada no tabuleiro
+* player: identificação do autor da jogada
+* position: vetor de inteiros com o quadrante a
+* ser marcado (linha, coluna)
+*******************************************************************/
 void register_move(int player, int position[]){
-  
   checkboard[position[0]][position[1]] = player;
-  
 }
 
-// 00 01 02
-// 10 11 12
-// 20 21 22
-
-int check_winner(){
-  //checking rows
+/*******************************************************************
+*  Função: check_winner
+* Verifica, no tabuleiro atual, se existe algum vencedor da partida
+* Return: o identificador do vencedor da partida ou 
+*         -1 caso não exista um vencedor
+*******************************************************************/
+int check_winner()
+{
+  // verifica colunas
   for (int i = 0; i < WIDTH; i++){
     if ((checkboard[i][0] != -1) && (checkboard[i][0] == checkboard[i][1] && checkboard[i][1] == checkboard[i][2])){
       return checkboard[i][0];
     }
-    
   }
-  
-  //checking columns
+
+  //verifica linhas
   for (int i = 0; i < WIDTH; i++){
-    if ((checkboard[0][i] != -1) && (checkboard[0][i] == checkboard[1][i] && checkboard[1][i] == checkboard[2][i]))
-    {
+    if ((checkboard[0][i] != -1) && (checkboard[0][i] == checkboard[1][i] && checkboard[1][i] == checkboard[2][i])){
       return checkboard[0][i];
     }
-    
   }
 
-  //checking diagonals
-  if ((checkboard[1][1] != -1) && (
-    (checkboard[0][0] == checkboard[1][1] && checkboard[1][1] == checkboard[2][2]) ||
-    (checkboard[0][2] == checkboard[1][1] && checkboard[1][1] == checkboard[2][0])))
-  {
+  //verifica diagonais
+  if ((checkboard[1][1] != -1) && ((checkboard[0][0] == checkboard[1][1] && checkboard[1][1] == checkboard[2][2]) ||
+                                   (checkboard[0][2] == checkboard[1][1] && checkboard[1][1] == checkboard[2][0])))
+{
     return checkboard[1][1];
-    
   }
-   
-   return -1;
+
+  return -1;
 }
 
 
+// Driver do jogo
 int main(int argc, char const *argv[])
 {
-  int winner = tic_tac_toe_dual_player();
 
-  switch (winner)
+  int winner = -1;
+
+  print_title();
+
+  winner = tic_tac_toe_computer_player();
+
+  switch (winner) //identifica vencedor
   {
   case 0:
-    printf("Player 1 wins!");
+    printf("Computer wins!");
     break;
   case 1:
+    printf("Player 1 wins!");
+    break;
+  case 2:
     printf("Player 2 wins!");
     break;
-  default:
+  case -1:
     printf("It's a draw!");
     break;
+  default:
+    printf("Game finished!");
   }
 
-    
-  
   return 0;
 }
-
