@@ -23,9 +23,9 @@ Data da última modificação: 07/05/2024
 
 /**
  * função responsável pela leitura dos eventos do mouse e retornar um vetor com 3 posições
- * @param currentPos vetor de inteiro com 3 posições onde 0 e 1 são os eixos Y e X e 2 é o valor correspondente ao botão pressionado
- * @param newPos  vetor de inteiros com 3 posições onde 0 e 1 são as novas cordenadas Y e X e 2 é o valor correspondente ao botão pressionado
- * @return Inteiro que indica se a operação ocorreu be sucedida ou não, 0 caso erro e 1 caso sucesso
+ * currentPos: vetor de inteiro com 3 posições onde 0 e 1 são os eixos Y e X e 2 é o valor correspondente ao botão pressionado
+ * newPos:  vetor de inteiros com 3 posições onde 0 e 1 são as novas cordenadas Y e X e 2 é o valor correspondente ao botão pressionado
+ * Return: Inteiro que indica se a operação ocorreu be sucedida ou não, 0 caso erro e 1 caso sucesso
 */
 int readEvent(int currentPos[], int * newPos);
 
