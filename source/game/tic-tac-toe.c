@@ -13,6 +13,8 @@ Data da última modificação: 07/05/2024
 #include <stdlib.h>
 #include <unistd.h>
 #include <time.h>
+#include <pthread.h>
+#include "memory-access.c"
 
 
 #define COMPUTER 0 //identificacao do computador
@@ -51,6 +53,12 @@ int checkboard[WIDTH][WIDTH] = {{-1, -1, -1},
                                 {-1, -1, -1}, 
                                 {-1, -1, -1}};
 
+int button_pressed = -1; //id do botão pressionado na placa DE1-SoC
+int changed = 0; //usado para sincrinizar a leitura e utilização dos botões da placa
+
+pthread_mutex_t button_mutex;
+pthread_cond_t condIsChanged;
+
 
 /*******************************************************************
 *  Função: tic_tac_toe_dual_player
@@ -64,22 +72,28 @@ int checkboard[WIDTH][WIDTH] = {{-1, -1, -1},
 int tic_tac_toe_dual_player()
 {
   
-  int move[3] = {0};        //quadrante e confirmação de jogada
+  int position[3] = {1,1,-1};        //quadrante e confirmação de jogada
   int playingNow = PLAYER1, //de quem é a vez de jogar
       winner = -1,          //armazena a identificação do vencedor
-      finish = 0;           // partida finalizada externamente
   
   //Loop do jogo
-  while (!finish && empty_spaces() && winner == -1)
+  while (empty_spaces() && winner == -1)
   {
+    // Verificar solicitação de finalização
+    if(changed == 1 && button_pressed == 3){
+      pthread_mutex_lock(&button_mutex);
+      changed = 0;
+      pthread_mutex_unlock(&button_mutex);
+
+      return -2;
+    }
 
     system("clear");
     print_title();
     print_checkboard();
 
-   // Jogada do player da vez
-   // TODO
-
+    // Jogada do player da vez
+    //todo
 
     // Registrar jogada
     if (check_empty_space(move))
@@ -95,18 +109,14 @@ int tic_tac_toe_dual_player()
 
     
     winner = check_winner(); // Verificar vencedor
-    // Verificar finalização externa
-    //TODO
+    
   }
 
   system("clear");
   print_checkboard();
   
-  if (finish) //solicitacao realizada
-    return -2;
-
   return winner;
-};
+}
 
 /*******************************************************************
 *  Função: tic_tac_toe_single_player_easy
@@ -128,6 +138,11 @@ int tic_tac_toe_single_player_easy()
   //Loop do jogo
   while (!finish && empty_spaces() && winner == -1)
   {
+    // Verificar solicitação de finalização
+    if(button_pressed == 3){
+      return -2;
+    }
+
     system("clear");
     print_title();
     print_checkboard();
@@ -148,16 +163,10 @@ int tic_tac_toe_single_player_easy()
     playingNow = (playingNow == PLAYER2) ? COMPUTER : PLAYER2;
 
     winner = check_winner(); //verificar vencedor
-
-    //Verificar solicitação de encerramento
-    //TODO
   }
 
   system("clear");
   print_checkboard();
-
-  if (finish) //solicitacao realizada
-    return -2;
 
   return winner;
 }
@@ -385,34 +394,138 @@ int check_winner()
   return -1;
 }
 
+void* get_pressed_key_routine(){
+
+  volatile int *KEY_ptr; // endereco virtual para os botoes
+  int fd = -1; // usado para abrir /dev/mem
+  void *LW_virtual; // endereco fisico para light-weight bridge
+  int button;
+
+  /* Cria endereco de acesso virtual para FPGA light-weight bridge */
+  if ((fd = open_physical(fd)) == -1)
+    return (-1);
+
+  if (!(LW_virtual = map_physical(fd, LW_BRIDGE_BASE, LW_BRIDGE_SPAN)))
+      return (-1);
+  
+  //Seta o endereço virtual para a porta KEY
+  KEY_ptr = LW_virtual + KEY_BASE;
+
+  //Inicializa o registrador edgecapture
+  *(KEY_ptr + 3) = 0xF;
+
+  while(button_pressed != 3){
+    button = *(KEY_ptr + 3);
+    *(KEY_ptr + 3) = button; //limpa registrador
+
+    pthread_mutex_lock(&button_mutex);
+    if(button & 0x1){
+      button_pressed = 0;
+      changed = 1;
+    }else if(button & 0x2){
+      button_pressed = 1;
+      changed = 1;
+    }else if(button & 0x4){
+      button_pressed = 2;
+      changed = 1;
+    }else if(button & 0x8){
+      button_pressed = 3;
+      changed = 1;
+    }
+    pthread_mutex_unlock(&button_mutex);
+    pthread_cond_signal(&condIsChanged);
+  }
+
+  return NULL;
+}
+
+void* game_menu_routine(){
+
+  int winner = -100;
+  int option = -1;
+  
+  while(winner != -2){
+    system("clear");
+    print_title();
+    print_menu();
+
+
+    pthread_mutex_lock(&button_mutex);
+    while (!changed)
+    {
+      pthread_cond_wait(&condIsChanged,&button_mutex);
+    }
+    option = button_pressed;
+    changed = 0;
+    pthread_mutex_unlock(&button_mutex);
+
+
+    switch (option)
+    {
+    case 0:
+      winner = -2;
+      break;
+    case 1:
+      winner = tic_tac_toe_dual_player();
+      break;
+    case 2:
+      winner = tic_tac_toe_single_player_easy();
+      break;
+    case 3:
+      winner = tic_tac_toe_single_player_hard();
+      break; 
+    }
+
+    
+
+    switch (winner) //identifica vencedor
+    {
+    case 0:
+      printf("Computer wins!\n");
+      break;
+    case 1:
+      printf("Player 1 wins!\n");
+      break;
+    case 2:
+      printf("Player 2 wins!\n");
+      break;
+    case -1:
+      printf("It's a draw!\n");
+      break;
+    case -2:
+      system("clear");
+      printf("Game finished!\n");
+      return NULL;
+    }
+  }
+}
+
 
 // Driver do jogo
 int main(int argc, char const *argv[])
 {
 
-  int winner = -1;
+  pthread_t button_handler, game;
+  
+  pthread_mutex_init(&button_mutex, NULL);
+  pthread_cond_init(&condIsChanged, NULL);
 
-  print_title();
+  if(pthread_create(&button_handler, NULL, &read_edgecapture_reg, NULL) !=0)
+    perror("Failed to created thread");
 
-  winner = tic_tac_toe_computer_player();
+  if(pthread_create(&game, NULL, &game_menu_routine, NULL) !=0)
+    perror("Failed to created thread");
 
-  switch (winner) //identifica vencedor
-  {
-  case 0:
-    printf("Computer wins!");
-    break;
-  case 1:
-    printf("Player 1 wins!");
-    break;
-  case 2:
-    printf("Player 2 wins!");
-    break;
-  case -1:
-    printf("It's a draw!");
-    break;
-  default:
-    printf("Game finished!");
-  }
+  if(pthread_join(button_handler, NULL) !=0)
+    perror("Failed to join thread");
+
+  if(pthread_join(game, NULL) !=0)
+    perror("Failed to join thread");
+
+
+  pthread_mutex_destroy(&button_mutex);
+  pthread_cond_destroy(&condIsChanged);
 
   return 0;
+ 
 }
