@@ -510,7 +510,7 @@ int main(int argc, char const *argv[])
   pthread_mutex_init(&button_mutex, NULL);
   pthread_cond_init(&condIsChanged, NULL);
 
-  if(pthread_create(&button_handler, NULL, &read_edgecapture_reg, NULL) !=0)
+  if(pthread_create(&button_handler, NULL, &get_pressed_key_routine, NULL) !=0)
     perror("Failed to created thread");
 
   if(pthread_create(&game, NULL, &game_menu_routine, NULL) !=0)
