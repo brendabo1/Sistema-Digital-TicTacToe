@@ -205,7 +205,7 @@ void print_title()
 void print_menu()
 {
   printf("1. DUAL PLAYER\n2. SINGLE PLAYER (easy)\n3. SINGLE PLAYER (hard)");
-  printf("\nMode: ");
+  printf("\n\nSELECIONE SUA ESCOLHA PELOS BOTÕES DA PLACA\n")
 }
 
 /*******************************************************************
