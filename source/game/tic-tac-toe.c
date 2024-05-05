@@ -80,7 +80,7 @@ int tic_tac_toe_dual_player()
   while (empty_spaces() && winner == -1)
   {
     // Verificar solicitação de finalização
-    if(changed == 1 && button_pressed == 3){
+    if(changed == 1 && button_pressed == 0){
       pthread_mutex_lock(&button_mutex);
       changed = 0;
       pthread_mutex_unlock(&button_mutex);
@@ -139,7 +139,7 @@ int tic_tac_toe_single_player_easy()
   while (!finish && empty_spaces() && winner == -1)
   {
     // Verificar solicitação de finalização
-    if(button_pressed == 3){
+    if(button_pressed == 0){
       return -2;
     }
 
