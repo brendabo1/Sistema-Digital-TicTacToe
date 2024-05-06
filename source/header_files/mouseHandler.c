@@ -46,6 +46,7 @@ int getMouseEvent(int *data) {
                 data[TYPE] = ev.type;
                 data[CODE] = ev.code;
                 data[VALUE] = ev.value;
+                //printf("type = %d\tcode = %d\tvalue = %d\ncount x = %d\tcount y = %d\tcount click = %d\n", ev.type, ev.code, ev.value, count_to_x, count_to_y, count_click);
                 return SUCCESS;
 
         } 
@@ -97,6 +98,7 @@ int getMousePos(char * ev) {
                                         if (count_to_y == 7){
                                                 /*reset do contador e envio do evento capturado*/
                                                 count_to_y = 0;
+                                                count_to_x = 0;
                                                 *ev = UP;
                                                 return MOVE_EVENT;
                                         } 
@@ -111,6 +113,7 @@ int getMousePos(char * ev) {
                                         count_to_y -=1;
                                         if(count_to_y == -7){
                                                 count_to_y = 0;
+                                                count_to_x = 0;
 
                                                 *ev = DOWN;
                                                 return MOVE_EVENT;
@@ -130,6 +133,7 @@ int getMousePos(char * ev) {
                                 if (data[VALUE] < -6){
                                         count_to_x += 1;
                                         if (count_to_x == 7) {
+                                                count_to_y = 0;
                                                 count_to_x = 0;
                                                 *ev = LEFT;
                                                 return MOVE_EVENT;
@@ -140,6 +144,7 @@ int getMousePos(char * ev) {
                                 } else if (data[VALUE] > 6) {
                                         count_to_x -= 1;
                                         if(count_to_x == -7){
+                                                count_to_y = 0;
                                                 count_to_x = 0;
                                                 *ev = RIGHT;
                                                 return MOVE_EVENT;
@@ -160,12 +165,13 @@ int getMousePos(char * ev) {
 
                                 if (data[VALUE] == 272) { /* 272 valor do clique esquerco */
                                         count_click +=1 ;
-
                                         /*como a ocorrencia do evento de clique é duplicada usa se um contado para impedir o envio de eventos d*/
                                         if (count_click == 2) {
                                                 count_click = 0;
                                                 *ev = LEFT_CLICK;
                                                 return CLICK_EVENT;
+                                        } else {
+                                                return -1;
                                         }
 
                                 } else if (data[VALUE] == 273) { /* 273 valor do clique direito */
@@ -174,6 +180,8 @@ int getMousePos(char * ev) {
                                                 count_click = 0;
                                                 *ev = RIGHT_CLICK;
                                                 return CLICK_EVENT;
+                                        }else {
+                                                return -1;
                                         }
 
                                 } else if (data[VALUE] == 274) { /* 274  valor do clique do meio*/
@@ -182,6 +190,8 @@ int getMousePos(char * ev) {
                                                 count_click = 0;
                                                 *ev = MIDDLE_CLICK;
                                                 return CLICK_EVENT;
+                                        }else {
+                                                return -1;
                                         }
                                 } 
                                 /* caso haja leitura mas o contador não tenha chegado no valor de filtro, retorna -1 */
