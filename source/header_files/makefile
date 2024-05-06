@@ -1,11 +1,7 @@
-
-all: test
-
-test: main.o interface.o mouseHandler.o posTranslate.o
-	gcc -o teste main.o interface.o  mouseHandler.o posTranslate.o
-
-main.o: main.c interface.o mouseHandler.o posTranslate.o
-	gcc -c main.c interface.o mouseHandler.o posTranslate.o
+OBJ = ../game/tic-tac-toe.o interface.o
+all: interface
+interface: $(OBJ)
+$(CC) -o $@ $(OBJ)
 
 interface.o: interface.c interface.h mouseHandler.h posTranslate.h
 	gcc -c interface.c mouseHandler.h posTranslate.h
