@@ -507,9 +507,16 @@ void* get_mouse_coordinate(){
   int cord_x, cord_y, confirma;
 
   if(readEvent(currentpos, currentpos)){
+
     cord_x = currentpos[1];
     cord_y =currentpos[0];
     confirma = currentpos[2]; //confirma a escolha do quadrante
+
+    if (confrma == -1) {
+      //chama função de colorir a casa selecionada
+    } else if (confirma == 0){
+      //clique do botão esquerdo
+    }
   }
 
 }
