@@ -5,8 +5,6 @@
 <p>introdução</p>
 <h3>Requisitos</h3>
 <p>
-[The hard processor system (HPS), as shown in Figure 1, includes an ARM Cortex A9 dual-core processor. The A9
-dual-core processor features two 32-bit CPUs and associated subsystems that are implemented as hardware circuits in the Intel Cyclone V SoC chip]
   <ul>
     <li>O código deve ser escrito em linguagem C;</li>
     <li>O sistema só poderá utilizar os componentes disponíveis na placa.</li>
@@ -18,7 +16,13 @@ dual-core processor features two 32-bit CPUs and associated subsystems that are 
   <li>Camila</li>
   <li>Maike</li>
 </ul>
+<details open>
+<summary>Sumário</summary>
 
+* softwar
+* 2
+
+</details>
 
 <h2>Softwares Utilizados</h2>
 
