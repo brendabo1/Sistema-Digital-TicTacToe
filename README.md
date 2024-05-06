@@ -25,14 +25,29 @@
 </details>
 
 <h2>Softwares Utilizados</h2>
+<h3>Linguagem C</h3>
+<h3>Compilador GNU</h3>
+<h3>Nano</h3>
 
-<h2>Arquitetura do Computador utilizado nos testes*</h2>
+
+<h2>Arquitetura do Computador utilizado nos Testes</h2>
 <!-- 
 *Threads do botao com teoria dos leitores/escritores
 *Device drivers (parte da doc)
 -->
 <h3>Arquitetura da DE1-SoC 2</h3>
-<h3>Linux</h3>
-<h3>Testes</h3>
-<h2>Configuação do Ambeinte e Execução 3</h2>
+<h4>Memória</h4>
+<h3>Periféricos da Placa DE1-SoC Utilizados</h3>
+<h3>Dispositivos de Entrada e Saída Utilizados</h3>
+<h4>USB</h4>
+<h3>Drivers</h3>
+<!--Acho que nem precisa dessa seção. Não usamos drivers da placa-->
+<h2>O Jogo</h2>
+<h3>Interface do Usuário</h3>
+<h3>Algoritmos do jogo </h3>
+<h3>O Tabuleiro</h3>
+<h2>Solução Geral</h2>
+<h2>Testes</h2>
+
+<h2>Descrição de instalação, configuração de ambiente e execução</h2>
 
