@@ -14,7 +14,7 @@ Data da última modificação: 07/05/2024
 #include <unistd.h>
 #include <time.h>
 #include <pthread.h>
-//#include "memory-access.c"
+#include "memory-access.c"
 #include "../header_files/interface.h"
 
 
@@ -101,19 +101,19 @@ int translate_position(int mouse_position[]){
   //tradução do quadrante
     if(mouse_position[0] == 0 && mouse_position[1] == 0){
       space = 1;
-    }else if(mouse_position[0] == 1 && mouse_position[1] == 0){
-      space = 2;
-    }else if(mouse_position[0] == 2 && mouse_position[1] == 0){
-      space = 3;
     }else if(mouse_position[0] == 0 && mouse_position[1] == 1){
+      space = 2;
+    }else if(mouse_position[0] == 0 && mouse_position[1] == 2){
+      space = 3;
+    }else if(mouse_position[0] == 1 && mouse_position[1] == 0){
       space = 4;
     }else if(mouse_position[0] == 1 && mouse_position[1] == 1){
       space = 5;
-    }else if(mouse_position[0] == 2 && mouse_position[1] == 1){
-      space = 6;
-    }else if(mouse_position[0] == 0 && mouse_position[1] == 2){
-      space = 7;
     }else if(mouse_position[0] == 1 && mouse_position[1] == 2){
+      space = 6;
+    }else if(mouse_position[0] == 2 && mouse_position[1] == 0){
+      space = 7;
+    }else if(mouse_position[0] == 2 && mouse_position[1] == 1){
       space = 8;
     }else if(mouse_position[0] == 2 && mouse_position[1] == 2){
       space = 9;
@@ -157,10 +157,9 @@ int tic_tac_toe_dual_player()
       while(!newPos){
         pthread_cond_wait(&condNewPos,&mouse_mutex);
       }
-      for (int i = 0; i < 3; i++)
-      {
-        move[i] = position[i];
-      }
+      move[0] = position[CORD_X];
+      move[1] = position[CORD_Y];
+      move[2] = position[2];
       newPos = 0;
       pthread_mutex_unlock(&mouse_mutex);
       
@@ -227,9 +226,9 @@ int tic_tac_toe_single_player_easy()
         while(!newPos){
         pthread_cond_wait(&condNewPos,&mouse_mutex);
         }
-        for (int i = 0; i < 3; i++){
-          move[i] = position[i];
-        }
+        move[0] = position[CORD_X];
+        move[1] = position[CORD_Y];
+        move[2] = position[2];
         newPos = 0;
         pthread_mutex_unlock(&mouse_mutex);
         
