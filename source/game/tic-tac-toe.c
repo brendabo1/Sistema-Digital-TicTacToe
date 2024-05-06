@@ -15,6 +15,7 @@ Data da última modificação: 07/05/2024
 #include <time.h>
 #include <pthread.h>
 #include "memory-access.c"
+#include "../header_files/interface.h"
 
 
 #define COMPUTER 0 //identificacao do computador
@@ -501,14 +502,30 @@ void* game_menu_routine(){
 }
 
 
+void* get_mouse_coordinate(){
+  int currentpos[3] = {0,0,0};
+  int cord_x, cord_y, confirma;
+
+  if(readEvent(currentpos, currentpos)){
+    cord_x = currentpos[1];
+    cord_y =currentpos[0];
+    confirma = currentpos[2]; //confirma a escolha do quadrante
+  }
+
+}
+
+
 // Driver do jogo
 int main(int argc, char const *argv[])
 {
 
-  pthread_t button_handler, game;
+  pthread_t button_handler, game, mouse;
   
   pthread_mutex_init(&button_mutex, NULL);
   pthread_cond_init(&condIsChanged, NULL);
+
+  //if(pthread_create(&mouse, NULL, &, NULL) !=0)
+    //perror("Failed to created thread");
 
   if(pthread_create(&button_handler, NULL, &get_pressed_key_routine, NULL) !=0)
     perror("Failed to created thread");
