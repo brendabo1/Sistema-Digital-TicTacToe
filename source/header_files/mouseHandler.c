@@ -22,6 +22,15 @@ int count_click = 0;
 //alterar o nome
 
 
+int MOUSE_open(FILE **path) {
+        *path = 0;
+        *path = fopen(MOUSE, B_READONLY);
+}
+
+int MOUSE_close(FILE *path) {
+        fclose(path);
+}
+
 /** 
  * 
  * faz a leitura do mouse e atribui a um vetor os valores referentes ao tipo, codigo e valor do evento
@@ -33,16 +42,13 @@ int count_click = 0;
  *      -> 1 se bem sucedida
  *      -> 0 se houve algum erro
 */
-int getMouseEvent(int *data) {
+int getMouseEvent(int *data, FILE *path) {
 
         struct input_event ev; /* struct que armazena um evento de entrada do mouse */
 
-        FILE *pathFile; /* ponteiro para o arqivo do mouse */
-
-        /* abre o arquivo do mouse no modo leitura binaria */
-        pathFile = fopen(MOUSE, B_READONLY);
+        
         /* caso não haja erro no momento da leitura atribui ao vetor de dados os dados armazenados na struct e retorna 1*/
-        if (fread(&ev, sizeof(ev), 1, pathFile)) {
+        if (fread(&ev, sizeof(ev), 1, path)) {
                 data[TYPE] = ev.type;
                 data[CODE] = ev.code;
                 data[VALUE] = ev.value;
@@ -58,7 +64,7 @@ int getMouseEvent(int *data) {
         }
 
         /* realiza o fechamendo do arquivo */
-        fclose(pathFile);
+        
 }
 
 
@@ -78,12 +84,19 @@ int getMouseEvent(int *data) {
  *      -> 1 caso haja um evento de movimentação
  *      -> 2 caso haja um evento de clique
 */
-int getMousePos(char * ev) {
+int getMousePos(char * ev, FILE* path) {
+
+        
 
         int data[3]; /* vetor para guardar o retorno da função de leitura do mouse */
+        //FILE *pathFile; /* ponteiro para o arqivo do mouse */
+
+        /* abre o arquivo do mouse no modo leitura binaria */
+
+        //MOUSE_open(&pathFile);
 
         /*caso mão haja nenhum erro*/
-        if (getMouseEvent(data)) {
+        if (getMouseEvent(data,path)) {
 
                         /*caso seja um evento do tipo movimentação e seja vertical*/
                         if(data[TYPE] == 2 && data[CODE] == 1){
@@ -95,11 +108,12 @@ int getMousePos(char * ev) {
                                         /* para limitar a quantidade de eventos enviados a interaface externa usa-se um contador
                                         que é incrementado a cada detecção de um evento valido e dentro da sensibilidade definida
                                         */
-                                        if (count_to_y == 7){
+                                        if (count_to_y >= 7){
                                                 /*reset do contador e envio do evento capturado*/
                                                 count_to_y = 0;
                                                 count_to_x = 0;
                                                 *ev = UP;
+                                                //fclose(pathFile);
                                                 return MOVE_EVENT;
                                         } 
                                         /*caso seja detecdtado um evento dentro da sensibilidade porem o contador ainda não tenha chegado
@@ -111,11 +125,12 @@ int getMousePos(char * ev) {
 
                                 } else if (data[VALUE] > 6) {
                                         count_to_y -=1;
-                                        if(count_to_y == -7){
+                                        if(count_to_y <= -7){
                                                 count_to_y = 0;
                                                 count_to_x = 0;
 
                                                 *ev = DOWN;
+                                               // fclose(pathFile);
                                                 return MOVE_EVENT;
                                         } else {
                                                 return -1;
@@ -132,10 +147,11 @@ int getMousePos(char * ev) {
 
                                 if (data[VALUE] < -6){
                                         count_to_x += 1;
-                                        if (count_to_x == 7) {
+                                        if (count_to_x >= 7) {
                                                 count_to_y = 0;
                                                 count_to_x = 0;
                                                 *ev = LEFT;
+                                               // fclose(pathFile);
                                                 return MOVE_EVENT;
                                         } else {
                                                 return -1;
@@ -143,10 +159,11 @@ int getMousePos(char * ev) {
 
                                 } else if (data[VALUE] > 6) {
                                         count_to_x -= 1;
-                                        if(count_to_x == -7){
+                                        if(count_to_x <= -7){
                                                 count_to_y = 0;
                                                 count_to_x = 0;
                                                 *ev = RIGHT;
+                                               // fclose(pathFile);
                                                 return MOVE_EVENT;
                                         }
                                         else {
@@ -166,9 +183,10 @@ int getMousePos(char * ev) {
                                 if (data[VALUE] == 272) { /* 272 valor do clique esquerco */
                                         count_click +=1 ;
                                         /*como a ocorrencia do evento de clique é duplicada usa se um contado para impedir o envio de eventos d*/
-                                        if (count_click == 2) {
+                                        if (count_click >= 2) {
                                                 count_click = 0;
                                                 *ev = LEFT_CLICK;
+                                                //fclose(pathFile);
                                                 return CLICK_EVENT;
                                         } else {
                                                 return -1;
@@ -176,9 +194,10 @@ int getMousePos(char * ev) {
 
                                 } else if (data[VALUE] == 273) { /* 273 valor do clique direito */
                                         count_click +=1 ;
-                                        if (count_click == 2) {
+                                        if (count_click <= 2) {
                                                 count_click = 0;
                                                 *ev = RIGHT_CLICK;
+                                                //fclose(pathFile);
                                                 return CLICK_EVENT;
                                         }else {
                                                 return -1;
@@ -189,6 +208,7 @@ int getMousePos(char * ev) {
                                         if (count_click == 2) {
                                                 count_click = 0;
                                                 *ev = MIDDLE_CLICK;
+                                                //fclose(pathFile);
                                                 return CLICK_EVENT;
                                         }else {
                                                 return -1;
@@ -201,7 +221,7 @@ int getMousePos(char * ev) {
                         }
                         
                 } else { /* caso haja um erro, retorna 0*/
-
+                        //fclose(pathFile);
                         return ERROR;
                 }
 }

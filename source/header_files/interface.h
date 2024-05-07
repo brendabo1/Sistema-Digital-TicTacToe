@@ -15,8 +15,8 @@ Data da última modificação: 07/05/2024
 /* Definição de constantes */
 
 #define CLICK 2     /* posição do vetor relativa ao dado de clique*/
-#define CORD_X 1    /* posição do vetor relativa a cordenada X */
-#define CORD_Y 0    /* posição do vetor relativa a cordenado Y */
+#define CORD_X 0    /* posição do vetor relativa a cordenada X */
+#define CORD_Y 1    /* posição do vetor relativa a cordenado Y */
 
 
 /* cabeçalhos de funções */
