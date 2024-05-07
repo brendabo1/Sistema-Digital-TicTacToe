@@ -1,16 +1,13 @@
-OBJ = ../game/tic-tac-toe.o interface.o
-all: interface
-interface: $(OBJ)
-$(CC) -o $@ $(OBJ)
+all: exec
 
-interface.o: interface.c interface.h mouseHandler.h posTranslate.h
-	gcc -c interface.c mouseHandler.h posTranslate.h
+exec: arquivo.c interface.o mouseHandler.o posTranslate.o
+	gcc -o exec arquivo.c interface.o mouseHandler.o posTranslate.o -pthread -std=c99
+
+interface.o: interface.c interface.h
+	gcc -c interface.c -std=c99
 
 mouseHandler.o: mouseHandler.c mouseHandler.h
-	gcc -c mouseHandler.c
+	gcc -c mouseHandler.c -std=c99
 
 posTranslate.o: posTranslate.c posTranslate.h
-	gcc -c posTranslate.c
-
-clean:
-	rm -f *.o
+	gcc -c posTranslate.c -std=c99
