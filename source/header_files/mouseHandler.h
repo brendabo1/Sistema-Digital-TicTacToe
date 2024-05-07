@@ -16,7 +16,7 @@ Data da última modificação: 07/05/2024
 
 /* Definição de constantes*/
 
-#define MOUSE   "/dev/input/event0"  /* caminho do mouse*/
+#define MOUSE   "/dev/input/event17"  /* caminho do mouse*/
 
 #define EVENT_SIZE sizeof(struct input_event) /* quantidade de bits de um evento do mouse*/
 
@@ -54,6 +54,9 @@ struct input_event {
 };
 
  
+int MOUSE_open(FILE **path);
+int MOUSE_close(FILE *path);
+
 /** 
  * 
  * faz a leitura do mouse e atribui a um vetor os valores referentes ao tipo, codigo e valor do evento
@@ -65,7 +68,7 @@ struct input_event {
  *      -> 1 se bem sucedida
  *      -> 0 se houve algum erro
 */
-int getMouseEvent(int *data);
+int getMouseEvent(int *data, FILE *path);
 
 /**
  * função responsavel por converter a leitura dos valores do  mouse em um dado mais facil de trabalhar
@@ -83,7 +86,7 @@ int getMouseEvent(int *data);
  *      -> 1 caso haja um evento de movimentação
  *      -> 2 caso haja um evento de clique
 */
-int getMousePos(char * ev);
+int getMousePos(char * ev, FILE* pathfile);
 
 
 #endif 

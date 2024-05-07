@@ -23,11 +23,14 @@ int readEvent(int currentPos[], int * newPos){
 
     char event = ' '; /* variavel que guarda que guarda o evento realizado pelo mouse */
     int response = 0; /* variavel responsavel por armazenar o retorno da função de leitura do mouse pra identificação de tipo de evento */
+    FILE *path = 0;
+    MOUSE_open(&path);
 
     /* Enquanto não houver um evento valido de mouse, o resto das operações ficam em espera ocupada aguardando um dado valido */
     do {
-        response = getMousePos(&event);
+        response = getMousePos(&event, path);
     } while (response == -1);
+    MOUSE_close(path);
     
     
     /* Verifica se o evento é um evento de movimento ou de click */
