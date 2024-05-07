@@ -214,22 +214,22 @@ void print_menu()
 * Imprime o tabuleiro do jogo no estado atual.
 *******************************************************************/
 
-void print_checkboard()
+void print_checkboard(int cord_x, int cord_y)
 {
   /* Elementos gráficos */
   char *x[5] = {
       "       \0",
-      " ** ** \0",
-      "  ***  \0",
-      "  ***  \0",
-      " ** ** \0"};
+      " * * \0",
+      "  *  \0",
+      "  *  \0",
+      " * * \0"};
 
   char *o[5] = {
       "       \0",
-      "  ***  \0",
-      " ** ** \0",
-      " ** ** \0",
-      "  ***  \0"};
+      "  *  \0",
+      " * * \0",
+      " * * \0",
+      "  *  \0"};
 
   char *empty[5] = {
       "       \0",
@@ -252,12 +252,12 @@ void print_checkboard()
 
   /*Relaciona cada jogada do tabuleiro ao respectivo
   elemento gráfico */
-  for (int i = 0; i < WIDTH; i++){
-    for (int j = 0; j < WIDTH; j++){
-      if (checkboard[i][j] == PLAYER1 || checkboard[i][j] == COMPUTER){
+  for (int i = 0; i < 3; i++){
+    for (int j = 0; j < 3; j++){
+      if (checkboard[i][j] == 0 || checkboard[i][j] == 1){
         spaces[index] = x;
       }
-      else if (checkboard[i][j] == PLAYER2){
+      else if (checkboard[i][j] == 2){
         spaces[index] = o;
       }else{
         spaces[index] = empty;
@@ -267,25 +267,116 @@ void print_checkboard()
     }
   }
 
+
   //Imprime o tabuleiro
-  for (int l = 0; l < 5; l++)
-  {
-    printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[0][l], vertical_bar, spaces[1][l], vertical_bar, spaces[2][l]);
-  }
-  printf("\t\t\t\t\t\t\t\t\t%s\n", horizontal_line);
 
-  for (int l = 0; l < 5; l++)
+  switch (cord_x)
   {
-    printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[3][l], vertical_bar, spaces[4][l], vertical_bar, spaces[5][l]);
-  }
+  //se for na primeira linha
+  case 0:
+    if(cord_y == 0) {
+      for (int l = 0; l < 5; l++){
+        printf("\t\t\t\t\t\t\t\t\t\e[46m%s\e[0m%s%s%s%s\n", spaces[0][l], vertical_bar, spaces[1][l], vertical_bar, spaces[2][l]);
+      }
+    } else if (cord_y == 1) {
+      for (int l = 0; l < 5; l++) {
+        printf("\t\t\t\t\t\t\t\t\t%s%s\e[46m%s\e[0m%s%s\n", spaces[0][l], vertical_bar, spaces[1][l], vertical_bar, spaces[2][l]);
+      }
+    } else {
+      for (int l = 0; l < 5; l++) {
+        printf("\t\t\t\t\t\t\t\t\t%s%s%s%s\e[46m%s\e[0m\n", spaces[0][l], vertical_bar, spaces[1][l], vertical_bar, spaces[2][l]);
+      }
+    }
+    printf("\t\t\t\t\t\t\t\t\t%s\n", horizontal_line);
 
-  printf("\t\t\t\t\t\t\t\t\t%s\n", horizontal_line);
+    for (int l = 0; l < 5; l++)
+    {
+      printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[3][l], vertical_bar, spaces[4][l], vertical_bar, spaces[5][l]);
+    }
 
-  for (int l = 0; l < 5; l++)
-  {
-    printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[6][l], vertical_bar, spaces[7][l], vertical_bar, spaces[8][l]);
+    printf("\t\t\t\t\t\t\t\t\t%s\n", horizontal_line);
+
+    for (int l = 0; l < 5; l++)
+    {
+      printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[6][l], vertical_bar, spaces[7][l], vertical_bar, spaces[8][l]);
+    }
+    break;
+
+  //se for na segunda linha
+  case 1:
+    for (int l = 0; l < 5; l++)
+    {
+      printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[0][l], vertical_bar, spaces[1][l], vertical_bar, spaces[2][l]);
+    }
+    printf("\t\t\t\t\t\t\t\t\t%s\n", horizontal_line);
+
+    if(cord_y == 0) {
+      for (int l = 0; l < 5; l++)
+      {
+        printf("\t\t\t\t\t\t\t\t\t\e[46m%s\e[0m%s%s%s%s\n", spaces[3][l], vertical_bar, spaces[4][l], vertical_bar, spaces[5][l]);
+      }
+
+    } else if (cord_y == 1) {
+      for (int l = 0; l < 5; l++)
+      {
+        printf("\t\t\t\t\t\t\t\t\t%s%s\e[46m%s\e[0m%s%s\n", spaces[3][l], vertical_bar, spaces[4][l], vertical_bar, spaces[5][l]);
+      }
+
+    } else {
+      for (int l = 0; l < 5; l++)
+      {
+        printf("\t\t\t\t\t\t\t\t\t%s%s%s%s\e[46m%s\e[0m\n", spaces[3][l], vertical_bar, spaces[4][l], vertical_bar, spaces[5][l]);
+      }
+      
+    }
+    printf("\t\t\t\t\t\t\t\t\t%s\n", horizontal_line);
+
+    for (int l = 0; l < 5; l++)
+    {
+      printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[6][l], vertical_bar, spaces[7][l], vertical_bar, spaces[8][l]);
+    }
+
+    break;
+
+  //se for na terceira linha
+  case 2:
+    for (int l = 0; l < 5; l++)
+    {
+      printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[0][l], vertical_bar, spaces[1][l], vertical_bar, spaces[2][l]);
+    }
+    printf("\t\t\t\t\t\t\t\t\t%s\n", horizontal_line);
+
+    for (int l = 0; l < 5; l++)
+    {
+      printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[3][l], vertical_bar, spaces[4][l], vertical_bar, spaces[5][l]);
+    }
+
+    printf("\t\t\t\t\t\t\t\t\t%s\n", horizontal_line);
+
+
+    if(cord_y == 0) {
+      for (int l = 0; l < 5; l++)
+      {
+        printf("\t\t\t\t\t\t\t\t\t\e[46m%s\e[0m%s%s%s%s\n", spaces[6][l], vertical_bar, spaces[7][l], vertical_bar, spaces[8][l]);
+      }
+
+    } else if (cord_y == 1) {
+      for (int l = 0; l < 5; l++)
+      {
+        printf("\t\t\t\t\t\t\t\t\t%s%s\e[46m%s\e[0m%s%s\n", spaces[6][l], vertical_bar, spaces[7][l], vertical_bar, spaces[8][l]);
+      }
+
+    } else {
+      for (int l = 0; l < 5; l++)
+      {
+        printf("\t\t\t\t\t\t\t\t\t%s%s%s%s\e[46m%s\e[0m\n", spaces[6][l], vertical_bar, spaces[7][l], vertical_bar, spaces[8][l]);
+      }
+      
+    }
+
+    break;
   }
-};
+};0
 
 
 /*******************************************************************
