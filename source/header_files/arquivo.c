@@ -238,19 +238,25 @@ void *readMouse(void *arg) {
 
 int main() {
 
-  int i =0;
-  int vitoria;
-  int pos[2] = {0,0};
-    pthread_t threadPrint, threadMouse;
+  int i =0; //jogador da vez
+  int vitoria;//quem venceu
+  int pos[2] = {0,0}; //vetor da ultima posição
+  pthread_t threadPrint, threadMouse; //threads
 
   while(1){
     // Criação das threads
     pthread_create(&threadPrint, NULL, printBoard, NULL);
     pthread_create(&threadMouse, NULL, readMouse, NULL);
+
+    //verificação de condição de clique
     if(vetor[CLICK] == 0) {
       pos[CORD_X] = vetor[CORD_X];
       pos[CORD_Y] = vetor[CORD_Y];
+
+      //verifica se é um espaço valido para jogada
       if(check_empty_space(pos)){
+        
+        //se sim, registra a jogada
         register_move(i,pos);
         if (i == 0) {
           i = 2;
@@ -258,6 +264,8 @@ int main() {
           i = 0;
         }
         vitoria =check_winner() ;
+
+        //verifica se alguem ganhou
         if( vitoria!= -1) {
           system("clear");
           print_checkboard(vetor[CORD_X], vetor[CORD_Y]);
