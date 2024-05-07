@@ -56,17 +56,17 @@ void print_checkboard(int cord_x, int cord_y)
   /* Elementos gráficos */
   char *x[5] = {
       "       \0",
-      " * * \0",
-      "  *  \0",
-      "  *  \0",
-      " * * \0"};
+      "  * *  \0",
+      "   *   \0",
+      "   *   \0",
+      "  * *  \0"};
 
   char *o[5] = {
       "       \0",
-      "  *  \0",
-      " * * \0",
-      " * * \0",
-      "  *  \0"};
+      "   *   \0",
+      "  * *  \0",
+      "  * *  \0",
+      "   *   \0"};
 
   char *empty[5] = {
       "       \0",
@@ -210,10 +210,45 @@ void print_checkboard(int cord_x, int cord_y)
       }
       
     }
+    break;
 
+  default:  
+    for (int l = 0; l < 5; l++)
+    {
+      printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[0][l], vertical_bar, spaces[1][l], vertical_bar, spaces[2][l]);
+    }
+    printf("\t\t\t\t\t\t\t\t\t%s\n", horizontal_line);
+
+    for (int l = 0; l < 5; l++)
+    {
+      printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[3][l], vertical_bar, spaces[4][l], vertical_bar, spaces[5][l]);
+    }
+
+    printf("\t\t\t\t\t\t\t\t\t%s\n", horizontal_line);
+    for (int l = 0; l < 5; l++)
+    {
+      printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[6][l], vertical_bar, spaces[7][l], vertical_bar, spaces[8][l]);
+    }
     break;
   }
 };
+
+int empty_spaces()
+{
+
+  for (int i = 0; i < 3; i++)
+  {
+    for (int j = 0; j < 3; j++)
+    {
+      if (checkboard[i][j] == -1)
+      {
+        return 1;
+      }
+    }
+  }
+
+  return 0;
+}
 
 // Função para imprimir o tabuleiro
 void *printBoard(void *arg) {
@@ -268,8 +303,14 @@ int main() {
         //verifica se alguem ganhou
         if( vitoria!= -1) {
           system("clear");
-          print_checkboard(vetor[CORD_X], vetor[CORD_Y]);
+          print_checkboard(-1, -1);
           printf("jogador %d venceu\n", vitoria);
+          break;
+        } else if (!empty_spaces()) {
+          //verifica se ainda tem espaço para jogar
+          system("clear");
+          print_checkboard(-1, -1);
+          printf("empate\n");
           break;
         }
       }
