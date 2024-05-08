@@ -94,7 +94,7 @@ Nesta seção, exploraremos o dispositivo embarcado utilizado bem como os compon
 -->
 
 <h4>Memória</h4>
-<h3>Dispositivos de Entrada e Saída Utilizados</h3>
+<h3>Dispositivos de Entrada e Saída: descrição e manipulação</h3>
 Como indicado na seção anterior, o kit de desenvolvimento DE1-SoC possui diversos periféricos integrados. Para este projeto, os componentes selecionados foram os botões do tipo *push* e a portas USB *host*, ambos destacados na figura abaixo. Associado a estes dispositivos, utilizou-se também um mouse USB. Segue abaixo a descrição destes componentes, bem como os procedimentos adotados para suas manipulações.
 <figure>  
   <img src="docs/images/perifericos-usados.png">
@@ -103,7 +103,9 @@ Como indicado na seção anterior, o kit de desenvolvimento DE1-SoC possui diver
     <p align="center">Fonte: FPGAcademy.org</p>
   </figcaption>
 </figure>
-<h4>Mouse</h4>
+<h4>Botões do tipo <i>push</i></h4>
+<h4>Porta USB <i>host</i></h4>
+<h4>Mouse USB</h4>
 <!--Processo de leitura do arquivo dev/input, decodificação da struct, deslocamento relativo da posição-->
 O desenvolvimento do biblioteca de leitura do mouse foi realizado com base na documentação do kernel do Linux, além de analises e testes realizados em laboratório com os documentos e informações.
 Segundo a própria documentação do kernel, dispositivos de entrada e saida USBs se comunicam e são reconhecido como arquivos do tipo Dispositivo que ficam dentro da pasta /dev/input, cada dispositivo tem suas entradas e saidas, mas no geral os dipositivos armazenam um campo onde ficam localizadas as informações de instante em que um evento foi realizado, qual foi o tipo de evento, qual o código do evento e qual o valor do evento.
@@ -126,8 +128,8 @@ Na realização dessas analises se constatou outro fato, seria necessário defin
 Outro problema foi notado durante a fase de experimentação é que, ao realizar a leitura de um evento o sinal é perpetuado por alguns instantes, fazendo com que a leitura do evento seja replicada por um determinado período de tempo. Para solucionar esse problema utilizou-se um contador, onde sempre que um evento for realizado é incrementado em um, e que ao chegar ao valor de 7 retorna que ocorreu um evento de movimentação e em qual sentido, sendo eles: cima, baixo, esquerda e direita.
 Foi adicionado a biblioteca outras 2 funções, uma que realiza a abertura do arquivo do mouse e uma que realiza o do mesmo fechamento.
 
-<h4>Botões do tipo <i>push</i></h4>
-<h4>Porta USB <i>host</i></h4>
+
+
 <h2>O Jogo</h2>
 <h3>Interface do Usuário</h3>
 <h3>Algoritmos do jogo </h3>
