@@ -16,7 +16,7 @@ Data da última modificação: 07/05/2024
 
 /* Definição de constantes*/
 
-#define MOUSE   "/dev/input/event17"  /* caminho do mouse*/
+#define MOUSE   "/dev/input/event0"  /* caminho do mouse*/
 
 #define EVENT_SIZE sizeof(struct input_event) /* quantidade de bits de um evento do mouse*/
 
@@ -53,8 +53,17 @@ struct input_event {
     unsigned int value;
 };
 
- 
+/**
+ * realiza a abertura do arquivo
+ * path: ponteiro para a variavel que vai armazenar a variavel o ponteiro do mouse 
+*/
 int MOUSE_open(FILE **path);
+
+
+/**
+ * faz o fechamento do arquivo do mouse
+ * path: ponteiro para o arquivo do mouse
+*/
 int MOUSE_close(FILE *path);
 
 /** 

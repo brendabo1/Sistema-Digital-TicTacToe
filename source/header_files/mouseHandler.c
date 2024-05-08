@@ -102,7 +102,7 @@ int getMousePos(char * ev, FILE* path) {
                         if(data[TYPE] == 2 && data[CODE] == 1){
 
                                 /* filtragem de sensibilidade na leitura */
-                                if (data[VALUE] < -6){
+                                if (data[VALUE] < -3){
                                         count_to_y +=1;
 
                                         /* para limitar a quantidade de eventos enviados a interaface externa usa-se um contador
@@ -123,7 +123,7 @@ int getMousePos(char * ev, FILE* path) {
                                         }
                                         
 
-                                } else if (data[VALUE] > 6) {
+                                } else if (data[VALUE] > 3) {
                                         count_to_y -=1;
                                         if(count_to_y <= -7){
                                                 count_to_y = 0;
@@ -145,7 +145,7 @@ int getMousePos(char * ev, FILE* path) {
                         /* caso seja um evento do movimentação e seja no eixo horizontal */
                         else  if (data[TYPE] == 2 && data[CODE] == 0) {
 
-                                if (data[VALUE] < -6){
+                                if (data[VALUE] < -3){
                                         count_to_x += 1;
                                         if (count_to_x >= 7) {
                                                 count_to_y = 0;
@@ -157,7 +157,7 @@ int getMousePos(char * ev, FILE* path) {
                                                 return -1;
                                         }
 
-                                } else if (data[VALUE] > 6) {
+                                } else if (data[VALUE] > 3) {
                                         count_to_x -= 1;
                                         if(count_to_x <= -7){
                                                 count_to_y = 0;
