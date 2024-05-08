@@ -3,48 +3,53 @@
 
 <h2>Sobre</h2>
 <p>
-Nos últimos anos, os jogos digitais emergiram como uma forma de entretenimento profundamente influente e culturalmente significativa. Desde os primórdios dos jogos de computador e consoles de videogame até a era contemporânea dos jogos móveis e realidade virtual, a indústria de jogos digitais tem evoluído constantemente. Entretanto, os jogos digitais clássicos representam os pilares fundamentais da indústria, transcendendo fronteiras geográficas e geracionais. Esses jogos clássicos não apenas resistiram ao teste do tempo, mas também continuam a ser celebrados como marcos históricos que ajudaram a moldar o meio dos jogos digitais como o conhecemos hoje.
+Nos últimos anos, os jogos digitais emergiram como uma forma de entretenimento profundamente influente e culturalmente significativa. Desde os primórdios dos jogos de computador e consoles de videogame até a era contemporânea dos jogos móveis e realidade virtual, a indústria de jogos digitais tem evoluído constantemente. Contudo, é importante o papel dos jogos digitais clássicos, que representam os pilares fundamentais da indústria, transcendendo fronteiras geográficas e geracionais. 
 
-Desse modo, este projeto tem como intuito desenvolver um console que implemente uma versão do clássico jogo da velha ou <i>tic-tac-toe</i> como Problema 1 do componente curricular TEC499 Sistemas Digitais. Para isso, é utilizado o Kit de desenvolvimento DE1-SoC para executar o sistema em uma interface em modo texto, que possa ser visualizada via terminal.
+Esses clássicos não apenas resistiram ao teste do tempo, mas também continuam a ser celebrados como marcos históricos que ajudaram a moldar o meio dos jogos digitais como o conhecemos hoje. Um desses emblemáticos passatempo é o Jogo Da Velha ou <i>Tic-Tac-Toe</i> que, apesar da sua origem remontar há mais de 3.500 anos no antigo Egito, e com sua dinâmica simples é um dos jogos mais populares do mundo. 
 
-Os requisitos
-<!--Neste contexto dinâmico, explorar os jogos digitais não apenas como formas de entretenimento, mas também como expressões artísticas, ferramentas educacionais e plataformas sociais, revela a diversidade e o potencial impacto dessa forma de mídia na sociedade contemporânea.-->
-O jogo deve ser executado em uma interface em modo texto, que possa ser visualizada via terminal. O jogo deve permitir a interação de dois jogadores, de forma que a escolha da posição de marcação no tabuleiro em cada jogada (assim como a confirmação da jogada) deva ser captada por um mouse conectado a uma das portas USB existentes no Kit de desenvolvimento DE1-SoC. Para acessar e controlar o jogo (iniciar, pausar, continuar, etc.) o usuário pode utilizar os botões e chaves disponíveis na placa. Os LEDs e displays 7-segmentos também podem ser utilizados para representação de outras informações, caso necessário. 
+Dessa maneira, este projeto tem como intuito desenvolver um console que implemente uma versão do clássico do Jogo Da Velha como Problema 1 do componente curricular TEC499 Sistemas Digitais. Para executar o sistema, o Kit de desenvolvimento DE1-SoC é utilizado provendo uma interface aos jogadores para inicar uma partida acionando um botão e preencher o tabuleiro alternadamente através do mouse USB até que um empate ou uma vitória ocorram. As soluções, os softwares e dispositivos utilizadas no desenvolvimento serão abordadas nas seções subsequentes.
 
-Este projeto tem o intuito de desenvolver um jogo inspirado no Breakout. É utilizada a placa FPGA DE1-SoC para executar o sistema e disponibilizar a interface de controle ao usuário. Um acelerômetro embutido na placa permite captar a movimentação pretendida pelo usuário. Botões são utilizados para executar comandos no jogo. E os dados de imagem são transmitidos por um cabo VGA para um monitor CRT, sendo ele, o dispositivo que fará a exibição das telas ao usuário.
-
-Os requisitos para elaboração do sistema são apresentados a seguir:
-
-O código carregado na DE1-SoC deve ser feito em linguagem C;
-Um acelerômetro deve captar a movimentação feita na placa para alterar a posição da barra que irá colidir com a bola;
-Os botões devem ser utilizados para executar comandos no jogo;
-Os dados de imagem devem ser transmitidos de um cabo VGA para um monitor CRT.
-
-</p>
 <h3>Requisitos</h3>
-<p>
-  <ul>
-    <li>O código deve ser escrito em linguagem C;</li>
-    <li>O sistema só poderá utilizar os componentes disponíveis na placa.</li>
-  </ul>
-</p>
+
+A solução deve atender às condições e aos requisitos predetermminados, de modo que o jogo deve:
+<ul>
+  <li>Ser executado em uma interface em modo texto, que possa ser visualizada via terminal</li>
+  <li>Permitir a interação de dois jogadores</li>
+  <li>Captar a posição de marcação da jogada no tabuleiro, assim como a confirmação da ação, por meio de um mouse conectado a uma das portas USB da placa</li>
+  <li>Utilizar os botões e chaves disponíveis na placa para iniciar, terminar e demais controles.</li>
+  <li>Ter seu código escrito em linguagem C;</li>
+  <li>Só poderá utilizar os componentes disponíveis na placa DE1-SoC.</li>
+</ul>
+O jogo deve permitir a interação de dois jogadores, de forma que a escolha da posição de marcação no tabuleiro em cada jogada (assim como a confirmação da jogada) deva ser captada por um mouse conectado a uma das portas USB existentes no Kit de desenvolvimento DE1-SoC. Para acessar e controlar o jogo (iniciar, pausar, continuar, etc.) o usuário pode utilizar os botões e chaves disponíveis na placa. Os LEDs e displays 7-segmentos também podem ser utilizados para representação de outras informações, caso necessário. 
+
+<!--Neste contexto dinâmico, explorar os jogos digitais não apenas como formas de entretenimento, mas também como expressões artísticas, ferramentas educacionais e plataformas sociais, revela a diversidade e o potencial impacto dessa forma de mídia na sociedade contemporânea.-->
+
 <h2>Equipe</h2>
 <ul>
-  <li>Brenda</li>
+  <li>Brenda Barbosa</li>
   <li>Camila</li>
   <li>Maike</li>
 </ul>
+<!-- Sumário pra configurar depois
 <details open>
-<summary>Sumário</summary>
-
-* softwar
-* 2
-
+  <summary>Sumário</summary>
+  <ol>
+    <li>xkmx</li>
+    <li>
+      <ol type="1">
+        <li>nlsc</li>
+        <li>m sx</li>
+      </ol>
+  </li>
+  </ol>
 </details>
+-->
+
 
 <h2>Softwares Utilizados</h2>
 <h3>Linguagem C</h3>
 <h3>Compilador GNU</h3>
+<h3>VS Code</h3>
 <h3>Nano</h3>
 <!-- versao gnu 2.2.6-->
 
@@ -68,4 +73,8 @@ Os dados de imagem devem ser transmitidos de um cabo VGA para um monitor CRT.
 <h2>Testes</h2>
 
 <h2>Descrição de instalação, configuração de ambiente e execução</h2>
+<h2>Referências</h2>
+<!--
+https://www.gadoo.com.br/dicas/tic-tac-toe/
+-->
 
