@@ -65,15 +65,13 @@ Nessa seção são apresentados os softwares que auxiliaram no desenvolvimento d
 Nesta seção, exploraremos o dispositivo embarcado utilizado bem como os componentes do Kit de Desenvolvimento DE1-SoC. 
 <h3>O Kit de Desenvolvimento DE1-SoC</h3>
 <p align="justify">Equipado com um processador, USB, memória DDR3, Ethernet e uma gama de periféricos, o kit de desenvolvimento DE1-SoC (Figura 1) integra no mesmo Cyclone V sistema em chip (SoC) um <i>hard processor system</i> (HPS) a uma FPGA <i>(Field Programmable Gate Arrays)</i>. Este design permite uma grande flexibilidade da placa nas mais variadas aplicações</p> 
-<div align="center">
-  <figure>  
-    <img src="docs/images/kit_desenvolvimento_DE1-SoC.jpg">
-    <figcaption>
-      <p align="center"><b>Figura 1</b> - Kit de Desenvolvimento DE1-SoC</p>
-      <p align="center">Fonte: Terasic Technologies</p>
-    </figcaption>
-  </figure>
-</div>
+<figure>  
+  <img src="docs/images/kit_desenvolvimento_DE1-SoC.jpg">
+  <figcaption>
+    <p align="center"><b>Figura 1</b> - Kit de Desenvolvimento DE1-SoC</p>
+    <p align="center">Fonte: Terasic Technologies</p>
+  </figcaption>
+</figure>
 
 <h3>Sistema Computacional DE1-SoC 2</h3>
 <p>O diagrama de blocos do sistema computacional apresentado na figura 2 explicita os componentes  O HPS inclui um processador dual-core ARM Cortex-A9, Ethernet, USB FPGA Cyclone V System-on-Chip (SoC) da Intel  
@@ -82,46 +80,30 @@ Nesta seção, exploraremos o dispositivo embarcado utilizado bem como os compon
  um processador ARM Cortex-A9 dual-core com um FPGA Cyclone V da Intel. Essa placa oferece uma ampla gama de periféricos, incluindo porta VGA, porta Ethernet, USB, porta de áudio, entre outros, o que a torna ideal para projetos que envolvem tanto software quanto hardware. Ela é frequentemente utilizada em ambientes educacionais e de pesquisa para o desenvolvimento e aprendizado em sistemas embarcados e FPGA.-->
 </p>
 
-<div align="center">
-  <figure>  
-    <img src="docs/images/diagramaDE1SoC_FPGAcademy.png">
-    <figcaption>
-      <p align="center"><b>Figura 2</b> - Diagrama de Blocos da DE1-SoC</p>
-      <p align="center">Fonte: FPGAcademy.org</p>
-    </figcaption>
-  </figure>
-</div>
+
+<figure>  
+  <img src="docs/images/diagramaDE1SoC_FPGAcademy.png">
+  <figcaption>
+    <p align="center"><b>Figura 2</b> - Diagrama de Blocos da DE1-SoC</p>
+    <p align="center">Fonte: FPGAcademy.org</p>
+  </figcaption>
+</figure>
 <!-- 
 *Threads do botao com teoria dos leitores/escritores
 *Device drivers (parte da doc)
 -->
 
 <h4>Memória</h4>
-<h3>Dispositivos de Entrada e Saída: descrição e manipulação</h3>
+<h3>Dispositivos de Entrada e Saída Utilizados</h3>
 Como indicado na seção anterior, o kit de desenvolvimento DE1-SoC possui diversos periféricos integrados. Para este projeto, os componentes selecionados foram os botões do tipo *push* e a portas USB *host*, ambos destacados na figura abaixo. Associado a estes dispositivos, utilizou-se também um mouse USB. Segue abaixo a descrição destes componentes, bem como os procedimentos adotados para suas manipulações.
-<div align="center">
-  <figure>  
-    <img src="docs/images/perifericos-usados.png">
-    <figcaption>
-      <p align="center"><b>Figura 3</b> - Periféricos da placa DE1-SoC (adaptado)</p>
-      <p align="center">Fonte: FPGAcademy.org</p>
-    </figcaption>
-  </figure>
-</div>
+<figure>  
+  <img src="docs/images/perifericos-usados.png">
+  <figcaption>
+    <p align="center"><b>Figura 3</b> - Periféricos da placa DE1-SoC (adaptado)</p>
+    <p align="center">Fonte: FPGAcademy.org</p>
+  </figcaption>
+</figure>
 <h4>Mouse</h4>
-<!--Processo de leitura do arquivo dev/input, decodificação da struct, deslocamento relativo da posição-->
-<div align="center">
-  <figure>  
-    <img src="docs/images/perifericos-usados.png">
-    <figcaption>
-      <p align="center"><b>Figura 3</b> - Periféricos da placa DE1-SoC (adaptado)</p>
-      <p align="center">Fonte: FPGAcademy.org</p>
-    </figcaption>
-  </figure>
-</div>
-<h4>Botões do tipo <i>push</i></h4>
-<h4>Porta USB <i>host</i></h4>
-<h4>Mouse USB</h4>
 <!--Processo de leitura do arquivo dev/input, decodificação da struct, deslocamento relativo da posição-->
 O desenvolvimento do biblioteca de leitura do mouse foi realizado com base na documentação do kernel do Linux, além de analises e testes realizados em laboratório com os documentos e informações.
 
@@ -129,13 +111,9 @@ Segundo a própria documentação do kernel, dispositivos de entrada e saida USB
 
 Inicialmente utilizou-se o comando Hexdump para a exibição, no terminal do linux dos bits que estavam dentro do arquivo de Dispositivo do mouse, event0, de forma hexadecimal. Ao realizar a leitura do arquivo constatou-se 2 coisas, a primeira era que toda vez que um evento era realizado por um dispositivo, os dados do arquivo eram reescritos assim não mantendo um log dos eventos passados. Outra constatação foi em padrões de bits para cada evento realizado pelo mouse.
 Segundo a documentação, a seguinte sctruct em linguagem C poderia ser utilizada para fazer a leitura dos eventos de dispositivos usb: 
-<figure>  
-  <img src="docs/images/struct-do-mouse.png">
-  <figcaption>
-    <p align="center"><b>Figura 4</b> - Struct em C do mouse </p>
-    <p align="center">Fonte: kernel.org</p>
-  </figcaption>
-</figure>
+
+
+
 Como o kernel usa um arquivo binário para realizar a comunicação com o dispositivo, utilizou-se das funções fopen e fread para realizar a leitura do mesmo, assim sendo possível uma melhor exibição do arquivo assim sendo possível também entender melhor o que cada evento significava.
 Apos esse avanço, foi definido que os tipos de eventos desejados seriam eventos de click e eventos de aceleração, também chamado de movimentação.
 
@@ -147,8 +125,8 @@ Na realização dessas analises se constatou outro fato, seria necessário defin
 Outro problema foi notado durante a fase de experimentação é que, ao realizar a leitura de um evento o sinal é perpetuado por alguns instantes, fazendo com que a leitura do evento seja replicada por um determinado período de tempo. Para solucionar esse problema utilizou-se um contador, onde sempre que um evento for realizado é incrementado em um, e que ao chegar ao valor de 7 retorna que ocorreu um evento de movimentação e em qual sentido, sendo eles: cima, baixo, esquerda e direita.
 Foi adicionado a biblioteca outras 2 funções, uma que realiza a abertura do arquivo do mouse e uma que realiza o do mesmo fechamento.
 
-
-
+<h4>Botões do tipo <i>push</i></h4>
+<h4>Porta USB <i>host</i></h4>
 <h2>O Jogo</h2>
 <h3>Interface do Usuário</h3>
 <h3>Algoritmos do jogo </h3>
@@ -163,5 +141,4 @@ https://www.gadoo.com.br/dicas/tic-tac-toe/
 https://www.facom.ufu.br/~gustavo/ED1/Apostila_Linguagem_C.pdf
 https://gcc.gnu.org/onlinedocs/gcc-14.1.0/gcc.pdf ou https://gcc.gnu.org/onlinedocs/
 http://uab.ifsul.edu.br/tsiad/conteudo/modulo1/hco/hco_ua/mouse.pdf  fala sobre o mouse e funcionamento do mesmo
-https://www.kernel.org/doc/html/latest/input/input_uapi.html kernel do linux
 -->
