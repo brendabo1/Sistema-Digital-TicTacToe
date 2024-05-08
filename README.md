@@ -1,9 +1,9 @@
-![Alt Teste](docs/images/diagramaDE1SoC_FPGAcademy.png)
+![Teste](docs/images/diagramaDE1SoC_FPGAcademy.png)
 
 <h1 align="center"> Sistema-Digital-TicTacToe</h1>
 <p align="center">Projeto de console dedicado em plataforma de desenvolvimento de hardware</p>
 
-<h2>Introdução</h2>
+##Introdução
 
 <p style="text-align:justify;">Nos últimos anos, os jogos digitais emergiram como uma forma de entretenimento profundamente influente e culturalmente significativa. Desde os primórdios dos jogos de computador e consoles de videogame até a era contemporânea dos jogos móveis e realidade virtual, a indústria de jogos digitais tem evoluído constantemente. Contudo, é importante o papel dos jogos digitais clássicos, que representam os pilares fundamentais da indústria, transcendendo fronteiras geográficas e geracionais.</p>
 
