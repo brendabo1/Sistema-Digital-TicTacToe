@@ -110,13 +110,15 @@ Como indicado na seção anterior, o kit de desenvolvimento DE1-SoC possui diver
 </div>
 <h4>Mouse</h4>
 <!--Processo de leitura do arquivo dev/input, decodificação da struct, deslocamento relativo da posição-->
-<figure>  
-  <img src="docs/images/perifericos-usados.png">
-  <figcaption>
-    <p align="center"><b>Figura 3</b> - Periféricos da placa DE1-SoC (adaptado)</p>
-    <p align="center">Fonte: FPGAcademy.org</p>
-  </figcaption>
-</figure>
+<div align="center">
+  <figure>  
+    <img src="docs/images/perifericos-usados.png">
+    <figcaption>
+      <p align="center"><b>Figura 3</b> - Periféricos da placa DE1-SoC (adaptado)</p>
+      <p align="center">Fonte: FPGAcademy.org</p>
+    </figcaption>
+  </figure>
+</div>
 <h4>Botões do tipo <i>push</i></h4>
 <h4>Porta USB <i>host</i></h4>
 <h4>Mouse USB</h4>
