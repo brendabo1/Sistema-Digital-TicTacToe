@@ -63,18 +63,44 @@ Nessa seção são apresentados os softwares que auxiliaram no desenvolvimento d
 <h3>Nano</h3>
 <p style="text-align:justify;">Também, o editor de texto simples Nano, na versão 2.2.6, presente no Linux embarcado do Kit de desenvolvimento DE1-SoC foi utilizado para codificação da solução. O Nano é um software leve e que oferece uma interface de linha de comando intuitiva, tornando-o ideal para rápida edição de arquivos, scripts e outros documentos de texto.</p>
 
-<h2>Arquitetura do Computador utilizado nos Testes</h2>
+<h2>Arquitetura do Computador Utilizado nos Testes</h2>
+Nesta seção, exploraremos o dispositivo embarcado utilizado bem como os componentes do Kit de Desenvolvimento DE1-SoC. 
+<h3>O Kit de Desenvolvimento DE1-SoC</h3>
+<p style="text-align:justify;">Equipado com um processador, USB, memória DDR3, Ethernet e uma gama de periféricos, o kit de desenvolvimento DE1-SoC (Figura 1) integra no mesmo Cyclone V sistema em chip (SoC) um <i>hard processor system</i> (HPS) a uma FPGA <i>(Field Programmable Gate Arrays)</i>. Este design permite uma grande flexibilidade da placa nas mais variadas aplicações</p> 
+<figure>  
+  <img src="docs/images/kit_desenvolvimento_DE1-SoC.jpg">
+  <figcaption>
+    <p style="text-align:center;"><b>Figura 1</b> - Kit de Desenvolvimento DE1-SoC</p>
+    <p style="text-align:center;">Fonte: Terasic Technologies</p>
+  </figcaption>
+</figure>
+
+<h3>Sistema Computacional DE1-SoC 2</h3>
+O diagrama de blocos do sistema computacional apresentado na figura 2 explicita os componentes  O HPS inclui um processador dual-core ARM Cortex-A9, Ethernet, USB FPGA Cyclone V System-on-Chip (SoC) da Intel  
+
+ <!--consistindo em um processador dual-core ARM Cortex-A9 Altera’s SoC integrates an ARM-based  consisting of processor, peripherals and memory interfaces tied seamlessly with the FPGA fabric using a high-bandwidth interconnect backbone.
+ um processador ARM Cortex-A9 dual-core com um FPGA Cyclone V da Intel. Essa placa oferece uma ampla gama de periféricos, incluindo porta VGA, porta Ethernet, USB, porta de áudio, entre outros, o que a torna ideal para projetos que envolvem tanto software quanto hardware. Ela é frequentemente utilizada em ambientes educacionais e de pesquisa para o desenvolvimento e aprendizado em sistemas embarcados e FPGA.-->
+</p>
+
+
+<figure>  
+  <img src="docs/images/diagramaDE1SoC_FPGAcademy.png">
+  <figcaption>
+    <p style="text-align:center;"><b>Figura 2</b> - Diagrma de Blocos da DE1-SoC</p>
+    <p style="text-align:center;">Fonte: FPGAcademy.org</p>
+  </figcaption>
+</figure>
 <!-- 
 *Threads do botao com teoria dos leitores/escritores
 *Device drivers (parte da doc)
 -->
-<h3>Arquitetura da DE1-SoC 2</h3>
+
 <h4>Memória</h4>
-<h3>Periféricos da Placa DE1-SoC Utilizados</h3>
+<h4>Controlador USB</h4>
+<h4>Botões</h4>
 <h3>Dispositivos de Entrada e Saída Utilizados</h3>
-<h4>USB</h4>
-<h3>Drivers</h3>
-<!--Acho que nem precisa dessa seção. Não usamos drivers da placa-->
+<h4>Mouse</h4>
+<!--Processo de leitura do arquivo dev/input, decodificação da struct, deslocamento relativo da posição-->
 <h2>O Jogo</h2>
 <h3>Interface do Usuário</h3>
 <h3>Algoritmos do jogo </h3>
