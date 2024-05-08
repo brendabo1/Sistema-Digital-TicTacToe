@@ -554,7 +554,7 @@ void* game_menu_routine(){
     {
       pthread_cond_wait(&condIsChanged,&button_mutex);
     }
-    option = button_pressed;
+    option = 2;
     changed = 0; //sinalizando que a informação foi lida
     pthread_mutex_unlock(&button_mutex);
 

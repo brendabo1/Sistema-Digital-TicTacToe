@@ -30,12 +30,13 @@ Data da última modificação: 07/05/2024
 
 /* Function prototypes */
 int check_finish_game();
+int translate_position();
 int tic_tac_toe_dual_player();
 int tic_tac_toe_computer_player();
 int tic_tac_toe_single_player_hard();
 void print_title();
 void print_menu();
-void print_checkboard(int cord_x, int cord_y);
+void print_checkboard();
 void reset_board();
 int check_empty_space(int[]);
 int empty_spaces();
@@ -62,16 +63,12 @@ int checkboard[WIDTH][WIDTH] = {{-1, -1, -1},
 int button_pressed = -1; // id do botão pressionado na placa DE1-SoC
 int changed = 0;         // usado para sincronizar a leitura e utilização dos botões da placa
 int finished = 0;             // identificação de partida finalizada externamente
-int position[3] = {0, 0, -1}; // quadrante e confirmação de jogada por meio do mouse
-int player;
+int position[3] = {1, 1, -1}; // quadrante e confirmação de jogada por meio do mouse
 
 pthread_mutex_t button_mutex;
 pthread_mutex_t finished_mutex;
 pthread_mutex_t mouse_mutex;
 pthread_cond_t condIsChanged; // condição que indica que um botão foi pressionado
-pthread_cond_t shouldPrint;
-
-int shouldPrintBoard = 1;
 
 /*******************************************************************
  *  Função: check_finish_game
@@ -94,8 +91,38 @@ int check_finish_game()
   return 0;
 }
 
+/*******************************************************************
+ *  Função: translate_position
+ *
+ * Traduz a posição do cursor para uma visualização user friendly
+ * Return: valor de 1 a 9 correspondente ao quadrante em que o cursor
+ *         se encontra
+ *******************************************************************/
+int translate_position()
+{
+  int space = -1;
+  if(position[CORD_Y] == 0 && position[CORD_X] == 0){
+    space = 1;
+  }else if(position[CORD_Y] == 0 && position[CORD_X] == 1){
+    space = 2;
+  }else if(position[CORD_Y] == 0 && position[CORD_X] == 2){
+    space = 3;
+  }else if(position[CORD_Y] == 1 && position[CORD_X] == 0){
+    space = 4;
+  }else if(position[CORD_Y] == 1 && position[CORD_X] == 1){
+    space = 5;
+  }else if(position[CORD_Y] == 1 && position[CORD_X] == 2){
+    space = 6;
+  }else if(position[CORD_Y] == 2 && position[CORD_X] == 0){
+   space = 7;
+  }else if(position[CORD_Y] == 2 && position[CORD_X] == 1){
+    space = 8;
+  }else if(position[CORD_Y] == 2 && position[CORD_X] == 2){
+    space = 9;
+  }
 
-
+  return space;
+}
 /*******************************************************************
  *  Função: tic_tac_toe_dual_player
  *
@@ -111,14 +138,20 @@ int tic_tac_toe_dual_player()
   int playingNow = PLAYER1, // de quem é a vez de jogar
       winner = -1;          // armazena a identificação do vencedor
   int lastClick = -1;
-  int move[3] = {0, 0, -1};
+  int move[3] = {1, 1, -1};
 
   // Loop do jogo
   while (empty_spaces() && winner == -1)
   {
-    player = playingNow;
+
     if (check_finish_game()) // verificando se a partida foi encerrada externamente
       return -2;
+
+    print_title();
+    print_checkboard();
+    printf("\nPLAYER %d É A SUA VEZ!\n", playingNow);
+    printf("\t\t\t\tVOCÊ ESTÁ NO QUADRANTE: %d", translate_position());
+
     // Jogada do player da vez
     while (1)
     {
@@ -128,25 +161,20 @@ int tic_tac_toe_dual_player()
       move[1] = position[CORD_X];
       lastClick = move[2];
       move[2] = position[2];
-      if (lastClick != 0 && move[2] == 0 && check_empty_space(move)){
+      printf("\033[1D");
+      printf("%d", translate_position());
+      if (lastClick != 0 && move[2] == 0 && check_empty_space(move))
         break;
-      }
     }
 
     // Registrar jogada
     register_move(playingNow, move);
     playingNow = (playingNow == PLAYER1) ? PLAYER2 : PLAYER1; // alterna entre players
     winner = check_winner();                                  // Verificar vencedor
-    print_checkboard(-1,-1);
-    if(player == 0)
-      printf("COMPUTADOR ESTÁ JOGANDO...\n");
-    else 
-      printf("VEZ DO PLAYER %d\n", player);
   }
 
   print_title();
-  print_checkboard(-1,-1);
-  
+  print_checkboard();
   return winner;
 }
 
@@ -164,22 +192,27 @@ int tic_tac_toe_single_player_easy()
   int playingNow = COMPUTER, // de quem é a vez de jogar
       winner = -1;           // armazena a identificação do vencedor
   int lastClick = -1;
-  int move[3] = {0, 0, -1};
+  int move[3] = {1, 1, -1};
 
   // Loop do jogo
   while (empty_spaces() && winner == -1)
   {
-    player = playingNow;
     if (check_finish_game())
       return -2;
 
+    print_title();
+    print_checkboard();
+
     if (playingNow == COMPUTER) // jogada do computador
     {
+      printf("\nCOMPUTADOR ESTÁ JOGANDO...\n");
       computer_move(move);
       sleep(1);
     }
     else // jogada do player
     {
+      printf("\n\nPLAYER %d É A SUA VEZ!\nVOCÊ ESTÁ NO QUADRANTE:%d", playingNow, translate_position()); // atualiza a visualização do quadrante
+
       while (1)
       {
         if (check_finish_game())
@@ -188,9 +221,10 @@ int tic_tac_toe_single_player_easy()
         move[1] = position[CORD_X];
         lastClick = move[2];
         move[2] = position[2];
-        if (lastClick != 0 && move[2] == 0 && check_empty_space(move)) {
+        printf("\033[1D");
+        printf("%d", translate_position());
+        if (lastClick != 0 && move[2] == 0 && check_empty_space(move))
           break;
-        }
       }
     }
 
@@ -202,14 +236,10 @@ int tic_tac_toe_single_player_easy()
     move[0] = 1;
     move[1] = 1;
     move[2] = -1;
-    print_checkboard(-1, -1);
-    if(player == 0)
-      printf("COMPUTADOR ESTÁ JOGANDO...\n");
-    else 
-      printf("VEZ DO PLAYER %d\n", player);
   }
 
-  print_checkboard(-1,-1);
+  print_title();
+  print_checkboard();
   return winner;
 }
 
@@ -257,7 +287,7 @@ void print_menu()
  * Imprime o tabuleiro do jogo no estado atual.
  *******************************************************************/
 
-void print_checkboard(int cord_x, int cord_y)
+void print_checkboard()
 {
   /* Elementos gráficos */
   char *x[5] = {
@@ -281,28 +311,33 @@ void print_checkboard(int cord_x, int cord_y)
       "       \0",
       "       \0"};
 
-  const char horizontal_line[26] = {124, 124, 124, 124, 124,
-                                    124, 124, 124, 124, 124,
-                                    124, 124, 124, 124, 124,
-                                    124, 124, 124, 124, 124,
-                                    124, 124, 124, 124, 124, '\0'};
+  const char horizontal_line[26] = {95, 95, 95, 95, 95,
+                                    95, 95, 95, 95, 95,
+                                    95, 95, 95, 95, 95,
+                                    95, 95, 95, 95, 95,
+                                    95, 95, 95, 95, 95, '\0'};
 
   const char vertical_bar[2] = {'|', '\0'};
 
-
-  char **spaces[9]; //relacao jogador x elemento grafico
+  char **spaces[9]; // relacao jogador x elemento grafico
   int index = 0;
 
   /*Relaciona cada jogada do tabuleiro ao respectivo
   elemento gráfico */
-  for (int i = 0; i < 3; i++){
-    for (int j = 0; j < 3; j++){
-      if (checkboard[i][j] == COMPUTER || checkboard[i][j] == PLAYER1){
+  for (int i = 0; i < WIDTH; i++)
+  {
+    for (int j = 0; j < WIDTH; j++)
+    {
+      if (checkboard[i][j] == PLAYER1 || checkboard[i][j] == COMPUTER)
+      {
         spaces[index] = x;
       }
-      else if (checkboard[i][j] == PLAYER2){
+      else if (checkboard[i][j] == PLAYER2)
+      {
         spaces[index] = o;
-      }else{
+      }
+      else
+      {
         spaces[index] = empty;
       }
 
@@ -310,132 +345,23 @@ void print_checkboard(int cord_x, int cord_y)
     }
   }
 
-
-  //Imprime o tabuleiro
-  print_title();
-  switch (cord_y)
+  // Imprime o tabuleiro
+  for (int l = 0; l < 5; l++)
   {
-  //se for na primeira linha
-  case 0:
-    if(cord_x == 0) {
-      for (int l = 0; l < 5; l++){
-        printf("\t\t\t\t\t\t\t\t\t\e[46m%s\e[0m%s%s%s%s\n", spaces[0][l], vertical_bar, spaces[1][l], vertical_bar, spaces[2][l]);
-      }
-    } else if (cord_x == 1) {
-      for (int l = 0; l < 5; l++) {
-        printf("\t\t\t\t\t\t\t\t\t%s%s\e[46m%s\e[0m%s%s\n", spaces[0][l], vertical_bar, spaces[1][l], vertical_bar, spaces[2][l]);
-      }
-    } else {
-      for (int l = 0; l < 5; l++) {
-        printf("\t\t\t\t\t\t\t\t\t%s%s%s%s\e[46m%s\e[0m\n", spaces[0][l], vertical_bar, spaces[1][l], vertical_bar, spaces[2][l]);
-      }
-    }
-    printf("\t\t\t\t\t\t\t\t\t%s\n", horizontal_line);
+    printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[0][l], vertical_bar, spaces[1][l], vertical_bar, spaces[2][l]);
+  }
+  printf("\t\t\t\t\t\t\t\t\t%s\n", horizontal_line);
 
-    for (int l = 0; l < 5; l++)
-    {
-      printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[3][l], vertical_bar, spaces[4][l], vertical_bar, spaces[5][l]);
-    }
+  for (int l = 0; l < 5; l++)
+  {
+    printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[3][l], vertical_bar, spaces[4][l], vertical_bar, spaces[5][l]);
+  }
 
-    printf("\t\t\t\t\t\t\t\t\t%s\n", horizontal_line);
+  printf("\t\t\t\t\t\t\t\t\t%s\n", horizontal_line);
 
-    for (int l = 0; l < 5; l++)
-    {
-      printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[6][l], vertical_bar, spaces[7][l], vertical_bar, spaces[8][l]);
-    }
-    break;
-
-  //se for na segunda linha
-  case 1:
-    for (int l = 0; l < 5; l++)
-    {
-      printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[0][l], vertical_bar, spaces[1][l], vertical_bar, spaces[2][l]);
-    }
-    printf("\t\t\t\t\t\t\t\t\t%s\n", horizontal_line);
-
-    if(cord_x == 0) {
-      for (int l = 0; l < 5; l++)
-      {
-        printf("\t\t\t\t\t\t\t\t\t\e[46m%s\e[0m%s%s%s%s\n", spaces[3][l], vertical_bar, spaces[4][l], vertical_bar, spaces[5][l]);
-      }
-
-    } else if (cord_x == 1) {
-      for (int l = 0; l < 5; l++)
-      {
-        printf("\t\t\t\t\t\t\t\t\t%s%s\e[46m%s\e[0m%s%s\n", spaces[3][l], vertical_bar, spaces[4][l], vertical_bar, spaces[5][l]);
-      }
-
-    } else {
-      for (int l = 0; l < 5; l++)
-      {
-        printf("\t\t\t\t\t\t\t\t\t%s%s%s%s\e[46m%s\e[0m\n", spaces[3][l], vertical_bar, spaces[4][l], vertical_bar, spaces[5][l]);
-      }
-      
-    }
-    printf("\t\t\t\t\t\t\t\t\t%s\n", horizontal_line);
-
-    for (int l = 0; l < 5; l++)
-    {
-      printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[6][l], vertical_bar, spaces[7][l], vertical_bar, spaces[8][l]);
-    }
-
-    break;
-
-  //se for na terceira linha
-  case 2:
-    for (int l = 0; l < 5; l++)
-    {
-      printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[0][l], vertical_bar, spaces[1][l], vertical_bar, spaces[2][l]);
-    }
-    printf("\t\t\t\t\t\t\t\t\t%s\n", horizontal_line);
-
-    for (int l = 0; l < 5; l++)
-    {
-      printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[3][l], vertical_bar, spaces[4][l], vertical_bar, spaces[5][l]);
-    }
-
-    printf("\t\t\t\t\t\t\t\t\t%s\n", horizontal_line);
-
-
-    if(cord_x == 0) {
-      for (int l = 0; l < 5; l++)
-      {
-        printf("\t\t\t\t\t\t\t\t\t\e[46m%s\e[0m%s%s%s%s\n", spaces[6][l], vertical_bar, spaces[7][l], vertical_bar, spaces[8][l]);
-      }
-
-    } else if (cord_x == 1) {
-      for (int l = 0; l < 5; l++)
-      {
-        printf("\t\t\t\t\t\t\t\t\t%s%s\e[46m%s\e[0m%s%s\n", spaces[6][l], vertical_bar, spaces[7][l], vertical_bar, spaces[8][l]);
-      }
-
-    } else {
-      for (int l = 0; l < 5; l++)
-      {
-        printf("\t\t\t\t\t\t\t\t\t%s%s%s%s\e[46m%s\e[0m\n", spaces[6][l], vertical_bar, spaces[7][l], vertical_bar, spaces[8][l]);
-      }
-      
-    }
-    break;
-
-  default:  
-    for (int l = 0; l < 5; l++)
-    {
-      printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[0][l], vertical_bar, spaces[1][l], vertical_bar, spaces[2][l]);
-    }
-    printf("\t\t\t\t\t\t\t\t\t%s\n", horizontal_line);
-
-    for (int l = 0; l < 5; l++)
-    {
-      printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[3][l], vertical_bar, spaces[4][l], vertical_bar, spaces[5][l]);
-    }
-
-    printf("\t\t\t\t\t\t\t\t\t%s\n", horizontal_line);
-    for (int l = 0; l < 5; l++)
-    {
-      printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[6][l], vertical_bar, spaces[7][l], vertical_bar, spaces[8][l]);
-    }
-    break;
+  for (int l = 0; l < 5; l++)
+  {
+    printf("\t\t\t\t\t\t\t\t\t%s%s%s%s%s\n", spaces[6][l], vertical_bar, spaces[7][l], vertical_bar, spaces[8][l]);
   }
 }
 
@@ -630,11 +556,6 @@ void *read_mouse_routine()
     pthread_mutex_lock(&mouse_mutex);
     readEvent(position, position);
     pthread_mutex_unlock(&mouse_mutex);
-    print_checkboard(position[CORD_X], position[CORD_Y]);
-    if(player == 0)
-      printf("COMPUTADOR ESTÁ JOGANDO...\n");
-    else 
-      printf("VEZ DO PLAYER %d\n", player);
   }
   pthread_exit(NULL);
 }
@@ -648,7 +569,7 @@ void *read_mouse_routine()
 *******************************************************************/
 void *game_menu_routine()
 {
-  pthread_t mouse_handler, threadPrint;
+  pthread_t mouse_handler;
   /* Identificação do vencedor
   -1 -> empate
   -2 -> partida finalizada externamente
@@ -684,16 +605,12 @@ void *game_menu_routine()
       return NULL;
     case 1:
       pthread_mutex_init(&mouse_mutex, NULL);
-      print_checkboard(position[CORD_X], position[CORD_Y]);
-      //pthread_create(&threadPrint, NULL, printBoard, NULL);
       pthread_create(&mouse_handler, NULL, read_mouse_routine, NULL);
       winner = tic_tac_toe_dual_player();
       reset_board();
       break;
     case 2:
       pthread_mutex_init(&mouse_mutex, NULL);
-      print_checkboard(position[CORD_X], position[CORD_Y]);
-      //pthread_create(&threadPrint, NULL, printBoard, NULL);
       pthread_create(&mouse_handler, NULL, read_mouse_routine, NULL);
       winner = tic_tac_toe_single_player_easy();
       reset_board();
@@ -702,10 +619,9 @@ void *game_menu_routine()
     }
 
     pthread_cancel(mouse_handler);
-    //pthread_cancel(threadPrint);
     pthread_mutex_destroy(&mouse_mutex);
-    position[0] = 0;
-    position[1] = 0;
+    position[0] =1;
+    position[1] = 1;
     position[2]= -1;
 
     switch (winner) // identifica vencedor
@@ -745,7 +661,7 @@ int main(int argc, char const *argv[])
   pthread_mutex_init(&finished_mutex, NULL);
   // Inicialização da condição
   pthread_cond_init(&condIsChanged, NULL);
-  //pthread_cond_init(&shouldPrint, NULL);
+
   // Criação das threads
   if (pthread_create(&button_handler, NULL, &get_pressed_key_routine, NULL) != 0)
     perror("Failed to created thread");
@@ -765,6 +681,5 @@ int main(int argc, char const *argv[])
   pthread_mutex_destroy(&finished_mutex);
   // Destruição da condição
   pthread_cond_destroy(&condIsChanged);
-  //pthread_cond_destroy(&shouldPrint);
   return 0;
 }
