@@ -1,3 +1,4 @@
+``` html
 <h1 align="center"> Sistema-Digital-TicTacToe</h1>
 <p align="center">Projeto de console dedicado em plataforma de desenvolvimento de hardware</p>
 
@@ -116,3 +117,4 @@ https://www.facom.ufu.br/~gustavo/ED1/Apostila_Linguagem_C.pdf
 https://gcc.gnu.org/onlinedocs/gcc-14.1.0/gcc.pdf ou https://gcc.gnu.org/onlinedocs/
 -->
 
+```
