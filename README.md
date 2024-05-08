@@ -97,7 +97,7 @@ Nesta seção, exploraremos o dispositivo embarcado utilizado bem como os compon
 -->
 
 <h4>Memória</h4>
-<h3>Dispositivos de Entrada e Saída Utilizados</h3>
+<h3>Dispositivos de Entrada e Saída: descrição e manipulação</h3>
 Como indicado na seção anterior, o kit de desenvolvimento DE1-SoC possui diversos periféricos integrados. Para este projeto, os componentes selecionados foram os botões do tipo *push* e a portas USB *host*, ambos destacados na figura abaixo. Associado a estes dispositivos, utilizou-se também um mouse USB. Segue abaixo a descrição destes componentes, bem como os procedimentos adotados para suas manipulações.
 <div align="center">
   <figure>  
@@ -110,8 +110,44 @@ Como indicado na seção anterior, o kit de desenvolvimento DE1-SoC possui diver
 </div>
 <h4>Mouse</h4>
 <!--Processo de leitura do arquivo dev/input, decodificação da struct, deslocamento relativo da posição-->
+<figure>  
+  <img src="docs/images/perifericos-usados.png">
+  <figcaption>
+    <p align="center"><b>Figura 3</b> - Periféricos da placa DE1-SoC (adaptado)</p>
+    <p align="center">Fonte: FPGAcademy.org</p>
+  </figcaption>
+</figure>
 <h4>Botões do tipo <i>push</i></h4>
 <h4>Porta USB <i>host</i></h4>
+<h4>Mouse USB</h4>
+<!--Processo de leitura do arquivo dev/input, decodificação da struct, deslocamento relativo da posição-->
+O desenvolvimento do biblioteca de leitura do mouse foi realizado com base na documentação do kernel do Linux, além de analises e testes realizados em laboratório com os documentos e informações.
+
+Segundo a própria documentação do kernel, dispositivos de entrada e saida USBs se comunicam e são reconhecido como arquivos do tipo Dispositivo que ficam dentro da pasta /dev/input, cada dispositivo tem suas entradas e saidas, mas no geral os dipositivos armazenam um campo onde ficam localizadas as informações de instante em que um evento foi realizado, qual foi o tipo de evento, qual o código do evento e qual o valor do evento.
+
+Inicialmente utilizou-se o comando Hexdump para a exibição, no terminal do linux dos bits que estavam dentro do arquivo de Dispositivo do mouse, event0, de forma hexadecimal. Ao realizar a leitura do arquivo constatou-se 2 coisas, a primeira era que toda vez que um evento era realizado por um dispositivo, os dados do arquivo eram reescritos assim não mantendo um log dos eventos passados. Outra constatação foi em padrões de bits para cada evento realizado pelo mouse.
+Segundo a documentação, a seguinte sctruct em linguagem C poderia ser utilizada para fazer a leitura dos eventos de dispositivos usb: 
+<br>
+	struct input_event {<br>
+        struct timeval time;<br>
+        unsigned short type;<br>
+        unsigned short code;<br>
+        unsigned int value;<br>
+	};<br>
+<br>
+Como o kernel usa um arquivo binário para realizar a comunicação com o dispositivo, utilizou-se das funções fopen e fread para realizar a leitura do mesmo, assim sendo possível uma melhor exibição do arquivo assim sendo possível também entender melhor o que cada evento significava.
+Apos esse avanço, foi definido que os tipos de eventos desejados seriam eventos de click e eventos de aceleração, também chamado de movimentação.
+
+Os eventos de aceleração ocorrem quando ha a movimentação do mouse sobre alguma superfície, assim retornando um valor de código correspondente ao eixo de movimentação e o valor a referente a aceleração e sentido a qual o mouse foi movimentado. Por exemplo, suponha que o mouse esta sobre a mesa e  seja movimentado da direita para a esquerda, enquanto isso esta sendo realizado a leitura do arquivo event0, sera retornado a struct um evento com valor de tipo igual a 2 e valor de código igual 0, além de um valor negativo, que indica o sentido e valor de aceleração. Esse valor de aceleração é calculado com base no deslocamento relativo da superfície abaixo do mouse, calculado pelo sensor óptico mediante ao feixe de luz emitido pelo LED embutido neste dispositivo, quando há movimentação do mouse, o sensor calcula e defini o sentido relativo que o mouse esta sendo movimentado e defini também a aceleração na qual foi realizada esse movimento.
+
+Os eventos de clique são mais simples, como o próprio nome já diz, ele é um evento que ocorre quando algum dos botões do mouse é pressionado ou solto, retornando 1 ou 0 respectivamente no campo de valor. Além disso, os eventos de clique tem valor de tipo igual a 2 e o valor do código é correspondente ao botão pressionado.
+Na realização dessas analises se constatou outro fato, seria necessário definir um valor mínimo de aceleração, pois qualquer toque sutil no mouse já era capaz de gerar eventos de aceleração, o que tornaria instável a usabilidade do mesmo. Para tal ato utilizou-se de base o valor 3, sendo -3 para eventos no sentido oposto.
+
+Outro problema foi notado durante a fase de experimentação é que, ao realizar a leitura de um evento o sinal é perpetuado por alguns instantes, fazendo com que a leitura do evento seja replicada por um determinado período de tempo. Para solucionar esse problema utilizou-se um contador, onde sempre que um evento for realizado é incrementado em um, e que ao chegar ao valor de 7 retorna que ocorreu um evento de movimentação e em qual sentido, sendo eles: cima, baixo, esquerda e direita.
+Foi adicionado a biblioteca outras 2 funções, uma que realiza a abertura do arquivo do mouse e uma que realiza o do mesmo fechamento.
+
+
+
 <h2>O Jogo</h2>
 <h3>Interface do Usuário</h3>
 <h3>Algoritmos do jogo </h3>
@@ -125,4 +161,5 @@ Como indicado na seção anterior, o kit de desenvolvimento DE1-SoC possui diver
 https://www.gadoo.com.br/dicas/tic-tac-toe/
 https://www.facom.ufu.br/~gustavo/ED1/Apostila_Linguagem_C.pdf
 https://gcc.gnu.org/onlinedocs/gcc-14.1.0/gcc.pdf ou https://gcc.gnu.org/onlinedocs/
+http://uab.ifsul.edu.br/tsiad/conteudo/modulo1/hco/hco_ua/mouse.pdf  fala sobre o mouse e funcionamento do mesmo
 -->
