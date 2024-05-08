@@ -65,13 +65,15 @@ Nessa seção são apresentados os softwares que auxiliaram no desenvolvimento d
 Nesta seção, exploraremos o dispositivo embarcado utilizado bem como os componentes do Kit de Desenvolvimento DE1-SoC. 
 <h3>O Kit de Desenvolvimento DE1-SoC</h3>
 <p align="justify">Equipado com um processador, USB, memória DDR3, Ethernet e uma gama de periféricos, o kit de desenvolvimento DE1-SoC (Figura 1) integra no mesmo Cyclone V sistema em chip (SoC) um <i>hard processor system</i> (HPS) a uma FPGA <i>(Field Programmable Gate Arrays)</i>. Este design permite uma grande flexibilidade da placa nas mais variadas aplicações</p> 
-<figure>  
-  <img src="docs/images/kit_desenvolvimento_DE1-SoC.jpg">
-  <figcaption>
-    <p align="center"><b>Figura 1</b> - Kit de Desenvolvimento DE1-SoC</p>
-    <p align="center">Fonte: Terasic Technologies</p>
-  </figcaption>
-</figure>
+<div align="center">
+  <figure>  
+    <img src="docs/images/kit_desenvolvimento_DE1-SoC.jpg">
+    <figcaption>
+      <p align="center"><b>Figura 1</b> - Kit de Desenvolvimento DE1-SoC</p>
+      <p align="center">Fonte: Terasic Technologies</p>
+    </figcaption>
+  </figure>
+</div>
 
 <h3>Sistema Computacional DE1-SoC 2</h3>
 <p>O diagrama de blocos do sistema computacional apresentado na figura 2 explicita os componentes  O HPS inclui um processador dual-core ARM Cortex-A9, Ethernet, USB FPGA Cyclone V System-on-Chip (SoC) da Intel  
@@ -80,14 +82,15 @@ Nesta seção, exploraremos o dispositivo embarcado utilizado bem como os compon
  um processador ARM Cortex-A9 dual-core com um FPGA Cyclone V da Intel. Essa placa oferece uma ampla gama de periféricos, incluindo porta VGA, porta Ethernet, USB, porta de áudio, entre outros, o que a torna ideal para projetos que envolvem tanto software quanto hardware. Ela é frequentemente utilizada em ambientes educacionais e de pesquisa para o desenvolvimento e aprendizado em sistemas embarcados e FPGA.-->
 </p>
 
-
-<figure>  
-  <img src="docs/images/diagramaDE1SoC_FPGAcademy.png">
-  <figcaption>
-    <p align="center"><b>Figura 2</b> - Diagrama de Blocos da DE1-SoC</p>
-    <p align="center">Fonte: FPGAcademy.org</p>
-  </figcaption>
-</figure>
+<div align="center">
+  <figure>  
+    <img src="docs/images/diagramaDE1SoC_FPGAcademy.png">
+    <figcaption>
+      <p align="center"><b>Figura 2</b> - Diagrama de Blocos da DE1-SoC</p>
+      <p align="center">Fonte: FPGAcademy.org</p>
+    </figcaption>
+  </figure>
+</div>
 <!-- 
 *Threads do botao com teoria dos leitores/escritores
 *Device drivers (parte da doc)
@@ -96,13 +99,15 @@ Nesta seção, exploraremos o dispositivo embarcado utilizado bem como os compon
 <h4>Memória</h4>
 <h3>Dispositivos de Entrada e Saída Utilizados</h3>
 Como indicado na seção anterior, o kit de desenvolvimento DE1-SoC possui diversos periféricos integrados. Para este projeto, os componentes selecionados foram os botões do tipo *push* e a portas USB *host*, ambos destacados na figura abaixo. Associado a estes dispositivos, utilizou-se também um mouse USB. Segue abaixo a descrição destes componentes, bem como os procedimentos adotados para suas manipulações.
-<figure>  
-  <img src="docs/images/perifericos-usados.png">
-  <figcaption>
-    <p align="center"><b>Figura 3</b> - Periféricos da placa DE1-SoC (adaptado)</p>
-    <p align="center">Fonte: FPGAcademy.org</p>
-  </figcaption>
-</figure>
+<div align="center">
+  <figure>  
+    <img src="docs/images/perifericos-usados.png">
+    <figcaption>
+      <p align="center"><b>Figura 3</b> - Periféricos da placa DE1-SoC (adaptado)</p>
+      <p align="center">Fonte: FPGAcademy.org</p>
+    </figcaption>
+  </figure>
+</div>
 <h4>Mouse</h4>
 <!--Processo de leitura do arquivo dev/input, decodificação da struct, deslocamento relativo da posição-->
 <h4>Botões do tipo <i>push</i></h4>
