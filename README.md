@@ -81,7 +81,7 @@ Nesta seção, exploraremos o dispositivo embarcado utilizado bem como os compon
  <!--consistindo em um processador dual-core ARM Cortex-A9 Altera’s SoC integrates an ARM-based  consisting of processor, peripherals and memory interfaces tied seamlessly with the FPGA fabric using a high-bandwidth interconnect backbone.
  um processador ARM Cortex-A9 dual-core com um FPGA Cyclone V da Intel. Essa placa oferece uma ampla gama de periféricos, incluindo porta VGA, porta Ethernet, USB, porta de áudio, entre outros, o que a torna ideal para projetos que envolvem tanto software quanto hardware. Ela é frequentemente utilizada em ambientes educacionais e de pesquisa para o desenvolvimento e aprendizado em sistemas embarcados e FPGA.-->
 </p>
-![Teste](docs/images/diagramaDE1SoC_FPGAcademy.png)
+![Alt Teste](docs/images/diagramaDE1SoC_FPGAcademy.png)
 
 <figure>  
   <img src="docs/images/diagramaDE1SoC_FPGAcademy.png">
@@ -123,4 +123,3 @@ https://www.gadoo.com.br/dicas/tic-tac-toe/
 https://www.facom.ufu.br/~gustavo/ED1/Apostila_Linguagem_C.pdf
 https://gcc.gnu.org/onlinedocs/gcc-14.1.0/gcc.pdf ou https://gcc.gnu.org/onlinedocs/
 -->
-
