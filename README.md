@@ -88,7 +88,7 @@ Nesta seção, exploraremos o dispositivo embarcado utilizado bem como os compon
 <figure>  
   <img src="docs/images/diagramaDE1SoC_FPGAcademy.png">
   <figcaption>
-    <p style="text-align:center;"><b>Figura 2</b> - Diagrma de Blocos da DE1-SoC</p>
+    <p style="text-align:center;"><b>Figura 2</b> - Diagrama de Blocos da DE1-SoC</p>
     <p style="text-align:center;">Fonte: FPGAcademy.org</p>
   </figcaption>
 </figure>
@@ -98,11 +98,19 @@ Nesta seção, exploraremos o dispositivo embarcado utilizado bem como os compon
 -->
 
 <h4>Memória</h4>
-<h4>Controlador USB</h4>
-<h4>Botões</h4>
 <h3>Dispositivos de Entrada e Saída Utilizados</h3>
+Como indicado na seção anterior, o kit de desenvolvimento DE1-SoC possui diversos periféricos integrados. Para este projeto, os componentes selecionados foram os botões do tipo *push* e a portas USB *host*, ambos destacados na figura abaixo. Associado a estes dispositivos, utilizou-se também um mouse USB. Segue abaixo a descrição destes componentes, bem como os procedimentos adotados para suas manipulações.
+<figure>  
+  <img src="docs/images/perifericos-usados.png">
+  <figcaption>
+    <p style="text-align:center;"><b>Figura 3</b> - Periféricos da placa DE1-SoC (adaptado)</p>
+    <p style="text-align:center;">Fonte: FPGAcademy.org</p>
+  </figcaption>
+</figure>
 <h4>Mouse</h4>
 <!--Processo de leitura do arquivo dev/input, decodificação da struct, deslocamento relativo da posição-->
+<h4>Botões do tipo <i>push</i></h4>
+<h4>Porta USB <i>host</i></h4>
 <h2>O Jogo</h2>
 <h3>Interface do Usuário</h3>
 <h3>Algoritmos do jogo </h3>
