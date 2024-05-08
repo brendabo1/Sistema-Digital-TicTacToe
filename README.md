@@ -1,4 +1,3 @@
-![Teste](docs/images/diagramaDE1SoC_FPGAcademy.png)
 
 <h1 align="center"> Sistema-Digital-TicTacToe</h1>
 <p align="center">Projeto de console dedicado em plataforma de desenvolvimento de hardware</p>
@@ -85,8 +84,8 @@ Nesta seção, exploraremos o dispositivo embarcado utilizado bem como os compon
 <figure>  
   <img src="docs/images/diagramaDE1SoC_FPGAcademy.png">
   <figcaption>
-    <p style="text-align:center;"><b>Figura 2</b> - Diagrama de Blocos da DE1-SoC</p>
-    <p style="text-align:center;">Fonte: FPGAcademy.org</p>
+    <p align="center"><b>Figura 2</b> - Diagrama de Blocos da DE1-SoC</p>
+    <p align="center">Fonte: FPGAcademy.org</p>
   </figcaption>
 </figure>
 <!-- 
@@ -100,8 +99,8 @@ Como indicado na seção anterior, o kit de desenvolvimento DE1-SoC possui diver
 <figure>  
   <img src="docs/images/perifericos-usados.png">
   <figcaption>
-    <p style="text-align:center;"><b>Figura 3</b> - Periféricos da placa DE1-SoC (adaptado)</p>
-    <p style="text-align:center;">Fonte: FPGAcademy.org</p>
+    <p align="center"><b>Figura 3</b> - Periféricos da placa DE1-SoC (adaptado)</p>
+    <p align="center">Fonte: FPGAcademy.org</p>
   </figcaption>
 </figure>
 <h4>Mouse</h4>
