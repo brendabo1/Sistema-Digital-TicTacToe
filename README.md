@@ -113,13 +113,14 @@ Segundo a própria documentação do kernel, dispositivos de entrada e saida USB
 
 Inicialmente utilizou-se o comando Hexdump para a exibição, no terminal do linux dos bits que estavam dentro do arquivo de Dispositivo do mouse, event0, de forma hexadecimal. Ao realizar a leitura do arquivo constatou-se 2 coisas, a primeira era que toda vez que um evento era realizado por um dispositivo, os dados do arquivo eram reescritos assim não mantendo um log dos eventos passados. Outra constatação foi em padrões de bits para cada evento realizado pelo mouse.
 Segundo a documentação, a seguinte sctruct em linguagem C poderia ser utilizada para fazer a leitura dos eventos de dispositivos usb: 
-	struct input_event {
-        struct timeval time;
-        unsigned short type;
-        unsigned short code;
-        unsigned int value;
-	};
-
+<br>
+	struct input_event {<br>
+        struct timeval time;<br>
+        unsigned short type;<br>
+        unsigned short code;<br>
+        unsigned int value;<br>
+	};<br>
+<br>
 Como o kernel usa um arquivo binário para realizar a comunicação com o dispositivo, utilizou-se das funções fopen e fread para realizar a leitura do mesmo, assim sendo possível uma melhor exibição do arquivo assim sendo possível também entender melhor o que cada evento significava.
 Apos esse avanço, foi definido que os tipos de eventos desejados seriam eventos de click e eventos de aceleração, também chamado de movimentação.
 
