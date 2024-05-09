@@ -153,7 +153,7 @@ Segundo a documentação, a seguinte sctruct em linguagem C poderia ser utilizad
   </figure>
 </div>
 
-<div align="justify">>
+<div align="justify">
 Como o kernel usa um arquivo binário para realizar a comunicação com o dispositivo, utilizou-se das funções <code>fopen()</code> e <code>fread()</code> para realizar a leitura do mesmo, assim sendo possível uma melhor exibição do arquivo assim sendo possível também entender melhor o que cada evento significava.
 Apos esse avanço, foi definido que os tipos de eventos desejados seriam eventos de click e eventos de aceleração, também chamado de movimentação.
 
