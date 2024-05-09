@@ -125,7 +125,7 @@ O banco de registradores apresentado acima compõe a porta KEY. Esta porta está
     <img src="docs/images/mmu-process.gif" width="800">
     <figcaption>
       <p align="center"><b>Figura 5</b>Mapeamento de memória via MMU</p>
-      <p align="center">Fonte: Os autores</p>
+      <p align="center">Fonte: Elaboração Própria.</p>
     </figcaption>
   </figure>
 </div>
@@ -189,8 +189,8 @@ Além disso, durante o desenvolvimento, foi adotado um valor mínimo de acelera�
   <figure>  
     <img src="docs/images/mouse-acell.png" width="410" height="640">
     <figcaption>
-      <p align="center"><b>Figura 6</b>- Relação evento de movimentação e valor da aceleração</p>
-      <p align="center">Fonte: Os autores</p>
+      <p align="center"><b>Figura 6</b>- Relação evento de movimentação</p>
+      <p align="center">Fonte: Elaboração Própria.</p>
     </figcaption>
   </figure>
 </div>
@@ -206,47 +206,14 @@ Além disso, durante o desenvolvimento, foi adotado um valor mínimo de acelera�
 <div align="justify">
 O controle do fluxo do jogo é dado por meio dos botões KEY0, KEY1 e KEY2 da placa DE1-SoC. Por meio desses, os jogadores podem selecionar entre os modos <i>single player</i> (jogador vs computador) e <i>dual player</i> (jogador 1 vs jogador 2), encerrar uma partida antes da sua conclusão, ou ainda finalizar a execução do jogo.
 
-A seleção de um espaço vazio no tabuleiro, bem como a confirmação da jogada, dá-se por meio do mouse USB conectado ao kit de desenvolvimento. O usuário pode navegar pelos espaços do tabuleiro por meio da movimentação do mouse nos sentidos horizontal ou vertical, como ilustrado na figura abaixo. Ao chegar no quadrante em que deseja inserir o seu símbolo, o jogador pode confirmar a sua jogada por meio do botão esquerdo do mouse.
+A seleção de um espaço vazio no tabuleiro, bem como a confirmação da jogada, dá-se por meio do mouse USB conectado ao kit de desenvolvimento. O usuário pode navegar pelos espaços do tabuleiro por meio da movimentação do mouse nas direções horizontal ou vertical, como ilustrado na figura abaixo. Ao chegar no quadrante em que deseja inserir o seu símbolo, o jogador pode confirmar a sua jogada por meio do botão esquerdo do mouse.
 </div>
 <div align="center">
   <figure>  
     <img src="docs/images/exemplo-mov.png">
     <figcaption>
       <p align="center"><b>Figura 7</b>- Ilustração da seleção de um quadrante</p>
-      <p align="center">Fonte: Os autores</p>
-    </figcaption>
-  </figure>
-</div>
-
-<h3>Interface do Usuário</h3>
-
-<div align="justify">
-A seguir a descrição e demonstração as telas que o jogador/usuário tera acesso 
-
-Na tela de menu principal o usuário tem uma breve descrição de como jogar e logo em seguida as opções de iniciar um jogo single player, dual player ou sair do jogo, e ao lado o botão da placa correspondente a cada opção
-
-
-Caso seja pressionado a KEY1, será iniciado o jogo no modo dual player, onde retângulo ciano descreve a posição em que esta o cursor do mouse
-
-Caso seja pressionado a KEY2, será inciado o jogo no modo single player onde o jogador irá jogar com o circulo e o computador irá jogar com X, assim, o computador inicia jogando e logo após isso é a vez do jogador, que novamente esta representando pelo retângulo de cor ciano.
-
-Caso seja pressionado a KEY0 durante uma partida, a partida é finalizada imediatamente e o jogador é retornado ao menu principal, caso seja pressionado no menu principal o jogo é encerrado.
-
-Caso um dos jogadores ganhe sera exibido o jogador que ganhou e após 5 segundos o jogador será redirecionado ao menu principal.
-
-Caso o computador ganhe sera exibida a mensagem que o computador ganhou e logo após isso o usuário será retornado ao menu principal.
-
-Caso ocorra um empate, ou seja, caso não haja mais casas disponíveis para novas jogadas e nenhum dos jogadores tenham ganhado, será exibido uma mensagem avisando que houve um empate e o jogador será redirecionado para o menu principal.
-</div>
-
-<h3>Algoritmos do jogo </h3>
-<!--Ta perfeito, só faltou um "não" depois de Houve solicitação de finalização-->
-<div align="center">
-  <figure>  
-    <img src="docs/images/algoritmo.png">
-    <figcaption>
-      <p align="center"><b>Figura 8</b>- Fluxograma do algoritmo da partida</p>
-      <p align="center">Fonte: Os autores</p>
+      <p align="center">Fonte: Elaboração Própria.</p>
     </figcaption>
   </figure>
 </div>
@@ -261,13 +228,247 @@ Caso seja realizado um evento de clique, verifica qual botão foi pressionado e 
   <figure>  
     <img src="docs/images/mouse-tabuleiro.png">
     <figcaption>
-      <p align="center"><b>Figura 9</b>- Relação evento do mouse x quadrante do tabuleiro</p>
-      <p align="center">Fonte: Os autores</p>
+      <p align="center"><b>Figura 8</b>- Relação evento do mouse x quadrante do tabuleiro</p>
+      <p align="center">Fonte: Elaboração Própria.</p>
     </figcaption>
   </figure>
 </div>
+
+<h3>Jogada: Seleção da Jogada</h3>
+<div align="center">
+  <figure>  
+    <img src="docs/images/movimento_mouse.gif">
+    <figcaption>
+      <p align="center"><b>Figura 9</b>- Menu da tela inicial</p>
+      <p align="center">Fonte: Elaboração Própria. </p>
+    </figcaption>
+  </figure>
+</div>
+<div align="center">
+  <figure>  
+    <img src="docs/images/tela_movimento_mouse.gif">
+    <figcaption>
+      <p align="center"><b>Figura 10</b>- Menu da tela inicial</p>
+      <p align="center">Fonte: Elaboração Própria. </p>
+    </figcaption>
+  </figure>
+</div>
+<h3>Interface do Usuário</h3>
+
+<div align="justify">
+A seguir, a interface visível ao jogador e os cenários do jogo.
+
+Na tela de menu principal o usuário tem o título, uma breve descrição de como jogar e as opções selecionadas através do acionamento de cada KEY especificada. O jogador pode iniciar uma partida dual player (KEY1), single player (KEY2) ou sair do jogo (KEY3).
+<div align="center">
+  <figure>  
+    <img src="docs/images/menu.png">
+    <figcaption>
+      <p align="center"><b>Figura 11</b>- Menu da tela inicial</p>
+      <p align="center">Fonte: Elaboração Própria. </p>
+    </figcaption>
+  </figure>
+</div>
+Após o acionamento dos botões KEY1 ou KEY2, o tabuleiro do jogo é exibido na tela e é dado inicio à partida.
+<div align="center">
+    <figure>  
+      <img src="docs/images/tabuleiro_vazio.png">
+      <figcaption>
+        <p align="center"><b>Figura </b>- Tabuleiro do jogo/p>
+        <p align="center">Fonte: Elaboração Própria.</p>
+      </figcaption>
+    </figure>
+  </div>
+Caso seja pressionado a KEY1, será iniciado o jogo no modo dual player, onde retângulo ciano descreve a posição em que esta o cursor do mouse e o clique confirma a seleção do quadrante na vez de cada jogador.
+<div align="center">
+  <figure>  
+    <img src="docs/images/dual_player.gif">
+    <figcaption>
+      <p align="center"><b>Figura 12</b>- Partida no Modo Dual Player</p>
+      <p align="center">Fonte: Elaboração Própria.</p>
+    </figcaption>
+  </figure>
+</div>
+
+Caso seja pressionado a KEY2, será inciado o jogo no modo single player onde o jogador irá jogar com o símbolo círculo e o computador com X. Assim, o computador inicia jogando e logo após isso é a vez do jogador, representando pelo retângulo de cor ciano.
+<div align="center">
+  <figure>  
+    <img src="docs/images/vitoria_modo_single_player.gif">
+    <figcaption>
+      <p align="center"><b>Figura 13</b>- Partida no Modo Single Player</p>
+      <p align="center">Fonte: Elaboração Própria.</p>
+    </figcaption>
+  </figure>
+</div>
+
+Caso seja pressionado a KEY0 durante uma partida, esta será finalizada imediatamente e o jogo retorna ao menu principal. Quando acionado no menu principal o jogo é encerrado.
+
+<div align="center">
+  <figure>  
+    <img src="docs/images/acionando_fim_partida.gif">
+    <figcaption>
+      <p align="center"><b>Figura 14</b>- Acionamento do botão (KEY0) para encerramento da partida</p>
+      <p align="center">Fonte: Elaboração Própria.</p>
+    </figcaption>
+  </figure>
+</div>
+<div align="center">
+  <figure>  
+    <img src="docs/images/finalizando_partida.gif">
+    <figcaption>
+      <p align="center"><b>Figura 15</b>- Encerramento da partida através do botão KEY0</p>
+      <p align="center">Fonte: Elaboração Própria.</p>
+    </figcaption>
+  </figure>
+</div>
+
+Caso um dos jogadores ganhe sera exibido o jogador que ganhou e após 5 segundos o jogador será redirecionado ao menu principal.
+<div align="center">
+  <figure>  
+    <img src="docs/images/vitoria_1.gif">
+    <figcaption>
+      <p align="center"><b>Figura 16</b>- Vitória do Jogador 1</p>
+      <p align="center">Fonte: Elaboração Própria.</p>
+    </figcaption>
+  </figure>
+</div>
+
+Caso o computador ganhe sera exibida a mensagem que o computador ganhou e logo após isso o usuário será retornado ao menu principal.
+*Gravar vitoria Computador*
+
+
+Caso ocorra um empate, ou seja, caso não haja mais casas disponíveis para novas jogadas e nenhum dos jogadores tenham vencido, será exibido uma mensagem avisando que houve um empate e o jogador será redirecionado para o menu principal.
+
+<div align="center">
+  <figure>  
+    <img src="docs/images/empate.gif">
+    <figcaption>
+      <p align="center"><b>Figura 18</b>- Partida finalizada com empate</p>
+      <p align="center">Fonte: Elaboração Própria.</p>
+    </figcaption>
+  </figure>
+</div>
+</div>
+
+<h3>Algoritmos do jogo </h3>
+
+<!--descrever lógica do modo single player-->
+
+<!--Ta perfeito, só faltou um "não" depois de Houve solicitação de finalização-->
+<div align="center">
+  <figure>  
+    <img src="docs/images/algoritmo.png">
+    <figcaption>
+      <p align="center"><b>Figura 19</b>- Fluxograma do algoritmo da partida</p>
+      <p align="center">Fonte: Elaboração Própria.</p>
+    </figcaption>
+  </figure>
+</div>
+
+
 <h2>Solução Geral</h2>
-<h2>Testes</h2>
+<h2>Testes Realizados</h2>
+Os testes realizados para garantir o correto funcionamento do jogo são apresentados abaixo.
+<ul>
+  <li>Iniciar: Transição do menu para a tela da partida a partir do acionamento das KEY1 OU KEY2</li>
+  <div align="center">
+    <figure>  
+      <img src="docs/images/transicao_menu_partida.gif">
+      <figcaption>
+        <p align="center"><b>Figura </b>- Transição do menu para a tela da partida</p>
+        <p align="center">Fonte: Elaboração Própria.</p>
+      </figcaption>
+    </figure>
+  </div>
+  <li>Movimentação durante a partida: Seleção de Quadrante após o primeiro jogador</li>
+  <div align="center">
+    <figure>  
+      <img src="docs/images/move.gif">
+      <figcaption>
+        <p align="center"><b>Figura </b>- Movimentação durante a partida</p>
+        <p align="center">Fonte: Elaboração Própria.</p>
+      </figcaption>
+    </figure>
+  </div>
+  <li>Confirmação de jogada com Símbolo X. Click do mouse para confirmação da jogada com símbolo X no quadrante selecionado do tabuleiro.</li>
+  <div align="center">
+    <figure>  
+      <img src="docs/images/confirma_jogada_x.gif">
+      <figcaption>
+        <p align="center"><b>Figura </b>- Confirmação de jogada X atravé do mouse</p>
+        <p align="center">Fonte: Elaboração Própria.</p>
+      </figcaption>
+    </figure>
+  </div>
+  <li>Confirmação de jogada com Símbolo 0. Click do mouse para confirmação da jogada com símbolo 0 no quadrante selecionado do tabuleiro</li>
+  <div align="center">
+    <figure>  
+      <img src="docs/images/confirma_jogada_0.gif">
+      <figcaption>
+        <p align="center"><b>Figura </b>- Confirmação de jogada 0 através do mouse</p>
+        <p align="center">Fonte: Elaboração Própria.</p>
+      </figcaption>
+    </figure>
+  </div>
+  <li>Vitória na Vertical: Conjunto de 3 símbolos iguais na vertical.</li>
+  <div align="center">
+  <figure>  
+    <img src="docs/images/vitoria_2.gif">
+    <figcaption>
+      <p align="center"><b>Figura </b>- Vitória do 0 na Vertical</p>
+      <p align="center">Fonte: Elaboração Própria.</p>
+    </figcaption>
+  </figure>
+</div>
+  <li>Vitória na Horizontal: Conjunto de 3 símbolos iguais na horizontal.</li>
+  <div align="center">
+    <figure>  
+      <img src="docs/images/vitoria_3.gif">
+      <figcaption>
+        <p align="center"><b>Figura </b>- Vitória do 0 na Horizontal</p>
+        <p align="center">Fonte: Elaboração Própria.</p>
+      </figcaption>
+    </figure>
+  </div>
+  <li>Vitória na Diagonal: Conjunto de 3 símbolos iguais na diagonal.</li>
+  <div align="center">
+  <figure>  
+    <img src="docs/images/vitoria_1.gif">
+    <figcaption>
+      <p align="center"><b>Figura </b>- Vitória do X na Diagonal</p>
+      <p align="center">Fonte: Elaboração Própria.</p>
+    </figcaption>
+  </figure>
+</div>
+  <li>Vitória do Computador</li>
+  <li>Empate: deu Velha ou Draw. Nenhum dos jogadores completa uma trilha de símbolos iguais.</li>
+  <div align="center">
+  <figure>  
+    <img src="docs/images/empate.gif">
+    <figcaption>
+      <p align="center"><b>Figura </b>- Empate: deu velha</p>
+      <p align="center">Fonte: Elaboração Própria.</p>
+    </figcaption>
+  </figure>
+</div>
+  <li>Interrupção do Jogo durante a partida</li>
+  <div align="center">
+    <figure>  
+      <img src="docs/images/transicao_menu_partida.gif">
+      <figcaption>
+        <p align="center"><b>Figura </b>- Transição do menu para a tela da partida</p>
+        <p align="center">Fonte: Elaboração Própria.</p>
+      </figcaption>
+    </figure>
+  </div>
+  <li>Sair do Jogo no Menu</li>
+</ul>
+
+<h2>Conclusão</h2>
+<div align="justify">
+O desenvolvimento do clássico jogo <i>Tic-Tac-Toe</i> em linguagem C no kit de desenvolvimento DE1-Soc se mostrou desafiadora, porém gratificante como primeiro projeto de sistemas digitais. Todos os requisitos foram atendidos utilizando as interfaces disponíveis na placa DE1-SoC e as políticas de gerenciamento de sistema operacional Linux em arquitetura ARM para a criação de soluções e implementação do jogo. A funcionalidade e eficiência do sistema foi evidenciada nos testes, que confirmaram a consistência do jogo nos diferentes modos e condições.
+
+Além de compreender os princípio básicos da arquitetura da plataforma DE1-SoC, este projeto proporcionou o aprofundamento e prática em uma distribuição Linux embarcada e dos conceitos de interação entre hardware e software.
+</div>
 
 <h2>Descrição de instalação, configuração de ambiente e execução</h2>
 
@@ -276,34 +477,35 @@ Caso seja realizado um evento de clique, verifica qual botão foi pressionado e 
 A seguir estão listados os passos necessários para a execução do jogo em outro dispositivo FPGA DE1-SoC 
 
 <h3>Requisitos:</h3>
-Possuir conexão com internet;<br>
-Possuir o compilador gcc;<br>
-Possuir o git instalado;<br>
-Estar utilizando uma placa de desenvolvimento FPGA DE1-SoC;<br>
-Possuir um mouse conectado a placa;<br>
+<ul>
+<li>Possuir conexão com internet;<br></li>
+<li>Possuir o compilador gcc;<br></li>
+<li>Possuir o git instalado;<br></li>
+<li>Estar utilizando uma placa de desenvolvimento FPGA DE1-SoC;<br></li>
+<li>Possuir um mouse conectado a placa;<br></li>
+</ul>
+Caso todos os requisitos anteriores sejam satisfeitos basta seguir o passo a passo
 
-Caso todos os requisitos anteriores sejam satisfeitos basta seguir  o passo a passo
-
-<h3>passo 1: clonar o repositorio</h3>
+<h3>1: clonar o repositorio</h3>
 
 abra o terminal do seu dispositivo e execute o seguinte comando
  ```
 git clone https://github.com/brendabo1/Sistema-Digital-TicTacToe.git
 ```
 
-<h3>passo 2: acessar a pasta source e compilar o codigo com o gcc</h3>
+<h3>2: acessar a pasta source e compilar o codigo com o gcc</h3>
 
 para acessar a pasta source basta execultar o seguinte comando
 ```
 cd source/
 ```
-<h3>Passo 3: compilar o codigo</h3>
+<h3>3: compilar o codigo</h3>
 execulte o seguinte comando para realizar a compilação do projeto
 
 ```
 make all
 ```
-<h3>Passo 4: execute o jogo</h3>
+<h3>4: execute o jogo</h3>
 para execultar o jogo basta execultar o seguinte comando
 
 ```
