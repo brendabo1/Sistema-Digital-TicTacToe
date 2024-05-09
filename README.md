@@ -134,6 +134,13 @@ A memória virtual é uma técnica utilizada para gerenciamento de memória nos 
 Para realizar o mapeamento do endereço físico da porta KEY, foram utilizadas as funções <code>mmap()</code> e <code>unmap()</code> e o arquivo <code>/dev/mem</code> (arquivo do Linux que contém um espelho da memória do computador). A partir do endereço virtual gerado, pode-se acessar o registrador <i>edgecapture</i>.
 </div>
 <h4>Porta USB <i>host</i></h4>
+<div align="justify">
+USB ou Barramento Serial Universal é um padrão de conexão que permite a anexação de ate 127 dispositivos sem a necessidade de reiniciar o dispositivo, sendo assim realizadas todas as configurações para funcionamento do dispositivo em tempo de execução. O padrão USB também dispensa o uso de drivers, fazendo com que toda a configuração do dispositivo seja automática.
+
+A comunicação entre um dispositivo host(computador) e um periférico pode envolver a troca de ate três pacotes de dados, sendo o primeiro, enviado pelo host que informa dados como endereço do dispositivo de destino, tipo de transação, fluxo de dados, entre outros
+
+No caso da placa DE1-SoC os conectores USB estão ligados a um HUB controlador que se comunica diretamente com o HPS, assim, quem por fim gerencia as portas é o SO instalado e em execução na processador ARM da placa, o que facilita o desenvolvimento e utilização das mesmas.
+</div>
 <h4>Mouse USB</h4>
 <!--Processo de leitura do arquivo dev/input, decodificação da struct, deslocamento relativo da posição
 Arquivos especiais permitem que dispositivos 
@@ -160,7 +167,7 @@ Segundo a documentação, a seguinte sctruct em linguagem C poderia ser utilizad
   </figure>
 </div>
 
-<div align="justify">>
+<div align="justify">
 Como o kernel usa um arquivo binário para realizar a comunicação com o dispositivo, utilizou-se das funções <code>fopen()</code> e <code>fread()</code> para realizar a leitura do mesmo, assim sendo possível uma melhor exibição do arquivo assim sendo possível também entender melhor o que cada evento significava.
 Apos esse avanço, foi definido que os tipos de eventos desejados seriam eventos de click e eventos de aceleração, também chamado de movimentação.
 
@@ -175,11 +182,15 @@ Foi adicionado a biblioteca outras 2 funções, uma que realiza a abertura do ar
 </div>
 
 <h2>O Jogo</h2>
+<div align="justify">
 <i>Tic tac toe</i>, ou jogo da velha, é um jogo atemporal e de fácil entendimento. O jogo consiste em dois jogadores que, de forma alternada, desenham símbolos ('x' ou 'o') em uma matriz 3x3. Durante a partida, um quadrante ocupado não pode ser selecionado. Vence o jogo o player que conseguir formar primeiro uma linha - seja na horizontal, vertical ou diagonal - com o seu símbolo. Caso todas as casas tenham sido preenchidas sem que nenhum jogador forme uma linha, o jogo finaliza em empate (ou 'velha').
+</div>
 <h3>Jogabilidade</h3>
+<div align="justify">
 O controle do fluxo do jogo é dado por meio dos botões KEY0, KEY1 e KEY2 da placa DE1-SoC. Por meio desses, os jogadores podem selecionar entre os modos <i>single player</i> (jogador vs computador) e <i>dual player</i> (jogador 1 vs jogador 2), encerrar uma partida antes da sua conclusão, ou ainda finalizar a execução do jogo.
 
 A seleção de um espaço de um espaço vazio no tabuleiro, bem como a confirmação da jogada, dá-se por meio do mouse USB conectado ao kit de desenvolvimento. O usuário pode navegar pelos espaços do tabuleiro por meio da movimentação do mouse nos sentidos horizontal ou vertical, como ilustrado na figura abaixo. Ao chegar no quadrante em que deseja inserir o seu símbolo, o jogador pode confirmar a sua jogada por meio do botão esquerdo do mouse.
+</div>
 <div align="center">
   <figure>  
     <img src="docs/images/exemplo-mov.png">
@@ -192,11 +203,31 @@ A seleção de um espaço de um espaço vazio no tabuleiro, bem como a confirma�
 
 <h3>Interface do Usuário</h3>
 <h3>Algoritmos do jogo </h3>
+<div align="center">
+  <figure>  
+    <img src="docs/images/algoritmo.png">
+    <figcaption>
+      <p align="center"><b>Figura 6</b>- Fluxograma do algoritmo da partida</p>
+      <p align="center">Fonte: Os autores</p>
+    </figcaption>
+  </figure>
+</div>
 <h3>O Tabuleiro</h3>
+<div align="justify">
 No momento do desenvolvimento da logica do jogo foi notado que seria necessário fazer uma camada que convertesse as leituras do mouse pra ações e coordenadas validas dentro do jogo, por esse motivo foi implementado um modulo de interface de comunicação entre o mouse e o jogo.
 O modulo da interface recebe do mouse a realização de eventos e, enquanto não for realizada a leitura de um evento valido o interface fica solicitando a entrada de um novo evento pelo mouse, no momento que um evento valido é detectado ele é realizada a identificação se é um evento de movimento ou um evento de clique.
 Caso o evento seja de movimentação é realizada a chamada de uma função que verifica se, em um tabuleiro 3x3 e na posição que o cursor se encontra no momento, aquele movimento é valido, caso seja realiza a alteração da coordenada do cursor em decorrência do tipo de movimento, incrementando ou decrementando um nos eixos x e y, e atribui essa nova posição ao vetor de retorno, entretanto, caso o movimento seja valido, mas não seja possível de realizar no momento, é retornada as coordenadas atuais, sem realizar alterações.
 Caso seja realizado um evento de clique, verifica qual botão foi pressionado e atribui ao vetor de retorno, na posição destinada para cliques, o valor do botão.
+</div>
+<div align="center">
+  <figure>  
+    <img src="docs/images/mouse-tabuleiro.png">
+    <figcaption>
+      <p align="center"><b>Figura 6</b>- Relação evento do mouse x quadrante do tabuleiro</p>
+      <p align="center">Fonte: Os autores</p>
+    </figcaption>
+  </figure>
+</div>
 <h2>Solução Geral</h2>
 <h2>Testes</h2>
 
@@ -209,4 +240,5 @@ https://gcc.gnu.org/onlinedocs/gcc-14.1.0/gcc.pdf ou https://gcc.gnu.org/onlined
 http://uab.ifsul.edu.br/tsiad/conteudo/modulo1/hco/hco_ua/mouse.pdf  fala sobre o mouse e funcionamento do mesmo
 https://www.kernel.org/doc/html/latest/input/input_uapi.html kernel do linux
 file:///C:/Users/Visitante%201/Documents/Arquitetura%20de%20Comp%20e%20SD/DE1-SoC_Computer_ARM.pdf
+https://www.gta.ufrj.br/grad/01_1/usb/usb.htm#%C2%A7%201.1%20%E2%80%93%20Objetivos%20de%20desenvolvimento%20do%20USB 
 -->
