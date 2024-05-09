@@ -171,6 +171,21 @@ Foi adicionado a biblioteca outras 2 funções, uma que realiza a abertura do ar
 </div>
 
 <h2>O Jogo</h2>
+<i>Tic tac toe</i>, ou jogo da velha, é um jogo atemporal e de fácil entendimento. O jogo consiste em dois jogadores que, de forma alternada, desenham símbolos ('x' ou 'o') em uma matriz 3x3. Durante a partida, um quadrante ocupado não pode ser selecionado. Vence o jogo o player que conseguir formar primeiro uma linha - seja na horizontal, vertical ou diagonal - com o seu símbolo. Caso todas as casas tenham sido preenchidas sem que nenhum jogador forme uma linha, o jogo finaliza em empate (ou 'velha').
+<h3>Jogabilidade</h3>
+O controle do fluxo do jogo é dado por meio dos botões KEY0, KEY1 e KEY2 da placa DE1-SoC. Por meio desses, os jogadores podem selecionar entre os modos <i>single player</i> (jogador vs computador) e <i>dual player</i> (jogador 1 vs jogador 2), encerrar uma partida antes da sua conclusão, ou ainda finalizar a execução do jogo.
+
+A seleção de um espaço de um espaço vazio no tabuleiro, bem como a confirmação da jogada, dá-se por meio do mouse USB conectado ao kit de desenvolvimento. O usuário pode navegar pelos espaços do tabuleiro por meio da movimentação do mouse nos sentidos horizontal ou vertical, como ilustrado na figura abaixo. Ao chegar no quadrante em que deseja inserir o seu símbolo, o jogador pode confirmar a sua jogada por meio do botão esquerdo do mouse.
+<div align="center">
+  <figure>  
+    <img src="docs/images/exemplo-mov.png">
+    <figcaption>
+      <p align="center"><b>Figura 5</b>- Ilustração da seleção de um quadrante</p>
+      <p align="center">Fonte: Os autores</p>
+    </figcaption>
+  </figure>
+</div>
+
 <h3>Interface do Usuário</h3>
 <h3>Algoritmos do jogo </h3>
 <h3>O Tabuleiro</h3>
