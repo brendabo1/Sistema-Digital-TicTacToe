@@ -492,10 +492,10 @@ Os testes realizados para garantir o correto funcionamento do jogo são apresent
     </figcaption>
   </figure>
 </div>
-  <li>Interrupção do Jogo durante a partida</li>
+  <li>Interrupção do Jogo durante a partida pelo acionamento da KEY0</li>
   <div align="center">
     <figure>  
-      <img src="docs/images/transicao_menu_partida.gif">
+      <img src="docs/images/finalizando_partida.gif">
       <figcaption>
         <p align="center"><b>Figura 32</b>- Transição do menu para a tela da partida</p>
         <p align="center">Fonte: Elaboração Própria.</p>
