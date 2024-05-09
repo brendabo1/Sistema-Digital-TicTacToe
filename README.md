@@ -28,8 +28,8 @@ A solução deve atender às condições e aos requisitos predetermminados, de m
 <h2>Equipe</h2>
 <ul>
   <li>Brenda Barbosa</li>
-  <li>Camila</li>
-  <li>Maike</li>
+  <li>Camila Queiroz</li>
+  <li>Maike de Oliveira</li>
 </ul>
 <!-- Sumário pra configurar depois
 <details open>
