@@ -142,11 +142,7 @@ No caso da placa DE1-SoC os conectores USB estão ligados a um HUB controlador q
 
 Sendo a movimentação do jogador no tabuleiro realizada através do mouse conectada a porta USB, a obtenção dos dados do dispositivo gerenciado pela distribuição Linux embarcada segue os padrões definidos pelo sistema operacional. Segundo Tanenbaum *adicionar citação*, em sistemas UNIX, arquivos especiais permitem que dispositivos de E/S se pareçam com arquivos, permitindo as mesmas chamadas para ler e escrever arquivos que são mantidos no diretório <i>/dev</i>. Desse modo, o arquivo correspondente ao mouse USB bem como seus dados são encontrados no caminho <i>/dev/input/event0</i> da placa. Este arquivo contém o instante do evento, seu tipo, código e valor. O padrão dos registros de dispositivos USB é definido na documentação da Linux Kernel Organization *incluir referencia* e apresentado na Figura 5. A struct em linguagem C foi aplicada na decodificação dos eventos do mouse.
 
-<!--captura e leitura dos dados se dá através do mouse e é obtida através da, O desenvolvimento do biblioteca de leitura do mouse foi realizado com base na [documentação do kernel Linux]. Além de analises e testes realizados em laboratório com os documentos e informações.
-Inicialmente utilizou-se o comando Hexdump para a exibição, no terminal do linux dos bits que estavam dentro do arquivo de Dispositivo do mouse, event0, de forma hexadecimal. Ao realizar a leitura do arquivo constatou-se 2 coisas, a primeira era que toda vez que um evento era realizado por um dispositivo, os dados do arquivo eram reescritos assim não mantendo um log dos eventos passados. Outra constatação foi em padrões de bits para cada evento realizado pelo mouse.
-Segundo a documentação, a seguinte sctruct em linguagem C poderia ser utilizada para fazer a leitura dos eventos de dispositivos usb:
-
-
+<!--
 Dessa maneira, as análises realizadas permitiram compreender os eventos e  Como o kernel usa um arquivo binário para realizar a comunicação com o dispositivo, utilizou-se das funções  para realizar a leitura do mesmo, assim sendo possível uma melhor exibição do arquivo assim sendo possível também entender melhor o que cada evento significava.
 
 Na realização dessas analises se constatou outro fato, seria necessário definir um valor mínimo de aceleração, pois qualquer toque sutil no mouse já era capaz de gerar eventos de aceleração, o que tornaria instável a usabilidade do mesmo. Para tal ato utilizou-se de base o valor 3, sendo -3 para eventos no sentido oposto
@@ -266,7 +262,7 @@ Após o acionamento dos botões KEY1 ou KEY2, o tabuleiro do jogo é exibido na 
     <figure>  
       <img src="docs/images/tabuleiro_vazio.png">
       <figcaption>
-        <p align="center"><b>Figura </b>- Tabuleiro do jogo/p>
+        <p align="center"><b>Figura </b>- Tabuleiro do jogo</p>
         <p align="center">Fonte: Elaboração Própria.</p>
       </figcaption>
     </figure>
@@ -344,22 +340,7 @@ Caso ocorra um empate, ou seja, caso não haja mais casas disponíveis para nova
 
 <h3>Algoritmos do jogo </h3>
 
-<!--processos que es￾tão trabalhando juntos podem compartilhar de alguma 
-memória comum que cada um pode ler e escrever. 
- Situações como essa, em que dois 
-ou mais processos estão lendo ou escrevendo alguns da￾dos compartilhados e o resultado final depende de quem 
-executa precisamente e quando, são chamadas de con￾dições de corrida.
-
- é encontrar alguma maneira 
-de proibir mais de um processo de ler e escrever os da￾dos compartilhados ao mesmo tempo. 
-Essa parte do programa onde a memória compar￾tilhada é acessada é chamada de região crítica ou seção 
-crítica. Se conseguíssemos arranjar as coisas de maneira 
-que jamais dois processos estivessem em suas regiões 
-críticas ao mesmo tempo, poderíamos evitar as corridas. 
-
-Um mutex é uma variável compartilhada que pode 
-estar em um de dois estados: destravado ou travado
-
+<!--
 will synchronize the positions and state of the objects in the world with the Render Thread, which will do all of the rendering logic and make sure to display them.
 -->
 <!--Ta perfeito, só faltou um "não" depois de Houve solicitação de finalização-->
@@ -526,14 +507,21 @@ sudo ./tic-tac-toe
 </div>
 
 <h2>Referências</h2>
+
+IASBIK, M. P. Tic Tac Toe: O Jogo da Velha que Encanta Gerações. Disponível em: <https://www.gadoo.com.br/dicas/tic-tac-toe/>. Acesso em: 6 maio. 2024.
+
+GCC online documentation - GNU Project. Disponível em: <https://gcc.gnu.org/onlinedocs/>. Acesso em: 7 maio. 2024.
+
+Linux Input Subsystem userspace API — The Linux Kernel documentation. Disponível em: <https://www.kernel.org/doc/html/latest/input/input_uapi.html>. Acesso em: 8 maio. 2024.
+
+MARTINS, Luiz. Apostila de Linguagem C (Conceitos Básicos), Virtual Books. Disponível em: <https://www.facom.ufu.br/~gustavo/ED1/Apostila_Linguagem_C.pdf>. Acesso em: 6 maio. 2024.
+
+TANENBAUM, A. S.; BOS, Herbert. Sistemas operacionais modernos. 4. ed. São Paulo: Pearson Education do Brasil, 2016.
+
+The Linux Kernel documentation — The Linux Kernel documentation. Disponível em: <https://www.kernel.org/doc/html/latest/>.
+
+Universal Serial Bus. Disponível em: <https://www.gta.ufrj.br/grad/01_1/usb/usb.htm#%C2%A7%201.1%20%E2%80%93%20Objetivos%20de%20desenvolvimento%20do%20USB>. Acesso em: 8 maio. 2024.
 <!--
-https://www.gadoo.com.br/dicas/tic-tac-toe/
-https://www.facom.ufu.br/~gustavo/ED1/Apostila_Linguagem_C.pdf
-https://gcc.gnu.org/onlinedocs/gcc-14.1.0/gcc.pdf ou https://gcc.gnu.org/onlinedocs/
 http://uab.ifsul.edu.br/tsiad/conteudo/modulo1/hco/hco_ua/mouse.pdf  fala sobre o mouse e funcionamento do mesmo
-https://www.kernel.org/doc/html/latest/input/input_uapi.html kernel do linux
 file:///C:/Users/Visitante%201/Documents/Arquitetura%20de%20Comp%20e%20SD/DE1-SoC_Computer_ARM.pdf
-https://www.gta.ufrj.br/grad/01_1/usb/usb.htm#%C2%A7%201.1%20%E2%80%93%20Objetivos%20de%20desenvolvimento%20do%20USB  fala sobre a usb
-https://www.gta.ufrj.br/grad/01_1/usb/usb.htm#%C2%A7%201.1%20%E2%80%93%20Objetivos%20de%20desenvolvimento%20do%20USB 
-(https://www.kernel.org/doc/html/latest/)
 -->
