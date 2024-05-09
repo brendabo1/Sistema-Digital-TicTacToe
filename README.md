@@ -64,7 +64,7 @@ Nessa seção são apresentados os softwares que auxiliaram no desenvolvimento d
 <h2>Arquitetura do Computador Utilizado nos Testes</h2>
 Nesta seção, exploraremos o dispositivo embarcado utilizado bem como os componentes do Kit de Desenvolvimento DE1-SoC. 
 <h3>O Kit de Desenvolvimento DE1-SoC</h3>
-<p align="justify">Equipado com um processador, USB, memória DDR3, Ethernet e uma gama de periféricos, o kit de desenvolvimento DE1-SoC (Figura 1) integra no mesmo Cyclone V sistema em chip (SoC) um <i>hard processor system</i> (HPS) a uma FPGA <i>(Field Programmable Gate Arrays)</i>. Este design permite uma grande flexibilidade da placa nas mais variadas aplicações. </p> 
+<p align="justify">Equipado com um processador, USB, memória DDR3, Ethernet e uma gama de periféricos, o kit de desenvolvimento DE1-SoC (Figura 1) integra no mesmo Cyclone V sistema em chip (SoC) um <i>hard processor system</i> (HPS) a uma FPGA <i>(Field Programmable Gate Arrays)</i>. Este design permite uma grande flexibilidade da placa nas mais variadas aplicações. Para o acesso ao sistema operacional embarcado no kit o protocolo de rede SSH <i>(Secure Shell)</i> foi utilizado, estabelecendo uma conexão criptografada para comunicação entre os dispositivos.</p> 
 <div align="center">
   <figure>  
     <img src="docs/images/kit_desenvolvimento_DE1-SoC.jpg">
@@ -75,8 +75,8 @@ Nesta seção, exploraremos o dispositivo embarcado utilizado bem como os compon
   </figure>
 </div>
 
-<h3>Sistema Computacional DE1-SoC 2</h3>
-<div align="justify">O diagrama de blocos do sistema computacional apresentado na figura 2 explicita os componentes Cyclone® V da Intel bem como os dipositivos e conexões. O HPS inclui um processador ARM Cortex-A9 de 2 núcleos para processamento de propósito geral além da memória DDR3 e dispositivos perféricos. Já a FPGA possibilita uma variedade de implementações através da programação dos blocos lógicos. 
+<h3>Sistema Computacional DE1-SoC</h3>
+<div align="justify">O diagrama de blocos do sistema computacional apresentado na figura 2 explicita os componentes Cyclone® V da Intel bem como os dipositivos e conexões. O HPS inclui um processador ARM Cortex-A9 de 2 núcleos com uma distribuição Linux embarcado para processamento de propósito geral além da memória DDR3 e dispositivos perféricos. Já a FPGA possibilita uma variedade de implementações através da programação dos blocos lógicos.
 
 A comunicação entre a o HPS e a FPGA se dá por meio das <i>FPGA bridges</i> no dispositivo. Assim, todos os dispositivos de entrada e saída conectados a placa são acessíveis ao processador através do mapeamento de memória, utilizando o sumário de endereços definidos na documentação da placa<!--citar FPGAcademy DE1-SoC Computer System with ARM* Cortex* A9-->.</div>
 
@@ -135,8 +135,15 @@ Para realizar o mapeamento do endereço físico da porta KEY, foram utilizadas a
 </div>
 <h4>Porta USB <i>host</i></h4>
 <h4>Mouse USB</h4>
-<!--Processo de leitura do arquivo dev/input, decodificação da struct, deslocamento relativo da posição-->
-<div align="justify">O desenvolvimento do biblioteca de leitura do mouse foi realizado com base na [documentação do kernel Linux](https://www.kernel.org/doc/html/latest/). Além de analises e testes realizados em laboratório com os documentos e informações.
+<!--Processo de leitura do arquivo dev/input, decodificação da struct, deslocamento relativo da posição
+Arquivos especiais permitem que dispositivos 
+de E/S se pareçam com arquivos. Dessa maneira, eles 
+podem ser lidos e escritos com as mesmas chamadas 
+de sistema que são usadas para ler e escrever arquivos
+-->
+<div align="justify">Sendo a movimentação do jogador no tabuleiro realizada através do mouse, a obtenção dos dados do dispositivo gerenciado pela distribuição Linux embarcada segue os padrões definidos pelo sistema operacional. Segundo Tanenbaum *adicionar citação*, em sistemas UNIX, arquivos especiais permitem que dispositivos de E/S se pareçam com arquivos, permitindo as mesmas chamadas para ler e escrever arquivos que são mantidos no diretório <i>/dev</i>. Desse modo, o arquivo correspondente ao mouse USB bem como seus dados são encontrados no caminho <i>/dev/input/event0</i> da placa. Este arquivo contém as 
+
+<!--captura e leitura dos dados se dá através do mouse e é obtida através da, O desenvolvimento do biblioteca de leitura do mouse foi realizado com base na [documentação do kernel Linux](https://www.kernel.org/doc/html/latest/). Além de analises e testes realizados em laboratório com os documentos e informações.-->
 
 Segundo a própria documentação do kernel, dispositivos de entrada e saida USBs se comunicam e são reconhecido como arquivos do tipo Dispositivo que ficam dentro da pasta /dev/input, cada dispositivo tem suas entradas e saidas, mas no geral os dipositivos armazenam um campo onde ficam localizadas as informações de instante em que um evento foi realizado, qual foi o tipo de evento, qual o código do evento e qual o valor do evento.
 
