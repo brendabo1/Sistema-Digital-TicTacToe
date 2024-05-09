@@ -148,42 +148,46 @@ de E/S se pareçam com arquivos. Dessa maneira, eles
 podem ser lidos e escritos com as mesmas chamadas 
 de sistema que são usadas para ler e escrever arquivos
 -->
-<div align="justify">Sendo a movimentação do jogador no tabuleiro realizada através do mouse, a obtenção dos dados do dispositivo gerenciado pela distribuição Linux embarcada segue os padrões definidos pelo sistema operacional. Segundo Tanenbaum *adicionar citação*, em sistemas UNIX, arquivos especiais permitem que dispositivos de E/S se pareçam com arquivos, permitindo as mesmas chamadas para ler e escrever arquivos que são mantidos no diretório <i>/dev</i>. Desse modo, o arquivo correspondente ao mouse USB bem como seus dados são encontrados no caminho <i>/dev/input/event0</i> da placa. Este arquivo contém as 
+<div align="justify">Sendo a movimentação do jogador no tabuleiro realizada através do mouse, a obtenção dos dados do dispositivo gerenciado pela distribuição Linux embarcada segue os padrões definidos pelo sistema operacional. Segundo Tanenbaum *adicionar citação*, em sistemas UNIX, arquivos especiais permitem que dispositivos de E/S se pareçam com arquivos, permitindo as mesmas chamadas para ler e escrever arquivos que são mantidos no diretório <i>/dev</i>. Desse modo, o arquivo correspondente ao mouse USB bem como seus dados são encontrados no caminho <i>/dev/input/event0</i> da placa. Este arquivo contém o instante do evento, seu tipo, código e valor. O padrão dos registros de dispositivos USB é definido na documentação da Linux Kernel Organization *incluir referencia* e apresentado na Figura 5. A struct em linguagem C foi aplicada na decodificação dos eventos do mouse.
 
-<!--captura e leitura dos dados se dá através do mouse e é obtida através da, O desenvolvimento do biblioteca de leitura do mouse foi realizado com base na [documentação do kernel Linux](https://www.kernel.org/doc/html/latest/). Além de analises e testes realizados em laboratório com os documentos e informações.-->
-
-Segundo a própria documentação do kernel, dispositivos de entrada e saida USBs se comunicam e são reconhecido como arquivos do tipo Dispositivo que ficam dentro da pasta /dev/input, cada dispositivo tem suas entradas e saidas, mas no geral os dipositivos armazenam um campo onde ficam localizadas as informações de instante em que um evento foi realizado, qual foi o tipo de evento, qual o código do evento e qual o valor do evento.
-
+<!--captura e leitura dos dados se dá através do mouse e é obtida através da, O desenvolvimento do biblioteca de leitura do mouse foi realizado com base na [documentação do kernel Linux]. Além de analises e testes realizados em laboratório com os documentos e informações.
 Inicialmente utilizou-se o comando Hexdump para a exibição, no terminal do linux dos bits que estavam dentro do arquivo de Dispositivo do mouse, event0, de forma hexadecimal. Ao realizar a leitura do arquivo constatou-se 2 coisas, a primeira era que toda vez que um evento era realizado por um dispositivo, os dados do arquivo eram reescritos assim não mantendo um log dos eventos passados. Outra constatação foi em padrões de bits para cada evento realizado pelo mouse.
-Segundo a documentação, a seguinte sctruct em linguagem C poderia ser utilizada para fazer a leitura dos eventos de dispositivos usb: 
+Segundo a documentação, a seguinte sctruct em linguagem C poderia ser utilizada para fazer a leitura dos eventos de dispositivos usb:
+
+
+Dessa maneira, as análises realizadas permitiram compreender os eventos e  Como o kernel usa um arquivo binário para realizar a comunicação com o dispositivo, utilizou-se das funções  para realizar a leitura do mesmo, assim sendo possível uma melhor exibição do arquivo assim sendo possível também entender melhor o que cada evento significava.
+
+Na realização dessas analises se constatou outro fato, seria necessário definir um valor mínimo de aceleração, pois qualquer toque sutil no mouse já era capaz de gerar eventos de aceleração, o que tornaria instável a usabilidade do mesmo. Para tal ato utilizou-se de base o valor 3, sendo -3 para eventos no sentido oposto
+ -->
+ 
 </div>
 <div align="center">
   <figure>  
     <img src="docs/images/struct-do-mouse.png">
     <figcaption>
-      <p align="center"><b>Figura 5</b> - Struct em C do mouse </p>
+      <p align="center"><b>Figura 5</b> - Struct em C de evento de entrada dos dispositivos via USB</p>
       <p align="center">Fonte: kernel.org</p>
     </figcaption>
   </figure>
 </div>
 
 <div align="justify">
-Como o kernel usa um arquivo binário para realizar a comunicação com o dispositivo, utilizou-se das funções <code>fopen()</code> e <code>fread()</code> para realizar a leitura do mesmo, assim sendo possível uma melhor exibição do arquivo assim sendo possível também entender melhor o que cada evento significava.
-Apos esse avanço, foi definido que os tipos de eventos desejados seriam eventos de click e eventos de aceleração, também chamado de movimentação.
+Para a compreensão do arquivo binário de registros do mouse, as funções <code>fopen()</code> e <code>fread()</code> da bibloteca <i>stdio</i> foram empregadas. Sendo assim possível compreender a dinâmica dos eventos, seus tipos e especificações. A partir das análises realizadas, constatou-se que os dados do arquivos são sobrescritos a cada novo evento e alteração não acumulando um histórico.
 
-Os eventos de aceleração ocorrem quando ha a movimentação do mouse sobre alguma superfície, assim retornando um valor de código correspondente ao eixo de movimentação e o valor a referente a aceleração e sentido a qual o mouse foi movimentado. Por exemplo, suponha que o mouse esta sobre a mesa e  seja movimentado da direita para a esquerda, enquanto isso esta sendo realizado a leitura do arquivo event0, sera retornado a struct um evento com valor de tipo igual a 2 e valor de código igual 0, além de um valor negativo, que indica o sentido e valor de aceleração. Esse valor de aceleração é calculado com base no deslocamento relativo da superfície abaixo do mouse, calculado pelo sensor óptico mediante ao feixe de luz emitido pelo LED embutido neste dispositivo, quando há movimentação do mouse, o sensor calcula e defini o sentido relativo que o mouse esta sendo movimentado e defini também a aceleração na qual foi realizada esse movimento.
+Apos esse avanço, foi definido que os tipos de eventos desejados seriam os eventos de click e os eventos de aceleração, também chamado de movimentação explicados a seguir:
+<ul>
+  <li>Eventos de clique são registrados quando algum dos botões do mouse é pressionado ou solto, retornando 1 ou 0 respectivamente no campo de valor. Um evento de clique tem valor <code>type</code> igual a 2 e valor do <code>code</code> correspondente ao botão pressionado.</li>
+  <li>Eventos de aceleração ocorrem quando há a movimentação do mouse sobre alguma superfície, retornando, então, um  código correspondente ao eixo de movimentação, o sentido, esqueda, direita, cima, baixo, e o módulo correspondente ao deslocamento relativo do mouse. Por exemplo, ao movimentar o mouse da direita para a esquerda será retornado uma struct correspondente a um evento com tipo igual a 2, indicando o movimento do dispositivo, código igual 0 para o eixo X e valor negativo para o sentido do deslocamento. Tais dados compõe o vetor aceleração do mouse *colocar IMAGEM dos eixos e sentido do mouse* capturado pelo seu sensor optico a partir do deslocamento relativo.</li> 
+</ul> 
 
-Os eventos de clique são mais simples, como o próprio nome já diz, ele é um evento que ocorre quando algum dos botões do mouse é pressionado ou solto, retornando 1 ou 0 respectivamente no campo de valor. Além disso, os eventos de clique tem valor de tipo igual a 2 e o valor do código é correspondente ao botão pressionado.
-Na realização dessas analises se constatou outro fato, seria necessário definir um valor mínimo de aceleração, pois qualquer toque sutil no mouse já era capaz de gerar eventos de aceleração, o que tornaria instável a usabilidade do mesmo. Para tal ato utilizou-se de base o valor 3, sendo -3 para eventos no sentido oposto.
+Além disso, durante o desenvolvimento, foi adotado um valor mínimo de aceleração igual a 3, de modo a ignorar a leitura de toques muito sutis capazes de prejudicar a experiência do jogador. Também, foi notado que ao realizar a leitura de um evento o sinal é perpetuado por alguns instantes, fazendo com que a leitura do evento seja replicada por um determinado período de tempo. Para solucionar esse problema utilizou-se um contador, incrementado em 1 a cada evento lido, que retorna o evento de movimentação, bem como seus dados de módulo, direção e sentido quando o contador chega a 7. 
 
-Outro problema foi notado durante a fase de experimentação é que, ao realizar a leitura de um evento o sinal é perpetuado por alguns instantes, fazendo com que a leitura do evento seja replicada por um determinado período de tempo. Para solucionar esse problema utilizou-se um contador, onde sempre que um evento for realizado é incrementado em um, e que ao chegar ao valor de 7 retorna que ocorreu um evento de movimentação e em qual sentido, sendo eles: cima, baixo, esquerda e direita.
-Foi adicionado a biblioteca outras 2 funções, uma que realiza a abertura do arquivo do mouse e uma que realiza o do mesmo fechamento.
-
+<!--Foi adicionado a biblioteca outras 2 funções, uma que realiza a abertura do arquivo do mouse e uma que realiza o do mesmo fechamento.-->
 </div>
 
 <h2>O Jogo</h2>
 <div align="justify">
-<i>Tic tac toe</i>, ou jogo da velha, é um jogo atemporal e de fácil entendimento. O jogo consiste em dois jogadores que, de forma alternada, desenham símbolos ('x' ou 'o') em uma matriz 3x3. Durante a partida, um quadrante ocupado não pode ser selecionado. Vence o jogo o player que conseguir formar primeiro uma linha - seja na horizontal, vertical ou diagonal - com o seu símbolo. Caso todas as casas tenham sido preenchidas sem que nenhum jogador forme uma linha, o jogo finaliza em empate (ou 'velha').
+<i>Tic tac toe</i>, ou jogo da velha, é um jogo atemporal e de fácil entendimento. O jogo consiste em dois jogadores que, de forma alternada, desenham símbolos ('x' ou 'o') em uma matriz 3x3. Durante a partida, um quadrante ocupado não pode ser selecionado. Vence o jogo o player que conseguir formar primeiro uma linha - seja na horizontal, vertical ou diagonal - com o seu símbolo. Caso todas as casas tenham sido preenchidas sem que nenhum jogador forme uma linha, o jogo finaliza em empate ('velha' ou 'draw').
 </div>
 <h3>Jogabilidade</h3>
 <div align="justify">
@@ -203,6 +207,7 @@ A seleção de um espaço de um espaço vazio no tabuleiro, bem como a confirma�
 
 <h3>Interface do Usuário</h3>
 <h3>Algoritmos do jogo </h3>
+<!--Ta perfeito, só faltou um "não" depois de Houve solicitação de finalização-->
 <div align="center">
   <figure>  
     <img src="docs/images/algoritmo.png">
@@ -241,4 +246,5 @@ http://uab.ifsul.edu.br/tsiad/conteudo/modulo1/hco/hco_ua/mouse.pdf  fala sobre 
 https://www.kernel.org/doc/html/latest/input/input_uapi.html kernel do linux
 file:///C:/Users/Visitante%201/Documents/Arquitetura%20de%20Comp%20e%20SD/DE1-SoC_Computer_ARM.pdf
 https://www.gta.ufrj.br/grad/01_1/usb/usb.htm#%C2%A7%201.1%20%E2%80%93%20Objetivos%20de%20desenvolvimento%20do%20USB 
+(https://www.kernel.org/doc/html/latest/)
 -->
