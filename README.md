@@ -129,7 +129,7 @@ Por fim, o registrador <i>interruptmask</i> é utilizado para manipular as inter
 O banco de registradores apresentado acima compõe a porta KEY. Esta porta está mapeada no espaço de endereçamento da ponte <code>lwhps2fpga</code> (Lightweight HPS-to-FPGA Bridge) a qual encarrega-se da conexão entre o FPGA e o HPS da placa. As portas E/S mapeadas nesta ponte podem ser acessadas por meio do endereço base (0xFF200000) somado ao <i>offset</i> da porta (para a porta KEY, <i>offset</i> = 0x00000050 ). Entretanto, para acessar os valores das portas mapeadas, faz-se necessária a virtualização destes endereços físicos.
 <div align="center">
   <figure>  
-    <img src="docs/images/mmu-process.gif" width="500">
+    <img src="docs/images/mmu-process.gif" width="800">
     <figcaption>
       <p align="center"><b>Figura 5</b>Mapeamento de memória via MMU</p>
       <p align="center">Fonte: Os autores</p>
