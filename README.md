@@ -202,6 +202,26 @@ A seleção de um espaço vazio no tabuleiro, bem como a confirmação da jogada
 </div>
 
 <h3>Interface do Usuário</h3>
+
+<div align="justify">
+A seguir a descrição e demonstração as telas que o jogador/usuário tera acesso 
+
+Na tela de menu principal o usuário tem uma breve descrição de como jogar e logo em seguida as opções de iniciar um jogo single player, dual player ou sair do jogo, e ao lado o botão da placa correspondente a cada opção
+
+
+Caso seja pressionado a KEY1, será iniciado o jogo no modo dual player, onde retângulo ciano descreve a posição em que esta o cursor do mouse
+
+Caso seja pressionado a KEY2, será inciado o jogo no modo single player onde o jogador irá jogar com o circulo e o computador irá jogar com X, assim, o computador inicia jogando e logo após isso é a vez do jogador, que novamente esta representando pelo retângulo de cor ciano.
+
+Caso seja pressionado a KEY0 durante uma partida, a partida é finalizada imediatamente e o jogador é retornado ao menu principal, caso seja pressionado no menu principal o jogo é encerrado.
+
+Caso um dos jogadores ganhe sera exibido o jogador que ganhou e após 5 segundos o jogador será redirecionado ao menu principal.
+
+Caso o computador ganhe sera exibida a mensagem que o computador ganhou e logo após isso o usuário será retornado ao menu principal.
+
+Caso ocorra um empate, ou seja, caso não haja mais casas disponíveis para novas jogadas e nenhum dos jogadores tenham ganhado, será exibido uma mensagem avisando que houve um empate e o jogador será redirecionado para o menu principal.
+</div>
+
 <h3>Algoritmos do jogo </h3>
 <div align="center">
   <figure>  
