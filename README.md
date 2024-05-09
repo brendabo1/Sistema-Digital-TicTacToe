@@ -137,7 +137,7 @@ Para realizar o mapeamento do endereço físico da porta KEY, foram utilizadas a
 <h4>Porta USB <i>host</i></h4>
 <h4>Mouse USB</h4>
 <!--Processo de leitura do arquivo dev/input, decodificação da struct, deslocamento relativo da posição-->
-O desenvolvimento do biblioteca de leitura do mouse foi realizado com base na documentação do [kernel](https://www.kernel.org/doc/html/latest/index.html) do Linux, além de analises e testes realizados em laboratório com os documentos e informações.
+O desenvolvimento do biblioteca de leitura do mouse foi realizado com base na [documentação do kernel do Linux](https://www.kernel.org/doc/html/latest/index.html). Além de analises e testes realizados em laboratório com os documentos e informações.
 
 Segundo a própria documentação do kernel, dispositivos de entrada e saida USBs se comunicam e são reconhecido como arquivos do tipo Dispositivo que ficam dentro da pasta /dev/input, cada dispositivo tem suas entradas e saidas, mas no geral os dipositivos armazenam um campo onde ficam localizadas as informações de instante em que um evento foi realizado, qual foi o tipo de evento, qual o código do evento e qual o valor do evento.
 
