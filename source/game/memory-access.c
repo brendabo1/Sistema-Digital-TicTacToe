@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <sys/mman.h>
-#include "/home/root/DE1-SoC/address_map_arm.h"
+#include "/home/root/tutorial_files/address_map_arm.h"
 
 /* Prototypes for functions used to access physical memory addresses */
 int open_physical(int);

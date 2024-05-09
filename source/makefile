@@ -1,10 +1,10 @@
-all: jogo
+all: tic-tac-toe
 
-jogo: tic-tac-toe.o interface.o mouseHandler.o posTranslate.o
-    gcc -o jogo tic-tac-toe.o interface.o mouseHandler.o posTranslate.o -lintelfpgaup -pthread -std=c99
+tic-tac-toe: tic-tac-toe.o interface.o mouseHandler.o posTranslate.o
+    gcc -o tic-tac-toe tic-tac-toe-threads.o interface.o mouseHandler.o posTranslate.o -pthread -std=c99
 
-tic-tac-toe.o: game/tic-tac-toe.c
-    gcc -c game/tic-tac-toe.c -lintelfpgaup -pthread -std=c99
+tic-tac-toe.o: game/tic-tac-toe-threads.c
+    gcc -c game/tic-tac-toe-threads.c -pthread -std=c99
 
 interface.o: header_files/interface.c header_files/interface.h
     gcc -c header_files/interface.c -std=c99
