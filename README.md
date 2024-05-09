@@ -173,6 +173,18 @@ Apos esse avanço, foi definido que os tipos de eventos desejados seriam eventos
 
 Os eventos de aceleração ocorrem quando ha a movimentação do mouse sobre alguma superfície, assim retornando um valor de código correspondente ao eixo de movimentação e o valor a referente a aceleração e sentido a qual o mouse foi movimentado. Por exemplo, suponha que o mouse esta sobre a mesa e  seja movimentado da direita para a esquerda, enquanto isso esta sendo realizado a leitura do arquivo event0, sera retornado a struct um evento com valor de tipo igual a 2 e valor de código igual 0, além de um valor negativo, que indica o sentido e valor de aceleração. Esse valor de aceleração é calculado com base no deslocamento relativo da superfície abaixo do mouse, calculado pelo sensor óptico mediante ao feixe de luz emitido pelo LED embutido neste dispositivo, quando há movimentação do mouse, o sensor calcula e defini o sentido relativo que o mouse esta sendo movimentado e defini também a aceleração na qual foi realizada esse movimento.
 
+A imagen a seguir descreve o funcionamento do mouse com relação a eventos de aceleração, a seta indica o sentido em que o mouse esta se mexendo, a variavel <code>ACL_X</code> indica se a aceleração no eixo X vai ser maior ou menor que 0 e a <code>ACL_Y</code> indica se vai ser maior ou menor, no Y.
+
+<div align="center">
+  <figure>  
+    <img src="docs/images/mouse-acell.png" width="410" height="640">
+    <figcaption>
+      <p align="center"><b>Figura 6</b>- Relação evento de movimentação e valor da aceleração</p>
+      <p align="center">Fonte: Os autores</p>
+    </figcaption>
+  </figure>
+</div>
+
 Os eventos de clique são mais simples, como o próprio nome já diz, ele é um evento que ocorre quando algum dos botões do mouse é pressionado ou solto, retornando 1 ou 0 respectivamente no campo de valor. Além disso, os eventos de clique tem valor de tipo igual a 2 e o valor do código é correspondente ao botão pressionado.
 Na realização dessas analises se constatou outro fato, seria necessário definir um valor mínimo de aceleração, pois qualquer toque sutil no mouse já era capaz de gerar eventos de aceleração, o que tornaria instável a usabilidade do mesmo. Para tal ato utilizou-se de base o valor 3, sendo -3 para eventos no sentido oposto.
 
@@ -195,7 +207,7 @@ A seleção de um espaço vazio no tabuleiro, bem como a confirmação da jogada
   <figure>  
     <img src="docs/images/exemplo-mov.png">
     <figcaption>
-      <p align="center"><b>Figura 5</b>- Ilustração da seleção de um quadrante</p>
+      <p align="center"><b>Figura 7</b>- Ilustração da seleção de um quadrante</p>
       <p align="center">Fonte: Os autores</p>
     </figcaption>
   </figure>
@@ -227,7 +239,7 @@ Caso ocorra um empate, ou seja, caso não haja mais casas disponíveis para nova
   <figure>  
     <img src="docs/images/algoritmo.png">
     <figcaption>
-      <p align="center"><b>Figura 6</b>- Fluxograma do algoritmo da partida</p>
+      <p align="center"><b>Figura 8</b>- Fluxograma do algoritmo da partida</p>
       <p align="center">Fonte: Os autores</p>
     </figcaption>
   </figure>
@@ -243,7 +255,7 @@ Caso seja realizado um evento de clique, verifica qual botão foi pressionado e 
   <figure>  
     <img src="docs/images/mouse-tabuleiro.png">
     <figcaption>
-      <p align="center"><b>Figura 6</b>- Relação evento do mouse x quadrante do tabuleiro</p>
+      <p align="center"><b>Figura 9</b>- Relação evento do mouse x quadrante do tabuleiro</p>
       <p align="center">Fonte: Os autores</p>
     </figcaption>
   </figure>
