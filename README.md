@@ -134,6 +134,13 @@ A memória virtual é uma técnica utilizada para gerenciamento de memória nos 
 Para realizar o mapeamento do endereço físico da porta KEY, foram utilizadas as funções <code>mmap()</code> e <code>unmap()</code> e o arquivo <code>/dev/mem</code> (arquivo do Linux que contém um espelho da memória do computador). A partir do endereço virtual gerado, pode-se acessar o registrador <i>edgecapture</i>.
 </div>
 <h4>Porta USB <i>host</i></h4>
+<div align="justify">
+USB ou Barramento Serial Universal é um padrão de conexão que permite a anexação de ate 127 dispositivos sem a necessidade de reiniciar o dispositivo, sendo assim realizadas todas as configurações para funcionamento do dispositivo em tempo de execução. O padrão USB também dispensa o uso de drivers, fazendo com que toda a configuração do dispositivo seja automática.
+
+A comunicação entre um dispositivo host(computador) e um periférico pode envolver a troca de ate três pacotes de dados, sendo o primeiro, enviado pelo host que informa dados como endereço do dispositivo de destino, tipo de transação, fluxo de dados, entre outros
+
+No caso da placa DE1-SoC os conectores USB estão ligados a um HUB controlador que se comunica diretamente com o HPS, assim, quem por fim gerencia as portas é o SO instalado e em execução na processador ARM da placa, o que facilita o desenvolvimento e utilização das mesmas.
+</div>
 <h4>Mouse USB</h4>
 <!--Processo de leitura do arquivo dev/input, decodificação da struct, deslocamento relativo da posição-->
 <div align="justify">O desenvolvimento do biblioteca de leitura do mouse foi realizado com base na [documentação do kernel Linux](https://www.kernel.org/doc/html/latest/). Além de analises e testes realizados em laboratório com os documentos e informações.
@@ -217,4 +224,5 @@ https://gcc.gnu.org/onlinedocs/gcc-14.1.0/gcc.pdf ou https://gcc.gnu.org/onlined
 http://uab.ifsul.edu.br/tsiad/conteudo/modulo1/hco/hco_ua/mouse.pdf  fala sobre o mouse e funcionamento do mesmo
 https://www.kernel.org/doc/html/latest/input/input_uapi.html kernel do linux
 file:///C:/Users/Visitante%201/Documents/Arquitetura%20de%20Comp%20e%20SD/DE1-SoC_Computer_ARM.pdf
+https://www.gta.ufrj.br/grad/01_1/usb/usb.htm#%C2%A7%201.1%20%E2%80%93%20Objetivos%20de%20desenvolvimento%20do%20USB 
 -->
