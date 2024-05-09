@@ -76,7 +76,9 @@ Nesta seção, exploraremos o dispositivo embarcado utilizado bem como os compon
 </div>
 
 <h3>Sistema Computacional DE1-SoC 2</h3>
-<p>O diagrama de blocos do sistema computacional apresentado na figura 2 explicita os componentes Cyclone® V da Intel bem como os dipositivos e conexões. O HPS inclui um processador ARM Cortex-A9 de 2 núcleos para processamento de propósito geral além da memória DDR3 e dispositivos perféricos. Já a FPGA possibilita uma variedade de implementações através da programação dos blocos lógicos. Todos os dispositivos de entrada e saída são acessíveis ao processador através do mapeamento de memória, utilizando o sumário de endereços definidos na documentação da placa<!--citar FPGAcademy DE1-SoC Computer System with ARM* Cortex* A9-->.</p>
+<div align="justify">O diagrama de blocos do sistema computacional apresentado na figura 2 explicita os componentes Cyclone® V da Intel bem como os dipositivos e conexões. O HPS inclui um processador ARM Cortex-A9 de 2 núcleos para processamento de propósito geral além da memória DDR3 e dispositivos perféricos. Já a FPGA possibilita uma variedade de implementações através da programação dos blocos lógicos. 
+
+A comunicação entre a o HPS e a FPGA se dá por meio das <i>FPGA bridges</i> no dispositivo. Assim, todos os dispositivos de entrada e saída conectados a placa são acessíveis ao processador através do mapeamento de memória, utilizando o sumário de endereços definidos na documentação da placa<!--citar FPGAcademy DE1-SoC Computer System with ARM* Cortex* A9-->.</div>
 
 <div align="center">
   <figure>  
@@ -87,14 +89,9 @@ Nesta seção, exploraremos o dispositivo embarcado utilizado bem como os compon
     </figcaption>
   </figure>
 </div>
-<!-- 
-*Threads do botao com teoria dos leitores/escritores
-*Device drivers (parte da doc)
--->
 
-<h4>Memória</h4>
 <h3>Dispositivos de Entrada e Saída: descrição e manipulação</h3>
-<p align="justify">Como indicado na seção anterior, o kit de desenvolvimento DE1-SoC possui diversos periféricos integrados. Para este projeto, os componentes selecionados foram os botões do tipo *push* e a portas USB *host*, ambos destacados na figura abaixo. Associado a estes dispositivos, utilizou-se também um mouse USB. Segue abaixo a descrição destes componentes, bem como os procedimentos adotados para suas manipulações.</p>
+<p align="justify">Como indicado na seção anterior, o kit de desenvolvimento DE1-SoC possui diversos periféricos integrados. Para este projeto, os componentes selecionados foram os botões do tipo <i>push</i> e a portas USB <i>host</i>, ambos destacados na figura abaixo. Associado a estes dispositivos, utilizou-se também um mouse USB. Segue abaixo a descrição destes componentes, bem como os procedimentos adotados para suas manipulações.</p>
 <div align="center">
   <figure>  
     <img src="docs/images/perifericos-usados.png">
