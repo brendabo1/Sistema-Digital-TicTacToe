@@ -207,11 +207,8 @@ A seleção de um espaço vazio no tabuleiro, bem como a confirmação da jogada
 </div>
 <h3>O Tabuleiro</h3>
 <div align="justify">
-Para o tabuleiro, uma matrix 3x3 é implementada enquanto o usuário tem acesso a uma interface
-No momento do desenvolvimento da logica do jogo foi notado que seria necessário fazer uma camada que convertesse as leituras do mouse pra ações e coordenadas validas dentro do jogo, por esse motivo foi implementado um modulo de interface de comunicação entre o mouse e o jogo.
-O modulo da interface recebe do mouse a realização de eventos e, enquanto não for realizada a leitura de um evento valido o interface fica solicitando a entrada de um novo evento pelo mouse, no momento que um evento valido é detectado ele é realizada a identificação se é um evento de movimento ou um evento de clique.
-Caso o evento seja de movimentação é realizada a chamada de uma função que verifica se, em um tabuleiro 3x3 e na posição que o cursor se encontra no momento, aquele movimento é valido, caso seja realiza a alteração da coordenada do cursor em decorrência do tipo de movimento, incrementando ou decrementando um nos eixos x e y, e atribui essa nova posição ao vetor de retorno, entretanto, caso o movimento seja valido, mas não seja possível de realizar no momento, é retornada as coordenadas atuais, sem realizar alterações.
-Caso seja realizado um evento de clique, verifica qual botão foi pressionado e atribui ao vetor de retorno, na posição destinada para cliques, o valor do botão.
+Para a criação do tabuleiro uma matrix 3x3 é implementada salvando as jogadas dos usuários em função dos eixos x e y, sendo p(x,y). Também, o deslocamento do mouse se dá em função dos eixos cartesianos x e y, transcrevendo o respectivo evento no tabuleiro. Ao confirmar a jogada através do clique, a jogada é registrada na matriz caso o espaço esteja vazio e o símbolo do player é exibido na interface para o usuário na posição selecionada. 
+
 </div>
 <div align="center">
   <figure>  
@@ -322,8 +319,6 @@ Caso um dos jogadores ganhe sera exibido o jogador que ganhou e após 5 segundos
 </div>
 
 Caso o computador ganhe sera exibida a mensagem que o computador ganhou e logo após isso o usuário será retornado ao menu principal.
-*Gravar vitoria Computador*
-
 
 Caso ocorra um empate, ou seja, caso não haja mais casas disponíveis para novas jogadas e nenhum dos jogadores tenham vencido, será exibido uma mensagem avisando que houve um empate e o jogador será redirecionado para o menu principal.
 
