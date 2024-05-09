@@ -133,22 +133,14 @@ O banco de registradores apresentado acima compõe a porta KEY. Esta porta está
 A memória virtual é uma técnica utilizada para gerenciamento de memória nos computadores. Nela, cada programa possui seu próprio espaço de endereçamento o qual é mapeado na memória física. Quando o programa referencia uma parte do espaço de endereçamento que está na memória física, o hardware encarrega-se de realizar rapidamente o mapeamento (tradução). 
 Para realizar o mapeamento do endereço físico da porta KEY, foram utilizadas as funções <code>mmap()</code> e <code>unmap()</code> e o arquivo <code>/dev/mem</code> (arquivo do Linux que contém um espelho da memória do computador). A partir do endereço virtual gerado, pode-se acessar o registrador <i>edgecapture</i>.
 </div>
-<h4>Porta USB <i>host</i></h4>
-<div align="justify">
-USB ou Barramento Serial Universal é um padrão de conexão que permite a anexação de ate 127 dispositivos sem a necessidade de reiniciar o dispositivo, sendo assim realizadas todas as configurações para funcionamento do dispositivo em tempo de execução. O padrão USB também dispensa o uso de drivers, fazendo com que toda a configuração do dispositivo seja automática.
 
-A comunicação entre um dispositivo host(computador) e um periférico pode envolver a troca de ate três pacotes de dados, sendo o primeiro, enviado pelo host que informa dados como endereço do dispositivo de destino, tipo de transação, fluxo de dados, entre outros
+<h4>Porta USB <i>host</i> e Mouse USB</h4>
+<div align="justify">
+USB ou Barramento Serial Universal é um padrão de conexão que permite a anexação de ate 127 dispositivos sem a necessidade de reiniciar o dispositivo, sendo assim realizadas todas as configurações para funcionamento do dispositivo em tempo de execução. Ademais, o padrão USB também dispensa o uso de drivers, fazendo com que toda a configuração do dispositivo seja automática. A comunicação entre um dispositivo host(computador) e um periférico pode envolver a troca de ate três pacotes de dados, sendo o primeiro, enviado pelo host que informa dados como endereço do dispositivo de destino, tipo de transação, fluxo de dados, entre outros.
 
 No caso da placa DE1-SoC os conectores USB estão ligados a um HUB controlador que se comunica diretamente com o HPS, assim, quem por fim gerencia as portas é o SO instalado e em execução na processador ARM da placa, o que facilita o desenvolvimento e utilização das mesmas.
-</div>
-<h4>Mouse USB</h4>
-<!--Processo de leitura do arquivo dev/input, decodificação da struct, deslocamento relativo da posição
-Arquivos especiais permitem que dispositivos 
-de E/S se pareçam com arquivos. Dessa maneira, eles 
-podem ser lidos e escritos com as mesmas chamadas 
-de sistema que são usadas para ler e escrever arquivos
--->
-<div align="justify">Sendo a movimentação do jogador no tabuleiro realizada através do mouse, a obtenção dos dados do dispositivo gerenciado pela distribuição Linux embarcada segue os padrões definidos pelo sistema operacional. Segundo Tanenbaum *adicionar citação*, em sistemas UNIX, arquivos especiais permitem que dispositivos de E/S se pareçam com arquivos, permitindo as mesmas chamadas para ler e escrever arquivos que são mantidos no diretório <i>/dev</i>. Desse modo, o arquivo correspondente ao mouse USB bem como seus dados são encontrados no caminho <i>/dev/input/event0</i> da placa. Este arquivo contém o instante do evento, seu tipo, código e valor. O padrão dos registros de dispositivos USB é definido na documentação da Linux Kernel Organization *incluir referencia* e apresentado na Figura 5. A struct em linguagem C foi aplicada na decodificação dos eventos do mouse.
+
+Sendo a movimentação do jogador no tabuleiro realizada através do mouse conectada a porta USB, a obtenção dos dados do dispositivo gerenciado pela distribuição Linux embarcada segue os padrões definidos pelo sistema operacional. Segundo Tanenbaum *adicionar citação*, em sistemas UNIX, arquivos especiais permitem que dispositivos de E/S se pareçam com arquivos, permitindo as mesmas chamadas para ler e escrever arquivos que são mantidos no diretório <i>/dev</i>. Desse modo, o arquivo correspondente ao mouse USB bem como seus dados são encontrados no caminho <i>/dev/input/event0</i> da placa. Este arquivo contém o instante do evento, seu tipo, código e valor. O padrão dos registros de dispositivos USB é definido na documentação da Linux Kernel Organization *incluir referencia* e apresentado na Figura 5. A struct em linguagem C foi aplicada na decodificação dos eventos do mouse.
 
 <!--captura e leitura dos dados se dá através do mouse e é obtida através da, O desenvolvimento do biblioteca de leitura do mouse foi realizado com base na [documentação do kernel Linux]. Além de analises e testes realizados em laboratório com os documentos e informações.
 Inicialmente utilizou-se o comando Hexdump para a exibição, no terminal do linux dos bits que estavam dentro do arquivo de Dispositivo do mouse, event0, de forma hexadecimal. Ao realizar a leitura do arquivo constatou-se 2 coisas, a primeira era que toda vez que um evento era realizado por um dispositivo, os dados do arquivo eram reescritos assim não mantendo um log dos eventos passados. Outra constatação foi em padrões de bits para cada evento realizado pelo mouse.
@@ -219,6 +211,7 @@ A seleção de um espaço vazio no tabuleiro, bem como a confirmação da jogada
 </div>
 <h3>O Tabuleiro</h3>
 <div align="justify">
+Para o tabuleiro, uma matrix 3x3 é implementada enquanto o usuário tem acesso a uma interface
 No momento do desenvolvimento da logica do jogo foi notado que seria necessário fazer uma camada que convertesse as leituras do mouse pra ações e coordenadas validas dentro do jogo, por esse motivo foi implementado um modulo de interface de comunicação entre o mouse e o jogo.
 O modulo da interface recebe do mouse a realização de eventos e, enquanto não for realizada a leitura de um evento valido o interface fica solicitando a entrada de um novo evento pelo mouse, no momento que um evento valido é detectado ele é realizada a identificação se é um evento de movimento ou um evento de clique.
 Caso o evento seja de movimentação é realizada a chamada de uma função que verifica se, em um tabuleiro 3x3 e na posição que o cursor se encontra no momento, aquele movimento é valido, caso seja realiza a alteração da coordenada do cursor em decorrência do tipo de movimento, incrementando ou decrementando um nos eixos x e y, e atribui essa nova posição ao vetor de retorno, entretanto, caso o movimento seja valido, mas não seja possível de realizar no momento, é retornada as coordenadas atuais, sem realizar alterações.
@@ -234,12 +227,11 @@ Caso seja realizado um evento de clique, verifica qual botão foi pressionado e 
   </figure>
 </div>
 
-<h3>Jogada: Seleção da Jogada</h3>
 <div align="center">
   <figure>  
     <img src="docs/images/movimento_mouse.gif">
     <figcaption>
-      <p align="center"><b>Figura 9</b>- Menu da tela inicial</p>
+      <p align="center"><b>Figura 9</b>- Movimento físico do mouse</p>
       <p align="center">Fonte: Elaboração Própria. </p>
     </figcaption>
   </figure>
@@ -248,11 +240,12 @@ Caso seja realizado um evento de clique, verifica qual botão foi pressionado e 
   <figure>  
     <img src="docs/images/tela_movimento_mouse.gif">
     <figcaption>
-      <p align="center"><b>Figura 10</b>- Menu da tela inicial</p>
+      <p align="center"><b>Figura 10</b>- Movimentação do cursor de acordo com o mouse</p>
       <p align="center">Fonte: Elaboração Própria. </p>
     </figcaption>
   </figure>
 </div>
+
 <h3>Interface do Usuário</h3>
 
 <div align="justify">
@@ -351,9 +344,27 @@ Caso ocorra um empate, ou seja, caso não haja mais casas disponíveis para nova
 
 <h3>Algoritmos do jogo </h3>
 
-<!--descrever lógica do modo single player-->
+<!--processos que es￾tão trabalhando juntos podem compartilhar de alguma 
+memória comum que cada um pode ler e escrever. 
+ Situações como essa, em que dois 
+ou mais processos estão lendo ou escrevendo alguns da￾dos compartilhados e o resultado final depende de quem 
+executa precisamente e quando, são chamadas de con￾dições de corrida.
 
+ é encontrar alguma maneira 
+de proibir mais de um processo de ler e escrever os da￾dos compartilhados ao mesmo tempo. 
+Essa parte do programa onde a memória compar￾tilhada é acessada é chamada de região crítica ou seção 
+crítica. Se conseguíssemos arranjar as coisas de maneira 
+que jamais dois processos estivessem em suas regiões 
+críticas ao mesmo tempo, poderíamos evitar as corridas. 
+
+Um mutex é uma variável compartilhada que pode 
+estar em um de dois estados: destravado ou travado
+
+will synchronize the positions and state of the objects in the world with the Render Thread, which will do all of the rendering logic and make sure to display them.
+-->
 <!--Ta perfeito, só faltou um "não" depois de Houve solicitação de finalização-->
+A implementação do projeto exige a integração de 2 módulos principais: a rotina do jogo, incluindo o menu inicial, a checagem a matriz do tabuleiro em busca de combinações de símbolos para a condição de vitória, entre outras atividade e a captura e tradução do movimento do mouse no tabuleiro. Como decisão de projeto para maior eficiência da CPU e menor tempo de ociosidade aguardando entradas dos dispositivos E/S, o sistema ganha em eficiência operando com duas threads. Chamados por Tanenbaum de miniprocessos, as threads compartilham um conjunto de recursos de maneira que possam trabalhar juntos intimamente para desempenhar alguma tarefa, precisamente a interação desejada entre os módulos.
+Além disso, tais processos rotineiramente acessam o mesmo espaço de memória, seja para ler ou escrever dados a exemplo da atualização da posição após o evento do mouse e a leitura da posição para checagem de posição livre para a jogada. Quando um ou mais processos manipulam dados compartilhados, o resultado final da variável varia a depender da ordem de execução entre eles. Diante de tal condição de corrida, variáveis compartilhadas para gerenciar a exclusão mútua (mutexes) foram implementadas, garantindo que apenas um processo tenha acesso a um dado compartilhado por vez.
 <div align="center">
   <figure>  
     <img src="docs/images/algoritmo.png">
@@ -366,6 +377,7 @@ Caso ocorra um empate, ou seja, caso não haja mais casas disponíveis para nova
 
 
 <h2>Solução Geral</h2>
+
 <h2>Testes Realizados</h2>
 Os testes realizados para garantir o correto funcionamento do jogo são apresentados abaixo.
 <ul>
