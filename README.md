@@ -252,6 +252,47 @@ Caso seja realizado um evento de clique, verifica qual botão foi pressionado e 
 <h2>Testes</h2>
 
 <h2>Descrição de instalação, configuração de ambiente e execução</h2>
+
+<div align="justify">
+
+A seguir estão listados os passos necessários para a execução do jogo em outro dispositivo FPGA DE1-SoC 
+
+<h3>Requisitos:</h3>
+Possuir conexão com internet;<br>
+Possuir o compilador gcc;<br>
+Possuir o git instalado;<br>
+Estar utilizando uma placa de desenvolvimento FPGA DE1-SoC;<br>
+Possuir um mouse conectado a placa;<br>
+
+Caso todos os requisitos anteriores sejam satisfeitos basta seguir  o passo a passo
+
+<h3>passo 1: clonar o repositorio</h3>
+
+abra o terminal do seu dispositivo e execute o seguinte comando
+ ```
+git clone https://github.com/brendabo1/Sistema-Digital-TicTacToe.git
+```
+
+<h3>passo 2: acessar a pasta source e compilar o codigo com o gcc</h3>
+
+para acessar a pasta source basta execultar o seguinte comando
+```
+cd source/
+```
+<h3>Passo 3: compilar o codigo</h3>
+execulte o seguinte comando
+```
+make all
+```
+
+<h3>Passo 4: execute o jogo</h3>
+para execultar o jogo basta execultar o seguinte comando
+
+```
+sudo ./tic-tac-toe
+```
+</div>
+
 <h2>Referências</h2>
 <!--
 https://www.gadoo.com.br/dicas/tic-tac-toe/
@@ -260,5 +301,5 @@ https://gcc.gnu.org/onlinedocs/gcc-14.1.0/gcc.pdf ou https://gcc.gnu.org/onlined
 http://uab.ifsul.edu.br/tsiad/conteudo/modulo1/hco/hco_ua/mouse.pdf  fala sobre o mouse e funcionamento do mesmo
 https://www.kernel.org/doc/html/latest/input/input_uapi.html kernel do linux
 file:///C:/Users/Visitante%201/Documents/Arquitetura%20de%20Comp%20e%20SD/DE1-SoC_Computer_ARM.pdf
-https://www.gta.ufrj.br/grad/01_1/usb/usb.htm#%C2%A7%201.1%20%E2%80%93%20Objetivos%20de%20desenvolvimento%20do%20USB 
+https://www.gta.ufrj.br/grad/01_1/usb/usb.htm#%C2%A7%201.1%20%E2%80%93%20Objetivos%20de%20desenvolvimento%20do%20USB  fala sobre a usb
 -->
