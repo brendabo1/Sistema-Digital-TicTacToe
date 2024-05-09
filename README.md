@@ -78,7 +78,7 @@ Nesta seção, exploraremos o dispositivo embarcado utilizado bem como os compon
 <h3>Sistema Computacional DE1-SoC</h3>
 <div align="justify">O diagrama de blocos do sistema computacional apresentado na figura 2 explicita os componentes Cyclone® V da Intel bem como os dipositivos e conexões. O HPS inclui um processador ARM Cortex-A9 de 2 núcleos com uma distribuição Linux embarcado para processamento de propósito geral além da memória DDR3 e dispositivos perféricos. Já a FPGA possibilita uma variedade de implementações através da programação dos blocos lógicos.
 
-A comunicação entre a o HPS e a FPGA se dá por meio das <i>FPGA bridges</i> no dispositivo. Assim, todos os dispositivos de entrada e saída conectados a placa são acessíveis ao processador através do mapeamento de memória, utilizando o sumário de endereços definidos na documentação da placa<!--citar FPGAcademy DE1-SoC Computer System with ARM* Cortex* A9-->.</div>
+A comunicação entre a o HPS e a FPGA se dá por meio das <i>FPGA bridges</i> no dispositivo. Assim, todos os dispositivos de entrada e saída conectados a placa são acessíveis ao processador através do mapeamento de memória, utilizando o sumário de endereços definidos na documentação da placa (FPGAcademy)<!--citar FPGAcademy DE1-SoC Computer System with ARM* Cortex* A9-->.</div>
 
 <div align="center">
   <figure>  
@@ -140,7 +140,7 @@ USB ou Barramento Serial Universal é um padrão de conexão que permite a anexa
 
 No caso da placa DE1-SoC os conectores USB estão ligados a um HUB controlador que se comunica diretamente com o HPS, assim, quem por fim gerencia as portas é o SO instalado e em execução na processador ARM da placa, o que facilita o desenvolvimento e utilização das mesmas.
 
-Sendo a movimentação do jogador no tabuleiro realizada através do mouse conectada a porta USB, a obtenção dos dados do dispositivo gerenciado pela distribuição Linux embarcada segue os padrões definidos pelo sistema operacional. Segundo Tanenbaum *adicionar citação*, em sistemas UNIX, arquivos especiais permitem que dispositivos de E/S se pareçam com arquivos, permitindo as mesmas chamadas para ler e escrever arquivos que são mantidos no diretório <i>/dev</i>. Desse modo, o arquivo correspondente ao mouse USB bem como seus dados são encontrados no caminho <i>/dev/input/event0</i> da placa. Este arquivo contém o instante do evento, seu tipo, código e valor. O padrão dos registros de dispositivos USB é definido na documentação da Linux Kernel Organization *incluir referencia* e apresentado na Figura 5. A struct em linguagem C foi aplicada na decodificação dos eventos do mouse.
+Sendo a movimentação do jogador no tabuleiro realizada através do mouse conectada a porta USB, a obtenção dos dados do dispositivo gerenciado pela distribuição Linux embarcada segue os padrões definidos pelo sistema operacional. Segundo Tanenbaum (2016), em sistemas UNIX, arquivos especiais permitem que dispositivos de E/S se pareçam com arquivos, permitindo as mesmas chamadas para ler e escrever arquivos que são mantidos no diretório <i>/dev</i>. Desse modo, o arquivo correspondente ao mouse USB bem como seus dados são encontrados no caminho <i>/dev/input/event0</i> da placa. Este arquivo contém o instante do evento, seu tipo, código e valor. O padrão dos registros de dispositivos USB é definido na documentação da Linux Kernel Organization *incluir referencia* e apresentado na Figura 5. A struct em linguagem C foi aplicada na decodificação dos eventos do mouse.
 
 <!--
 Dessa maneira, as análises realizadas permitiram compreender os eventos e  Como o kernel usa um arquivo binário para realizar a comunicação com o dispositivo, utilizou-se das funções  para realizar a leitura do mesmo, assim sendo possível uma melhor exibição do arquivo assim sendo possível também entender melhor o que cada evento significava.
@@ -344,7 +344,7 @@ Caso ocorra um empate, ou seja, caso não haja mais casas disponíveis para nova
 will synchronize the positions and state of the objects in the world with the Render Thread, which will do all of the rendering logic and make sure to display them.
 -->
 <!--Ta perfeito, só faltou um "não" depois de Houve solicitação de finalização-->
-A implementação do projeto exige a integração de 2 módulos principais: a rotina do jogo, incluindo o menu inicial, a checagem a matriz do tabuleiro em busca de combinações de símbolos para a condição de vitória, entre outras atividade e a captura e tradução do movimento do mouse no tabuleiro. Como decisão de projeto para maior eficiência da CPU e menor tempo de ociosidade aguardando entradas dos dispositivos E/S, o sistema ganha em eficiência operando com duas threads. Chamados por Tanenbaum de miniprocessos, as threads compartilham um conjunto de recursos de maneira que possam trabalhar juntos intimamente para desempenhar alguma tarefa, precisamente a interação desejada entre os módulos.
+A implementação do projeto exige a integração de 2 módulos principais: a rotina do jogo, incluindo o menu inicial, a checagem a matriz do tabuleiro em busca de combinações de símbolos para a condição de vitória, entre outras atividade e a captura e tradução do movimento do mouse no tabuleiro. Como decisão de projeto para maior eficiência da CPU e menor tempo de ociosidade aguardando entradas dos dispositivos E/S, o sistema ganha em eficiência operando com duas threads. Chamados por Tanenbaum (2016) de miniprocessos, as threads compartilham um conjunto de recursos de maneira que possam trabalhar juntos intimamente para desempenhar alguma tarefa, precisamente a interação desejada entre os módulos.
 Além disso, tais processos rotineiramente acessam o mesmo espaço de memória, seja para ler ou escrever dados a exemplo da atualização da posição após o evento do mouse e a leitura da posição para checagem de posição livre para a jogada. Quando um ou mais processos manipulam dados compartilhados, o resultado final da variável varia a depender da ordem de execução entre eles. Diante de tal condição de corrida, variáveis compartilhadas para gerenciar a exclusão mútua (mutexes) foram implementadas, garantindo que apenas um processo tenha acesso a um dado compartilhado por vez.
 <div align="center">
   <figure>  
@@ -510,18 +510,23 @@ sudo ./tic-tac-toe
 
 IASBIK, M. P. Tic Tac Toe: O Jogo da Velha que Encanta Gerações. Disponível em: <https://www.gadoo.com.br/dicas/tic-tac-toe/>. Acesso em: 6 maio. 2024.
 
+Intel® FPGA University Program DE1-SoC Computer Manual. <https://ftp.intel.com/Public/Pub/fpgaup/pub/Intel_Material/18.1/Computer_Systems/DE1-SoC/DE1-SoC_Computer_ARM.pdf>. Acesso em: 22 abril. 2024.
+
+Intel® FPGA University Program DE1-SoC Computer System with ARM* Cortex* A9. Disponível em: <https://fpgacademy.org/courses.html>. Acesso em: 24 abril. 2024.
+
 GCC online documentation - GNU Project. Disponível em: <https://gcc.gnu.org/onlinedocs/>. Acesso em: 7 maio. 2024.
 
-Linux Input Subsystem userspace API — The Linux Kernel documentation. Disponível em: <https://www.kernel.org/doc/html/latest/input/input_uapi.html>. Acesso em: 8 maio. 2024.
+Linux Input Subsystem userspace API — The Linux Kernel documentation. Disponível em: <https://www.kernel.org/doc/html/latest/input/input_uapi.html>. Acesso em: 7 maio. 2024.
 
-MARTINS, Luiz. Apostila de Linguagem C (Conceitos Básicos), Virtual Books. Disponível em: <https://www.facom.ufu.br/~gustavo/ED1/Apostila_Linguagem_C.pdf>. Acesso em: 6 maio. 2024.
+MARTINS, Luiz. Apostila de Linguagem C (Conceitos Básicos), Virtual Books. Disponível em: <https://www.facom.ufu.br/~gustavo/ED1/Apostila_Linguagem_C.pdf>. Acesso em: 22 abril. 2024.
 
-TANENBAUM, A. S.; BOS, Herbert. Sistemas operacionais modernos. 4. ed. São Paulo: Pearson Education do Brasil, 2016.
+TANENBAUM, A. S.; BOS, Herbert. Sistemas operacionais modernos. 4. ed. São Paulo: Pearson Education do Brasil, 2016. Acesso em: 2 maio. 2024.
 
-The Linux Kernel documentation — The Linux Kernel documentation. Disponível em: <https://www.kernel.org/doc/html/latest/>.
+Terasic Techologies Inc. DE1-Soc User Manual. Disponível em: <https://www.terasic.com.tw/cgi-bin/page/archive.pl?Language=English&No=836&PartNo=4>. Acesso em: 20 abril. 2024.
+
+The Linux Kernel documentation — The Linux Kernel documentation. Disponível em: <https://www.kernel.org/doc/html/latest/>. Acesso em: 18 abril. 2024.
 
 Universal Serial Bus. Disponível em: <https://www.gta.ufrj.br/grad/01_1/usb/usb.htm#%C2%A7%201.1%20%E2%80%93%20Objetivos%20de%20desenvolvimento%20do%20USB>. Acesso em: 8 maio. 2024.
 <!--
 http://uab.ifsul.edu.br/tsiad/conteudo/modulo1/hco/hco_ua/mouse.pdf  fala sobre o mouse e funcionamento do mesmo
-file:///C:/Users/Visitante%201/Documents/Arquitetura%20de%20Comp%20e%20SD/DE1-SoC_Computer_ARM.pdf
 -->
