@@ -177,12 +177,25 @@ Para a compreensão do arquivo binário de registros do mouse, as funções <cod
 Apos esse avanço, foi definido que os tipos de eventos desejados seriam os eventos de click e os eventos de aceleração, também chamado de movimentação explicados a seguir:
 <ul>
   <li>Eventos de clique são registrados quando algum dos botões do mouse é pressionado ou solto, retornando 1 ou 0 respectivamente no campo de valor. Um evento de clique tem valor <code>type</code> igual a 2 e valor do <code>code</code> correspondente ao botão pressionado.</li>
-  <li>Eventos de aceleração ocorrem quando há a movimentação do mouse sobre alguma superfície, retornando, então, um  código correspondente ao eixo de movimentação, o sentido, esqueda, direita, cima, baixo, e o módulo correspondente ao deslocamento relativo do mouse. Por exemplo, ao movimentar o mouse da direita para a esquerda será retornado uma struct correspondente a um evento com tipo igual a 2, indicando o movimento do dispositivo, código igual 0 para o eixo X e valor negativo para o sentido do deslocamento. Tais dados compõe o vetor aceleração do mouse *colocar IMAGEM dos eixos e sentido do mouse* capturado pelo seu sensor optico a partir do deslocamento relativo.</li> 
+  <li>Eventos de aceleração ocorrem quando há a movimentação do mouse sobre alguma superfície, retornando, então, um  código correspondente ao eixo de movimentação, o sentido, esqueda, direita, cima, baixo, e o módulo correspondente ao deslocamento relativo do mouse. A figura 6 escreve o funcionamento do mouse com relação a eventos de aceleração, sendo a seta o sentido do movimento e as variáveis <code>ACL_X</code> e <code>ACL_Y</code> a aceleração positiva ou negativa nos eixos X e Y respectivamente. Por exemplo, ao movimentar o mouse da direita para a esquerda será retornado uma struct correspondente a um evento com tipo igual a 2, indicando o movimento do dispositivo, código igual 0 para o eixo X e valor negativo para o sentido do deslocamento. Tais dados compõe o deslocamento relativo do mouse capturado pelo seu sensor optico mediante o feixe de luz emitido pelo LED embutido no mouse.</li> 
 </ul> 
 
 Além disso, durante o desenvolvimento, foi adotado um valor mínimo de aceleração igual a 3, de modo a ignorar a leitura de toques muito sutis capazes de prejudicar a experiência do jogador. Também, foi notado que ao realizar a leitura de um evento o sinal é perpetuado por alguns instantes, fazendo com que a leitura do evento seja replicada por um determinado período de tempo. Para solucionar esse problema utilizou-se um contador, incrementado em 1 a cada evento lido, que retorna o evento de movimentação, bem como seus dados de módulo, direção e sentido quando o contador chega a 7. 
 
 <!--Foi adicionado a biblioteca outras 2 funções, uma que realiza a abertura do arquivo do mouse e uma que realiza o do mesmo fechamento.-->
+
+
+<div align="center">
+  <figure>  
+    <img src="docs/images/mouse-acell.png" width="410" height="640">
+    <figcaption>
+      <p align="center"><b>Figura 6</b>- Relação evento de movimentação e valor da aceleração</p>
+      <p align="center">Fonte: Os autores</p>
+    </figcaption>
+  </figure>
+</div>
+
+
 </div>
 
 <h2>O Jogo</h2>
@@ -193,26 +206,46 @@ Além disso, durante o desenvolvimento, foi adotado um valor mínimo de acelera�
 <div align="justify">
 O controle do fluxo do jogo é dado por meio dos botões KEY0, KEY1 e KEY2 da placa DE1-SoC. Por meio desses, os jogadores podem selecionar entre os modos <i>single player</i> (jogador vs computador) e <i>dual player</i> (jogador 1 vs jogador 2), encerrar uma partida antes da sua conclusão, ou ainda finalizar a execução do jogo.
 
-A seleção de um espaço de um espaço vazio no tabuleiro, bem como a confirmação da jogada, dá-se por meio do mouse USB conectado ao kit de desenvolvimento. O usuário pode navegar pelos espaços do tabuleiro por meio da movimentação do mouse nos sentidos horizontal ou vertical, como ilustrado na figura abaixo. Ao chegar no quadrante em que deseja inserir o seu símbolo, o jogador pode confirmar a sua jogada por meio do botão esquerdo do mouse.
+A seleção de um espaço vazio no tabuleiro, bem como a confirmação da jogada, dá-se por meio do mouse USB conectado ao kit de desenvolvimento. O usuário pode navegar pelos espaços do tabuleiro por meio da movimentação do mouse nos sentidos horizontal ou vertical, como ilustrado na figura abaixo. Ao chegar no quadrante em que deseja inserir o seu símbolo, o jogador pode confirmar a sua jogada por meio do botão esquerdo do mouse.
 </div>
 <div align="center">
   <figure>  
     <img src="docs/images/exemplo-mov.png">
     <figcaption>
-      <p align="center"><b>Figura 5</b>- Ilustração da seleção de um quadrante</p>
+      <p align="center"><b>Figura 7</b>- Ilustração da seleção de um quadrante</p>
       <p align="center">Fonte: Os autores</p>
     </figcaption>
   </figure>
 </div>
 
 <h3>Interface do Usuário</h3>
+
+<div align="justify">
+A seguir a descrição e demonstração as telas que o jogador/usuário tera acesso 
+
+Na tela de menu principal o usuário tem uma breve descrição de como jogar e logo em seguida as opções de iniciar um jogo single player, dual player ou sair do jogo, e ao lado o botão da placa correspondente a cada opção
+
+
+Caso seja pressionado a KEY1, será iniciado o jogo no modo dual player, onde retângulo ciano descreve a posição em que esta o cursor do mouse
+
+Caso seja pressionado a KEY2, será inciado o jogo no modo single player onde o jogador irá jogar com o circulo e o computador irá jogar com X, assim, o computador inicia jogando e logo após isso é a vez do jogador, que novamente esta representando pelo retângulo de cor ciano.
+
+Caso seja pressionado a KEY0 durante uma partida, a partida é finalizada imediatamente e o jogador é retornado ao menu principal, caso seja pressionado no menu principal o jogo é encerrado.
+
+Caso um dos jogadores ganhe sera exibido o jogador que ganhou e após 5 segundos o jogador será redirecionado ao menu principal.
+
+Caso o computador ganhe sera exibida a mensagem que o computador ganhou e logo após isso o usuário será retornado ao menu principal.
+
+Caso ocorra um empate, ou seja, caso não haja mais casas disponíveis para novas jogadas e nenhum dos jogadores tenham ganhado, será exibido uma mensagem avisando que houve um empate e o jogador será redirecionado para o menu principal.
+</div>
+
 <h3>Algoritmos do jogo </h3>
 <!--Ta perfeito, só faltou um "não" depois de Houve solicitação de finalização-->
 <div align="center">
   <figure>  
     <img src="docs/images/algoritmo.png">
     <figcaption>
-      <p align="center"><b>Figura 6</b>- Fluxograma do algoritmo da partida</p>
+      <p align="center"><b>Figura 8</b>- Fluxograma do algoritmo da partida</p>
       <p align="center">Fonte: Os autores</p>
     </figcaption>
   </figure>
@@ -228,7 +261,7 @@ Caso seja realizado um evento de clique, verifica qual botão foi pressionado e 
   <figure>  
     <img src="docs/images/mouse-tabuleiro.png">
     <figcaption>
-      <p align="center"><b>Figura 6</b>- Relação evento do mouse x quadrante do tabuleiro</p>
+      <p align="center"><b>Figura 9</b>- Relação evento do mouse x quadrante do tabuleiro</p>
       <p align="center">Fonte: Os autores</p>
     </figcaption>
   </figure>
@@ -237,6 +270,47 @@ Caso seja realizado um evento de clique, verifica qual botão foi pressionado e 
 <h2>Testes</h2>
 
 <h2>Descrição de instalação, configuração de ambiente e execução</h2>
+
+<div align="justify">
+
+A seguir estão listados os passos necessários para a execução do jogo em outro dispositivo FPGA DE1-SoC 
+
+<h3>Requisitos:</h3>
+Possuir conexão com internet;<br>
+Possuir o compilador gcc;<br>
+Possuir o git instalado;<br>
+Estar utilizando uma placa de desenvolvimento FPGA DE1-SoC;<br>
+Possuir um mouse conectado a placa;<br>
+
+Caso todos os requisitos anteriores sejam satisfeitos basta seguir  o passo a passo
+
+<h3>passo 1: clonar o repositorio</h3>
+
+abra o terminal do seu dispositivo e execute o seguinte comando
+ ```
+git clone https://github.com/brendabo1/Sistema-Digital-TicTacToe.git
+```
+
+<h3>passo 2: acessar a pasta source e compilar o codigo com o gcc</h3>
+
+para acessar a pasta source basta execultar o seguinte comando
+```
+cd source/
+```
+<h3>Passo 3: compilar o codigo</h3>
+execulte o seguinte comando para realizar a compilação do projeto
+
+```
+make all
+```
+<h3>Passo 4: execute o jogo</h3>
+para execultar o jogo basta execultar o seguinte comando
+
+```
+sudo ./tic-tac-toe
+```
+</div>
+
 <h2>Referências</h2>
 <!--
 https://www.gadoo.com.br/dicas/tic-tac-toe/
@@ -245,6 +319,7 @@ https://gcc.gnu.org/onlinedocs/gcc-14.1.0/gcc.pdf ou https://gcc.gnu.org/onlined
 http://uab.ifsul.edu.br/tsiad/conteudo/modulo1/hco/hco_ua/mouse.pdf  fala sobre o mouse e funcionamento do mesmo
 https://www.kernel.org/doc/html/latest/input/input_uapi.html kernel do linux
 file:///C:/Users/Visitante%201/Documents/Arquitetura%20de%20Comp%20e%20SD/DE1-SoC_Computer_ARM.pdf
+https://www.gta.ufrj.br/grad/01_1/usb/usb.htm#%C2%A7%201.1%20%E2%80%93%20Objetivos%20de%20desenvolvimento%20do%20USB  fala sobre a usb
 https://www.gta.ufrj.br/grad/01_1/usb/usb.htm#%C2%A7%201.1%20%E2%80%93%20Objetivos%20de%20desenvolvimento%20do%20USB 
 (https://www.kernel.org/doc/html/latest/)
 -->
