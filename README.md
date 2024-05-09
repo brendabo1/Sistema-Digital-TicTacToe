@@ -196,6 +196,15 @@ A seleção de um espaço de um espaço vazio no tabuleiro, bem como a confirma�
 
 <h3>Interface do Usuário</h3>
 <h3>Algoritmos do jogo </h3>
+<div align="center">
+  <figure>  
+    <img src="docs/images/algoritmo.png">
+    <figcaption>
+      <p align="center"><b>Figura 6</b>- Fluxograma do algoritmo da partida</p>
+      <p align="center">Fonte: Os autores</p>
+    </figcaption>
+  </figure>
+</div>
 <h3>O Tabuleiro</h3>
 <div align="justify">
 No momento do desenvolvimento da logica do jogo foi notado que seria necessário fazer uma camada que convertesse as leituras do mouse pra ações e coordenadas validas dentro do jogo, por esse motivo foi implementado um modulo de interface de comunicação entre o mouse e o jogo.
