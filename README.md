@@ -280,10 +280,8 @@ para acessar a pasta source basta execultar o seguinte comando
 cd source/
 ```
 <h3>Passo 3: compilar o codigo</h3>
-execulte o seguinte comando
-```
-make all
-```
+execulte o seguinte comando<br>
+```make all```
 
 <h3>Passo 4: execute o jogo</h3>
 para execultar o jogo basta execultar o seguinte comando
