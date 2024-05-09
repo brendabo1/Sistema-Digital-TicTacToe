@@ -98,7 +98,7 @@ Nesta seção, exploraremos o dispositivo embarcado utilizado bem como os compon
 
 <h4>Memória</h4>
 <h3>Dispositivos de Entrada e Saída: descrição e manipulação</h3>
-Como indicado na seção anterior, o kit de desenvolvimento DE1-SoC possui diversos periféricos integrados. Para este projeto, os componentes selecionados foram os botões do tipo *push* e a portas USB *host*, ambos destacados na figura abaixo. Associado a estes dispositivos, utilizou-se também um mouse USB. Segue abaixo a descrição destes componentes, bem como os procedimentos adotados para suas manipulações.
+<p align="justify">Como indicado na seção anterior, o kit de desenvolvimento DE1-SoC possui diversos periféricos integrados. Para este projeto, os componentes selecionados foram os botões do tipo *push* e a portas USB *host*, ambos destacados na figura abaixo. Associado a estes dispositivos, utilizou-se também um mouse USB. Segue abaixo a descrição destes componentes, bem como os procedimentos adotados para suas manipulações.</p>
 <div align="center">
   <figure>  
     <img src="docs/images/perifericos-usados.png">
@@ -120,6 +120,7 @@ A placa utilizada disponibiliza para o usuário quatro botões do tipo <i>push</
     </figcaption>
   </figure>
 </div>
+<div align="justify">
 O registrador de dados é utilizado para identificar quais botões estão pressionados em um determinado instante.  Quando um botão é pressionado, seu bit correspondente no registrador é setado com o valor 1. Quando liberado, o bit é setado para 0.
 Por sua vez, o <i>edgecapture</i> é utilizado para identificar se um botão foi pressionado desde a última checagem (mesmo que tenha sido liberado). Quando um botão é pressionado, seu bit correspondente no registrador é setado para 1. O valor permanece até que o bit seja limpo (escrever explicitamente o valor 1).
 
@@ -129,23 +130,28 @@ O banco de registradores apresentado acima compõe a porta KEY. Esta porta está
 
 A memória virtual é uma técnica utilizada para gerenciamento de memória nos computadores. Nela, cada programa possui seu próprio espaço de endereçamento o qual é mapeado na memória física. Quando o programa referencia uma parte do espaço de endereçamento que está na memória física, o hardware encarrega-se de realizar rapidamente o mapeamento (tradução). 
 Para realizar o mapeamento do endereço físico da porta KEY, foram utilizadas as funções <code>mmap()</code> e <code>unmap()</code> e o arquivo <code>/dev/mem</code> (arquivo do Linux que contém um espelho da memória do computador). A partir do endereço virtual gerado, pode-se acessar o registrador <i>edgecapture</i>.
-
+</div>
 <h4>Porta USB <i>host</i></h4>
 <h4>Mouse USB</h4>
 <!--Processo de leitura do arquivo dev/input, decodificação da struct, deslocamento relativo da posição-->
-O desenvolvimento do biblioteca de leitura do mouse foi realizado com base na [documentação do kernel Linux](https://www.kernel.org/doc/html/latest/). Além de analises e testes realizados em laboratório com os documentos e informações.
+<div align="justify">O desenvolvimento do biblioteca de leitura do mouse foi realizado com base na [documentação do kernel Linux](https://www.kernel.org/doc/html/latest/). Além de analises e testes realizados em laboratório com os documentos e informações.
 
 Segundo a própria documentação do kernel, dispositivos de entrada e saida USBs se comunicam e são reconhecido como arquivos do tipo Dispositivo que ficam dentro da pasta /dev/input, cada dispositivo tem suas entradas e saidas, mas no geral os dipositivos armazenam um campo onde ficam localizadas as informações de instante em que um evento foi realizado, qual foi o tipo de evento, qual o código do evento e qual o valor do evento.
 
 Inicialmente utilizou-se o comando Hexdump para a exibição, no terminal do linux dos bits que estavam dentro do arquivo de Dispositivo do mouse, event0, de forma hexadecimal. Ao realizar a leitura do arquivo constatou-se 2 coisas, a primeira era que toda vez que um evento era realizado por um dispositivo, os dados do arquivo eram reescritos assim não mantendo um log dos eventos passados. Outra constatação foi em padrões de bits para cada evento realizado pelo mouse.
 Segundo a documentação, a seguinte sctruct em linguagem C poderia ser utilizada para fazer a leitura dos eventos de dispositivos usb: 
-<figure>  
-  <img src="docs/images/struct-do-mouse.png">
-  <figcaption>
-    <p align="center"><b>Figura 5</b> - Struct em C do mouse </p>
-    <p align="center">Fonte: kernel.org</p>
-  </figcaption>
-</figure>
+</div>
+<div align="center">
+  <figure>  
+    <img src="docs/images/struct-do-mouse.png">
+    <figcaption>
+      <p align="center"><b>Figura 5</b> - Struct em C do mouse </p>
+      <p align="center">Fonte: kernel.org</p>
+    </figcaption>
+  </figure>
+</div>
+
+<div align="justify">>
 Como o kernel usa um arquivo binário para realizar a comunicação com o dispositivo, utilizou-se das funções <code>fopen()</code> e <code>fread()</code> para realizar a leitura do mesmo, assim sendo possível uma melhor exibição do arquivo assim sendo possível também entender melhor o que cada evento significava.
 Apos esse avanço, foi definido que os tipos de eventos desejados seriam eventos de click e eventos de aceleração, também chamado de movimentação.
 
@@ -157,7 +163,7 @@ Na realização dessas analises se constatou outro fato, seria necessário defin
 Outro problema foi notado durante a fase de experimentação é que, ao realizar a leitura de um evento o sinal é perpetuado por alguns instantes, fazendo com que a leitura do evento seja replicada por um determinado período de tempo. Para solucionar esse problema utilizou-se um contador, onde sempre que um evento for realizado é incrementado em um, e que ao chegar ao valor de 7 retorna que ocorreu um evento de movimentação e em qual sentido, sendo eles: cima, baixo, esquerda e direita.
 Foi adicionado a biblioteca outras 2 funções, uma que realiza a abertura do arquivo do mouse e uma que realiza o do mesmo fechamento.
 
-
+</div>
 
 <h2>O Jogo</h2>
 <h3>Interface do Usuário</h3>
