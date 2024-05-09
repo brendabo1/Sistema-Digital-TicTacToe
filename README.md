@@ -256,7 +256,7 @@ Com a definição de diferentes modos de jogo, bem como das possibilidades de en
 
 Com o inicio do programa no menu principal, três seguimentos distintos podem ser selecionados: encerramento da execução,  modo de jogo single player ou modo de jogo dual player. Ambos os modos de jogo, levam ao inicio de uma partida, a qual pode ter seu fluxo finalizado normalmente (pela vitória ou empate), ou pela escolha do usuário. Em ambos os casos, o fluxo retorna ao menu inicial. Por sua vez, o encerramento da execução finaliza o programa.
 
-Independente do modo de jogo selecionado pelo usuário, a execução de uma partida possui um fluxo básico. A partida iniciada permanece em execução até que uma solicitação de encerramento seja realizada ou uma vitória ou empate seja detectada. Ao longo do processo, o fluxo realiza ações de exibição do tabuleiro, registro de jogadas e verificações. A diferença entre os fluxos de partida dos modos dual player e single player, esquematizados nas figuras xx e xx (respectivamente) é que o último, ao identificar a vez do computador, realiza a jogada aleatória gerada.
+Independente do modo de jogo selecionado pelo usuário, a execução de uma partida possui um fluxo básico. A partida iniciada permanece em execução até que uma solicitação de encerramento seja realizada ou uma vitória ou empate seja detectada. Ao longo do processo, o fluxo realiza ações de exibição do tabuleiro, registro de jogadas e verificações. A diferença entre os fluxos de partida dos modos dual player e single player, esquematizados nas figuras 12 e 13 (respectivamente) é que o último, ao identificar a vez do computador, realiza a jogada aleatória gerada.
 <div align="center">
   <figure>  
     <img src="docs/images/fluxograma_single_player.jpg">
@@ -275,9 +275,6 @@ Independente do modo de jogo selecionado pelo usuário, a execução de uma part
     </figcaption>
   </figure>
 </div>
-
-A implementação do projeto exige a integração de 2 módulos principais: a rotina do jogo, incluindo o menu inicial, a checagem a matriz do tabuleiro em busca de combinações de símbolos para a condição de vitória, entre outras atividade e a captura e tradução do movimento do mouse no tabuleiro. Como decisão de projeto para maior eficiência da CPU e menor tempo de ociosidade aguardando entradas dos dispositivos E/S, o sistema ganha em eficiência operando com duas threads. Chamados por Tanenbaum (2016) de miniprocessos, as threads compartilham um conjunto de recursos de maneira que possam trabalhar juntos intimamente para desempenhar alguma tarefa, precisamente a interação desejada entre os módulos.
-Além disso, tais processos rotineiramente acessam o mesmo espaço de memória, seja para ler ou escrever dados a exemplo da atualização da posição após o evento do mouse e a leitura da posição para checagem de posição livre para a jogada. Quando um ou mais processos manipulam dados compartilhados, o resultado final da variável varia a depender da ordem de execução entre eles. Diante de tal condição de corrida, variáveis compartilhadas para gerenciar a exclusão mútua (mutexes) foram implementadas, garantindo que apenas um processo tenha acesso a um dado compartilhado por vez.
 
 </div>
 
