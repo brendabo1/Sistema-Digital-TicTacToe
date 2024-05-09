@@ -108,32 +108,28 @@ Como indicado na seção anterior, o kit de desenvolvimento DE1-SoC possui diver
     </figcaption>
   </figure>
 </div>
-<h4>Mouse</h4>
-<!--Processo de leitura do arquivo dev/input, decodificação da struct, deslocamento relativo da posição-->
+
+<h4>Botões do tipo <i>push</i></h4>
+A placa utilizada disponibiliza para o usuário quatro botões do tipo <i>push</i> os quais possuem três registradores com funções diversificadas. São eles o registrador de dados, o registrador <i>maskinterrupt</i> e o registrador <i>edgecapture</i>, todos ilustrados na figura abaixo.  
 <div align="center">
   <figure>  
-    <img src="docs/images/perifericos-usados.png">
+    <img src="docs/images/key-port.png">
     <figcaption>
-      <p align="center"><b>Figura 3</b> - Periféricos da placa DE1-SoC (adaptado)</p>
+      <p align="center"><b>Figura 4</b>Porta paralela KEY (adaptado)</p>
       <p align="center">Fonte: FPGAcademy.org</p>
     </figcaption>
   </figure>
 </div>
-<h4>Botões do tipo <i>push</i></h4>
-A placa utilizada disponibiliza para o usuário quatro botões do tipo <i>push</i> os quais possuem três registradores com funções diversificadas. São eles o registrador de dados, o registrador <i>maskinterrupt</i> e o registrador <i>edgecapture</i>, todos ilustrados na figura abaixo.  
-<figure>  
-  <img src="docs/images/key-port.png">
-  <figcaption>
-    <p align="center"><b>Figura 4</b>Porta paralela KEY (adaptado)</p>
-    <p align="center">Fonte: FPGAcademy.org</p>
-  </figcaption>
-</figure>
 O registrador de dados é utilizado para identificar quais botões estão pressionados em um determinado instante.  Quando um botão é pressionado, seu bit correspondente no registrador é setado com o valor 1. Quando liberado, o bit é setado para 0.
 Por sua vez, o <i>edgecapture</i> é utilizado para identificar se um botão foi pressionado desde a última checagem (mesmo que tenha sido liberado). Quando um botão é pressionado, seu bit correspondente no registrador é setado para 1. O valor permanece até que o bit seja limpo (escrever explicitamente o valor 1).
+
 Por fim, o registrador <i>interruptmask</i> é utilizado para manipular as interrupções enviadas ao processador ARM por meio dos botões. Para habilitar as interrupções para um determinado botão, basta setar para 1 no registrador o bit correspondente ao botão.
-O banco de registradores apresentado acima compõe a porta KEY. Esta porta está mapeada no espaço de endereçamento da ponte `lwhps2fpga` (Lightweight HPS-to-FPGA Bridge) a qual encarrega-se da conexão entre o FPGA e o HPS da placa. As portas E/S mapeadas nesta ponte podem ser acessadas por meio do endereço base (0xFF200000) somado ao <i>offset</i> da porta (para a porta KEY, <i>offset</i> = 0x00000050 ). Entretanto, para acessar os valores das portas mapeadas, faz-se necessária a virtualização destes endereços físicos.
+
+O banco de registradores apresentado acima compõe a porta KEY. Esta porta está mapeada no espaço de endereçamento da ponte <code>lwhps2fpga</code> (Lightweight HPS-to-FPGA Bridge) a qual encarrega-se da conexão entre o FPGA e o HPS da placa. As portas E/S mapeadas nesta ponte podem ser acessadas por meio do endereço base (0xFF200000) somado ao <i>offset</i> da porta (para a porta KEY, <i>offset</i> = 0x00000050 ). Entretanto, para acessar os valores das portas mapeadas, faz-se necessária a virtualização destes endereços físicos.
+
 A memória virtual é uma técnica utilizada para gerenciamento de memória nos computadores. Nela, cada programa possui seu próprio espaço de endereçamento o qual é mapeado na memória física. Quando o programa referencia uma parte do espaço de endereçamento que está na memória física, o hardware encarrega-se de realizar rapidamente o mapeamento (tradução). 
-Para realizar o mapeamento do endereço físico da porta KEY, foram utilizadas as funções `mmap()` e `unmap()` e o arquivo `/dev/mem` (arquivo do Linux que contém um espelho da memória do computador). A partir do endereço virtual gerado, pode-se acessar o registrador *edgecapture*.
+Para realizar o mapeamento do endereço físico da porta KEY, foram utilizadas as funções <code>mmap()</code> e <code>unmap()</code> e o arquivo <code>/dev/mem</code> (arquivo do Linux que contém um espelho da memória do computador). A partir do endereço virtual gerado, pode-se acessar o registrador <i>edgecapture</i>.
+
 <h4>Porta USB <i>host</i></h4>
 <h4>Mouse USB</h4>
 <!--Processo de leitura do arquivo dev/input, decodificação da struct, deslocamento relativo da posição-->
