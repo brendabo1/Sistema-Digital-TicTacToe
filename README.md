@@ -248,7 +248,7 @@ Com a definição de diferentes modos de jogo, bem como das possibilidades de en
   <figure>  
     <img src="docs/images/fluxo_jogo.jpg">
     <figcaption>
-      <p align="center"><b>Figura 19</b>- Esquema do fluxo do jogo</p>
+      <p align="center"><b>Figura 11</b>- Esquema do fluxo do jogo</p>
       <p align="center">Fonte: Elaboração Própria.</p>
     </figcaption>
   </figure>
@@ -257,6 +257,24 @@ Com a definição de diferentes modos de jogo, bem como das possibilidades de en
 Com o inicio do programa no menu principal, três seguimentos distintos podem ser selecionados: encerramento da execução,  modo de jogo single player ou modo de jogo dual player. Ambos os modos de jogo, levam ao inicio de uma partida, a qual pode ter seu fluxo finalizado normalmente (pela vitória ou empate), ou pela escolha do usuário. Em ambos os casos, o fluxo retorna ao menu inicial. Por sua vez, o encerramento da execução finaliza o programa.
 
 Independente do modo de jogo selecionado pelo usuário, a execução de uma partida possui um fluxo básico. A partida iniciada permanece em execução até que uma solicitação de encerramento seja realizada ou uma vitória ou empate seja detectada. Ao longo do processo, o fluxo realiza ações de exibição do tabuleiro, registro de jogadas e verificações. A diferença entre os fluxos de partida dos modos dual player e single player, esquematizados nas figuras xx e xx (respectivamente) é que o último, ao identificar a vez do computador, realiza a jogada aleatória gerada.
+<div align="center">
+  <figure>  
+    <img src="docs/images/fluxograma_single_player.jpg">
+    <figcaption>
+      <p align="center"><b>Figura 12</b>- Fluxograma da partida no modo single player</p>
+      <p align="center">Fonte: Elaboração Própria.</p>
+    </figcaption>
+  </figure>
+</div>
+<div align="center">
+  <figure>  
+    <img src="docs/images/fluxograma_dual_player.jpg">
+    <figcaption>
+      <p align="center"><b>Figura 13</b>- Fluxograma da partida no modo dual player</p>
+      <p align="center">Fonte: Elaboração Própria.</p>
+    </figcaption>
+  </figure>
+</div>
 
 A implementação do projeto exige a integração de 2 módulos principais: a rotina do jogo, incluindo o menu inicial, a checagem a matriz do tabuleiro em busca de combinações de símbolos para a condição de vitória, entre outras atividade e a captura e tradução do movimento do mouse no tabuleiro. Como decisão de projeto para maior eficiência da CPU e menor tempo de ociosidade aguardando entradas dos dispositivos E/S, o sistema ganha em eficiência operando com duas threads. Chamados por Tanenbaum (2016) de miniprocessos, as threads compartilham um conjunto de recursos de maneira que possam trabalhar juntos intimamente para desempenhar alguma tarefa, precisamente a interação desejada entre os módulos.
 Além disso, tais processos rotineiramente acessam o mesmo espaço de memória, seja para ler ou escrever dados a exemplo da atualização da posição após o evento do mouse e a leitura da posição para checagem de posição livre para a jogada. Quando um ou mais processos manipulam dados compartilhados, o resultado final da variável varia a depender da ordem de execução entre eles. Diante de tal condição de corrida, variáveis compartilhadas para gerenciar a exclusão mútua (mutexes) foram implementadas, garantindo que apenas um processo tenha acesso a um dado compartilhado por vez.
@@ -273,7 +291,7 @@ Na tela de menu principal o usuário tem o título, uma breve descrição de com
   <figure>  
     <img src="docs/images/menu.png">
     <figcaption>
-      <p align="center"><b>Figura 11</b>- Menu da tela inicial</p>
+      <p align="center"><b>Figura 14</b>- Menu da tela inicial</p>
       <p align="center">Fonte: Elaboração Própria. </p>
     </figcaption>
   </figure>
@@ -283,7 +301,7 @@ Após o acionamento dos botões KEY1 ou KEY2, o tabuleiro do jogo é exibido na 
     <figure>  
       <img src="docs/images/tabuleiro_vazio.png">
       <figcaption>
-        <p align="center"><b>Figura </b>- Tabuleiro do jogo</p>
+        <p align="center"><b>Figura 15</b>- Tabuleiro do jogo</p>
         <p align="center">Fonte: Elaboração Própria.</p>
       </figcaption>
     </figure>
@@ -293,7 +311,7 @@ Caso seja pressionado a KEY1, será iniciado o jogo no modo dual player, onde re
   <figure>  
     <img src="docs/images/dual_player.gif">
     <figcaption>
-      <p align="center"><b>Figura 12</b>- Partida no Modo Dual Player</p>
+      <p align="center"><b>Figura 16</b>- Partida no Modo Dual Player</p>
       <p align="center">Fonte: Elaboração Própria.</p>
     </figcaption>
   </figure>
@@ -304,7 +322,7 @@ Caso seja pressionado a KEY2, será inciado o jogo no modo single player onde o 
   <figure>  
     <img src="docs/images/vitoria_modo_single_player.gif">
     <figcaption>
-      <p align="center"><b>Figura 13</b>- Partida no Modo Single Player</p>
+      <p align="center"><b>Figura 17</b>- Partida no Modo Single Player</p>
       <p align="center">Fonte: Elaboração Própria.</p>
     </figcaption>
   </figure>
@@ -316,7 +334,7 @@ Caso seja pressionado a KEY0 durante uma partida, esta será finalizada imediata
   <figure>  
     <img src="docs/images/acionando_fim_partida.gif">
     <figcaption>
-      <p align="center"><b>Figura 14</b>- Acionamento do botão (KEY0) para encerramento da partida</p>
+      <p align="center"><b>Figura 18</b>- Acionamento do botão (KEY0) para encerramento da partida</p>
       <p align="center">Fonte: Elaboração Própria.</p>
     </figcaption>
   </figure>
@@ -325,7 +343,7 @@ Caso seja pressionado a KEY0 durante uma partida, esta será finalizada imediata
   <figure>  
     <img src="docs/images/finalizando_partida.gif">
     <figcaption>
-      <p align="center"><b>Figura 15</b>- Encerramento da partida através do botão KEY0</p>
+      <p align="center"><b>Figura 19</b>- Encerramento da partida através do botão KEY0</p>
       <p align="center">Fonte: Elaboração Própria.</p>
     </figcaption>
   </figure>
@@ -336,7 +354,7 @@ Caso um dos jogadores ganhe sera exibido o jogador que ganhou e após 5 segundos
   <figure>  
     <img src="docs/images/vitoria_1.gif">
     <figcaption>
-      <p align="center"><b>Figura 16</b>- Vitória do Jogador 1</p>
+      <p align="center"><b>Figura 20</b>- Vitória do Jogador 1</p>
       <p align="center">Fonte: Elaboração Própria.</p>
     </figcaption>
   </figure>
@@ -350,7 +368,7 @@ Caso ocorra um empate, ou seja, caso não haja mais casas disponíveis para nova
   <figure>  
     <img src="docs/images/empate.gif">
     <figcaption>
-      <p align="center"><b>Figura 18</b>- Partida finalizada com empate</p>
+      <p align="center"><b>Figura 21</b>- Partida finalizada com empate</p>
       <p align="center">Fonte: Elaboração Própria.</p>
     </figcaption>
   </figure>
@@ -365,7 +383,7 @@ Caso ocorra um empate, ou seja, caso não haja mais casas disponíveis para nova
   <figure>  
     <img src="docs/images/diagrama-solucao.jpg">
     <figcaption>
-      <p align="center"><b>Figura 19</b>- Esquema em blocos da solução geral</p>
+      <p align="center"><b>Figura 22</b>- Esquema em blocos da solução geral</p>
       <p align="center">Fonte: Elaboração Própria.</p>
     </figcaption>
   </figure>
@@ -383,7 +401,7 @@ A relação entre as threads, bem como seus períodos de vida estão esquematiza
   <figure>  
     <img src="docs/images/fluxo_threads.jpg">
     <figcaption>
-      <p align="center"><b>Figura 19</b>- Fluxograma do algoritmo da partida</p>
+      <p align="center"><b>Figura 23</b>- Fluxograma do algoritmo da partida</p>
       <p align="center">Fonte: Elaboração Própria.</p>
     </figcaption>
   </figure>
@@ -401,7 +419,7 @@ Os testes realizados para garantir o correto funcionamento do jogo são apresent
     <figure>  
       <img src="docs/images/transicao_menu_partida.gif">
       <figcaption>
-        <p align="center"><b>Figura </b>- Transição do menu para a tela da partida</p>
+        <p align="center"><b>Figura 24</b>- Transição do menu para a tela da partida</p>
         <p align="center">Fonte: Elaboração Própria.</p>
       </figcaption>
     </figure>
@@ -411,7 +429,7 @@ Os testes realizados para garantir o correto funcionamento do jogo são apresent
     <figure>  
       <img src="docs/images/move.gif">
       <figcaption>
-        <p align="center"><b>Figura </b>- Movimentação durante a partida</p>
+        <p align="center"><b>Figura 25</b>- Movimentação durante a partida</p>
         <p align="center">Fonte: Elaboração Própria.</p>
       </figcaption>
     </figure>
@@ -421,7 +439,7 @@ Os testes realizados para garantir o correto funcionamento do jogo são apresent
     <figure>  
       <img src="docs/images/confirma_jogada_x.gif">
       <figcaption>
-        <p align="center"><b>Figura </b>- Confirmação de jogada X atravé do mouse</p>
+        <p align="center"><b>Figura 26</b>- Confirmação de jogada X atravé do mouse</p>
         <p align="center">Fonte: Elaboração Própria.</p>
       </figcaption>
     </figure>
@@ -431,7 +449,7 @@ Os testes realizados para garantir o correto funcionamento do jogo são apresent
     <figure>  
       <img src="docs/images/confirma_jogada_0.gif">
       <figcaption>
-        <p align="center"><b>Figura </b>- Confirmação de jogada 0 através do mouse</p>
+        <p align="center"><b>Figura 27</b>- Confirmação de jogada 0 através do mouse</p>
         <p align="center">Fonte: Elaboração Própria.</p>
       </figcaption>
     </figure>
@@ -441,7 +459,7 @@ Os testes realizados para garantir o correto funcionamento do jogo são apresent
   <figure>  
     <img src="docs/images/vitoria_2.gif">
     <figcaption>
-      <p align="center"><b>Figura </b>- Vitória do 0 na Vertical</p>
+      <p align="center"><b>Figura 28</b>- Vitória do 0 na Vertical</p>
       <p align="center">Fonte: Elaboração Própria.</p>
     </figcaption>
   </figure>
@@ -451,7 +469,7 @@ Os testes realizados para garantir o correto funcionamento do jogo são apresent
     <figure>  
       <img src="docs/images/vitoria_3.gif">
       <figcaption>
-        <p align="center"><b>Figura </b>- Vitória do 0 na Horizontal</p>
+        <p align="center"><b>Figura 29</b>- Vitória do 0 na Horizontal</p>
         <p align="center">Fonte: Elaboração Própria.</p>
       </figcaption>
     </figure>
@@ -461,18 +479,18 @@ Os testes realizados para garantir o correto funcionamento do jogo são apresent
   <figure>  
     <img src="docs/images/vitoria_1.gif">
     <figcaption>
-      <p align="center"><b>Figura </b>- Vitória do X na Diagonal</p>
+      <p align="center"><b>Figura 30</b>- Vitória do X na Diagonal</p>
       <p align="center">Fonte: Elaboração Própria.</p>
     </figcaption>
   </figure>
 </div>
-  <li>Vitória do Computador</li>
+  <!-- <li>Vitória do Computador</li> -->
   <li>Empate: deu Velha ou Draw. Nenhum dos jogadores completa uma trilha de símbolos iguais.</li>
   <div align="center">
   <figure>  
     <img src="docs/images/empate.gif">
     <figcaption>
-      <p align="center"><b>Figura </b>- Empate: deu velha</p>
+      <p align="center"><b>Figura 31</b>- Empate: deu velha</p>
       <p align="center">Fonte: Elaboração Própria.</p>
     </figcaption>
   </figure>
@@ -482,12 +500,12 @@ Os testes realizados para garantir o correto funcionamento do jogo são apresent
     <figure>  
       <img src="docs/images/transicao_menu_partida.gif">
       <figcaption>
-        <p align="center"><b>Figura </b>- Transição do menu para a tela da partida</p>
+        <p align="center"><b>Figura 32</b>- Transição do menu para a tela da partida</p>
         <p align="center">Fonte: Elaboração Própria.</p>
       </figcaption>
     </figure>
   </div>
-  <li>Sair do Jogo no Menu</li>
+  <!-- <li>Sair do Jogo no Menu</li> -->
 </ul>
 
 <h2>Conclusão</h2>
