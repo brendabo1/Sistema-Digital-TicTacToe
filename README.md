@@ -64,7 +64,7 @@ Nessa seção são apresentados os softwares que auxiliaram no desenvolvimento d
 <h2>Arquitetura do Computador Utilizado nos Testes</h2>
 Nesta seção, exploraremos o dispositivo embarcado utilizado bem como os componentes do Kit de Desenvolvimento DE1-SoC. 
 <h3>O Kit de Desenvolvimento DE1-SoC</h3>
-<p align="justify">Equipado com um processador, USB, memória DDR3, Ethernet e uma gama de periféricos, o kit de desenvolvimento DE1-SoC (Figura 1) integra no mesmo Cyclone V sistema em chip (SoC) um <i>hard processor system</i> (HPS) a uma FPGA <i>(Field Programmable Gate Arrays)</i>. Este design permite uma grande flexibilidade da placa nas mais variadas aplicações</p> 
+<p align="justify">Equipado com um processador, USB, memória DDR3, Ethernet e uma gama de periféricos, o kit de desenvolvimento DE1-SoC (Figura 1) integra no mesmo Cyclone V sistema em chip (SoC) um <i>hard processor system</i> (HPS) a uma FPGA <i>(Field Programmable Gate Arrays)</i>. Este design permite uma grande flexibilidade da placa nas mais variadas aplicações. </p> 
 <div align="center">
   <figure>  
     <img src="docs/images/kit_desenvolvimento_DE1-SoC.jpg">
@@ -76,11 +76,7 @@ Nesta seção, exploraremos o dispositivo embarcado utilizado bem como os compon
 </div>
 
 <h3>Sistema Computacional DE1-SoC 2</h3>
-<p>O diagrama de blocos do sistema computacional apresentado na figura 2 explicita os componentes  O HPS inclui um processador dual-core ARM Cortex-A9, Ethernet, USB FPGA Cyclone V System-on-Chip (SoC) da Intel  
-
- <!--consistindo em um processador dual-core ARM Cortex-A9 Altera’s SoC integrates an ARM-based  consisting of processor, peripherals and memory interfaces tied seamlessly with the FPGA fabric using a high-bandwidth interconnect backbone.
- um processador ARM Cortex-A9 dual-core com um FPGA Cyclone V da Intel. Essa placa oferece uma ampla gama de periféricos, incluindo porta VGA, porta Ethernet, USB, porta de áudio, entre outros, o que a torna ideal para projetos que envolvem tanto software quanto hardware. Ela é frequentemente utilizada em ambientes educacionais e de pesquisa para o desenvolvimento e aprendizado em sistemas embarcados e FPGA.-->
-</p>
+<p>O diagrama de blocos do sistema computacional apresentado na figura 2 explicita os componentes Cyclone® V da Intel bem como os dipositivos e conexões. O HPS inclui um processador ARM Cortex-A9 de 2 núcleos para processamento de propósito geral além da memória DDR3 e dispositivos perféricos. Já a FPGA possibilita uma variedade de implementações através da programação dos blocos lógicos. Todos os dispositivos de entrada e saída são acessíveis ao processador através do mapeamento de memória, utilizando o sumário de endereços definidos na documentação da placa<!--citar FPGAcademy DE1-SoC Computer System with ARM* Cortex* A9-->.</p>
 
 <div align="center">
   <figure>  
@@ -180,4 +176,5 @@ https://www.facom.ufu.br/~gustavo/ED1/Apostila_Linguagem_C.pdf
 https://gcc.gnu.org/onlinedocs/gcc-14.1.0/gcc.pdf ou https://gcc.gnu.org/onlinedocs/
 http://uab.ifsul.edu.br/tsiad/conteudo/modulo1/hco/hco_ua/mouse.pdf  fala sobre o mouse e funcionamento do mesmo
 https://www.kernel.org/doc/html/latest/input/input_uapi.html kernel do linux
+file:///C:/Users/Visitante%201/Documents/Arquitetura%20de%20Comp%20e%20SD/DE1-SoC_Computer_ARM.pdf
 -->
