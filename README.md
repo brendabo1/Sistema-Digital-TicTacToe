@@ -160,22 +160,22 @@ Na realização dessas analises se constatou outro fato, seria necessário defin
 </div>
 
 <div align="justify">
-Para a compreensão do arquivo binário de registros do mouse, as funções <code>fopen()</code> e <code>fread()</code> da bibloteca <i>stdio</i> foram empregadas. Sendo assim possível compreender a dinâmica dos eventos, seus tipos e especificações. A partir das análises realizadas, constatou-se que os dados do arquivos são sobrescritos a cada novo evento e alteração não acumulando um histórico.
+Para a compreensão do arquivo binário de registros do mouse, as funções <code>fopen()</code> e <code>fread()</code> da bibloteca <i>stdio</i> foram empregadas. Sendo assim possível compreender a dinâmica dos eventos, seus tipos e especificações. A partir das análises realizadas, constatou-se que os dados do arquivos são sobrescritos a cada novo evento, não acumulando um histórico.
 
-Apos esse avanço, foi definido que os tipos de eventos desejados seriam os eventos de click e os eventos de aceleração, também chamado de movimentação explicados a seguir:
+Apos esse avanço, foi definido que os tipos de eventos desejados seriam os eventos de click e os eventos de movimentação do mouse, explicados a seguir:
 <ul>
   <li>Eventos de clique são registrados quando algum dos botões do mouse é pressionado ou solto, retornando 1 ou 0 respectivamente no campo de valor. Um evento de clique tem valor <code>type</code> igual a 2 e valor do <code>code</code> correspondente ao botão pressionado.</li>
-  <li>Eventos de aceleração ocorrem quando há a movimentação do mouse sobre alguma superfície, retornando, então, um  código correspondente ao eixo de movimentação, o sentido, esqueda, direita, cima, baixo, e o módulo correspondente ao deslocamento relativo do mouse. A figura 6 escreve o funcionamento do mouse com relação a eventos de aceleração, sendo a seta o sentido do movimento e as variáveis <code>ACL_X</code> e <code>ACL_Y</code> a aceleração positiva ou negativa nos eixos X e Y respectivamente. Por exemplo, ao movimentar o mouse da direita para a esquerda será retornado uma struct correspondente a um evento com tipo igual a 2, indicando o movimento do dispositivo, código igual 0 para o eixo X e valor negativo para o sentido do deslocamento. Tais dados compõe o deslocamento relativo do mouse capturado pelo seu sensor optico mediante o feixe de luz emitido pelo LED embutido no mouse.</li> 
+  <li>Eventos de movimentação, ocorrem quando há o deslocamento do mouse sobre alguma superfície, retornando, então, um  código correspondente ao eixo de movimentação, o sentido, esqueda, direita, cima, baixo, e o módulo correspondente ao deslocamento relativo do mouse. A figura 6 escreve o funcionamento do mouse com relação a eventos de delocamento, sendo a seta o sentido do movimento e as variáveis <code>REL_X</code> e <code>REL_Y</code> a valocidade, positiva ou negativa, nos eixos X e Y respectivamente. Por exemplo, ao movimentar o mouse da direita para a esquerda será retornado uma struct correspondente a um evento com tipo igual a 2, indicando o movimento do dispositivo, código igual 0 para o eixo X e valor negativo para o sentido do deslocamento. Tais dados compõe o deslocamento relativo do mouse capturado pelo seu sensor optico mediante o feixe de luz emitido pelo LED embutido no mouse.</li> 
 </ul> 
 
-Além disso, durante o desenvolvimento, foi adotado um valor mínimo de aceleração igual a 3, de modo a ignorar a leitura de toques muito sutis capazes de prejudicar a experiência do jogador. Também, foi notado que ao realizar a leitura de um evento o sinal é perpetuado por alguns instantes, fazendo com que a leitura do evento seja replicada por um determinado período de tempo. Para solucionar esse problema utilizou-se um contador, incrementado em 1 a cada evento lido, que retorna o evento de movimentação, bem como seus dados de módulo, direção e sentido quando o contador chega a 7. 
+Além disso, durante o desenvolvimento, foi adotado um valor mínimo de velocidade igual a 3, de modo a ignorar a leitura de toques muito sutis capazes de prejudicar a experiência do jogador. Também, foi notado que ao realizar a leitura de um evento o sinal é perpetuado por alguns instantes, fazendo com que a leitura do evento seja replicada por um determinado período de tempo. Para solucionar esse problema utilizou-se um contador, incrementado em 1 a cada evento, de movimentação ou clique, lido, que retorna o evento de movimentação, bem como seus dados de módulo, direção e sentido quando o contador chega a 7. 
 
 <!--Foi adicionado a biblioteca outras 2 funções, uma que realiza a abertura do arquivo do mouse e uma que realiza o do mesmo fechamento.-->
 
 
 <div align="center">
   <figure>  
-    <img src="docs/images/mouse-acell.png" width="410" height="640">
+    <img src="docs/images/mouse-vel.png" width="410" height="640">
     <figcaption>
       <p align="center"><b>Figura 6</b>- Relação evento de movimentação</p>
       <p align="center">Fonte: Elaboração Própria.</p>
