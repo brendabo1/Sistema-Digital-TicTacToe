@@ -503,7 +503,8 @@ A seguir estão listados os passos necessários para a execução do jogo em out
 Caso todos os requisitos anteriores sejam satisfeitos basta seguir o passo a passo
 <h3>1: Clonar o repositório</h3>
 Abra o terminal do seu dispositivo e execute o seguinte comando
- 
+
+
 ```
 git clone https://github.com/brendabo1/Sistema-Digital-TicTacToe.git
 ```
